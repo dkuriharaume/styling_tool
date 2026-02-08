@@ -1,0 +1,206 @@
+@import "sanitize";
+@import "_config";
+@import "_mixin";
+@import "_layout";
+@import "_menu";
+@import "_header";
+@import "_footer";
+@import "splide/template/default/index.scss";
+@import "_splide";
+@import "_section";
+@import "_index";
+@import "_subpage";
+@import "_card";
+@import "_gallery";
+@import "_breadcrumb";
+@import "_pager";
+@import "_page-top";
+@import "_goto";
+@import "_news";
+@import "_adjust";
+
+//フォーム系
+// @import "_form"; //フォーム
+@import "_deco-form"; //デコレーション版フォーム
+
+//スライダー系
+//@import "slick";
+//@import "_photoslider";
+
+//募集要項系
+//@import "_jobs-card";
+//@import "_refine";
+
+//インタビュー系
+//@import "_interview-card";
+//@import "_interview-section";
+//@import "_interview-slider";
+
+// ライトボックス
+@import "_magnific-popup";
+
+
+:root {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+
+[id] {
+  scroll-margin-top: 80px;
+  @include min_desktop {
+    scroll-margin-top: 100px;
+  }
+}
+
+@font-face {
+  font-family: 'icomoon';
+  src: url('../fonts/icomoon.eot?vg6ec6');
+  src: url('../fonts/icomoon.eot?vg6ec6#iefix') format('embedded-opentype'), url('../fonts/icomoon.ttf?vg6ec6') format('truetype'), url('../fonts/icomoon.woff?vg6ec6') format('woff'), url('../fonts/icomoon.svg?vg6ec6#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.8;
+  font-family: 'Roboto',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Noto Sans JP',
+    "游ゴシック体",
+    YuGothic,
+    "游ゴシック Medium",
+    "Yu Gothic Medium",
+    "ヒラギノ角ゴ ProN W3",
+    Hiragino Kaku Gothic ProN,
+    Arial,
+    "メイリオ",
+    Meiryo,
+    sans-serif;
+  color: var(--color-font);
+  font-feature-settings: "halt";
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: 0.02em;
+
+  @include min_desktop {
+    font-size: 1.6rem;
+  }
+}
+
+
+/*
+:root {
+  --column-count: 12;
+  --container-width-min: 600px;
+  --container-width-max: 1080px;
+}
+
+.page {
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax( 20px, 1fr)
+    [container-start] repeat(var(--column-count), minmax( calc( var(--container-width-min) / var(--column-count) ), calc( var(--container-width-max) / var(--column-count) ) ) )
+    [container-end] minmax( 20px, 1fr)
+    [full-end];
+
+  &__header,
+  &__footer,
+  &__main {
+    display: grid;
+    grid-column: full;
+    grid-template-columns: subgrid;
+  }
+}
+*/
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.kadomaru {
+  border-radius: 20px;
+  &--10{
+    border-radius: 10px;
+  }
+}
+
+.img-responsive {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+.img-fit {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.link-fit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-decoration: none;
+  z-index: 1;
+}
+
+:focus:not(:focus-visible) {
+  outline: 0;
+}
+
+.alignleft,
+.alignright,
+.aligncenter {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1em auto;
+}
+
+.alignleft {
+  @include min_tablet {
+    float: left;
+    margin: 0 2em 0 0;
+  }
+}
+
+.alignright {
+  @include min_tablet {
+    float: right;
+    margin: 0 0 0 2em;
+  }
+}
+
+img.aligncenter {
+  max-width: 100%;
+  height: auto;
+
+  @include min_tablet {
+    margin: 2em auto;
+  }
+}
+
+.gmap-wrapper {
+  position: relative;
+  height: 0;
+  padding-top: 56.25%;
+  margin-top: 2rem;
+  overflow: hidden;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}

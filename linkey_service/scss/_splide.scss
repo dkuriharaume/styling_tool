@@ -1,0 +1,48 @@
+#auto-scroll {
+  background: #F4F5F7;
+  padding: 3.5rem 0;
+  margin-top: 7rem;
+  @include only_mobile {
+    padding: 1.2rem 0;
+    margin-top: 4rem;
+  }
+}
+
+#card-slider {
+  .splide {
+    &__track {
+      overflow: inherit;
+    }
+    &__list {
+      @include min_desktop {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6rem;
+      }
+    }
+    &__pagination {
+      position: relative;
+      bottom: 0;
+      left: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: nowrap;
+      margin-top: 3rem;
+      li{
+        width: 100%;
+      }
+      &__page{
+        width: 100%;
+        border-radius: 0;
+        height: 4px;
+        min-height: inherit;
+        opacity: 1;
+        background: #D7D9DD;
+        &.is-active{
+          transform: none;
+          background: var(--color-primary);
+        }
+      }
+    }
+  }
+}

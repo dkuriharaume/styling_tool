@@ -1,0 +1,51 @@
+/*  パンくず  */
+
+.breadcrumb {
+  $this: &;
+  margin-bottom: 1.7rem;
+
+  &__list {
+    display: flex;
+    flex-wrap: nowrap;
+    font-size: var(--font-text-xs);
+    list-style: none;
+  }
+    &__item {
+      color: var(--color-primary);
+      
+      &:not(:first-child) {
+        &:before {
+          content: "";
+          width: 12px;
+          height: 1px;
+          background: #D7D9DD;
+          position: relative;
+          display: inline-block;
+          margin: 0 1rem .4rem;
+        }
+      }
+      &:not(:last-child) {
+        flex-shrink: 0;
+        color: var(--color-font);
+      }
+      &:last-child{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        pointer-events: none;
+      }
+    }
+
+    &__link {
+      transition: .3s ease-out;
+      color: inherit;
+      @include min_desktop {
+        transition: .2s ease-out;
+        &:hover{
+          opacity: .6;
+        }
+      }
+    }
+
+    &__sep {}
+}

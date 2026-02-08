@@ -1,0 +1,424 @@
+/*********************/
+
+/*  ヘッダー  */
+
+/*********************/
+
+/*  ヘッダー AおよびB */
+
+.header {
+  $this: &;
+  position: fixed;
+  width: 240px;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  @include max_tablet {
+    width: 155px;
+  }
+
+  &__body {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 15px;
+    @include min_desktop {
+      padding: 25px;
+    }
+  }
+
+  &__logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include min_desktop {
+      transition: .2s ease-out;
+      &:hover{
+        opacity: .6;
+      }
+    }
+    img{
+      width: 274px;
+      height: auto;
+    }
+  }
+
+  &__contact {
+    @include max_tablet {
+      display: none;
+    }
+  }
+
+  &__nav {
+    margin-left: auto;
+    margin-right: 24px;
+    @include max_tablet {
+      display: none;
+    }
+  }
+
+  &--fixed {
+    position: fixed;
+  }
+}
+
+.gnav {
+}
+
+.gnav-list {
+  $this: &;
+  display: flex;
+  gap: 24px;
+
+  &__item {
+    position: relative;
+  }
+
+  &__link {
+    display: block;
+    color: inherit;
+  }
+
+  &__child {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    #{$this}__item:hover & {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  &__trigger {
+    display: none;
+  }
+}
+
+/*********************/
+
+/*  メインビジュアル  */
+
+/*********************/
+
+.mv {
+  $this: &;
+  position: relative;
+  z-index: 1;
+  &__bg {
+    width: 100%;
+    height: auto;
+    @include min_tablet {
+      position: absolute;
+      display: block;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      font-family: 'object-fit: cover; object-position: center;';
+      z-index: -1;
+    }
+  }
+  &__container {
+      width: 100%;
+      position: relative;
+    @include min_tablet {
+      height: 100vh;
+      max-height: 1000px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 $padding_wide;
+    }
+    @media screen and (min-width:1756px) {
+      padding-left: calc((100vw - 1756px) / 2);
+      padding-right: calc((100vw - 1756px) / 2);
+    }
+  }
+
+  &__message {
+    position: relative;
+
+    @include only_mobile {
+      margin-top: -8rem;
+      padding: 0 $padding_std;
+    }
+  }
+  &__cv {
+    display: flex;
+    gap: 1.3rem;
+    padding: 60px 24px 24px;
+    @include min_tablet {
+      flex-direction: column;
+      padding: 0;
+      gap: 2rem;
+      width: 357px;
+      position: absolute;
+      bottom: -30px;
+      right: $padding_wide;
+    }
+    @media screen and (min-width:1756px) {
+      right: calc((100vw - 1756px) / 2);
+    }
+    .btn{
+      @include only_mobile {
+        padding: 1.5rem 3.5rem 1.5rem 2rem;
+        border-radius: 10px;
+        font-size: 1.4rem;
+        width: 100%;
+      }
+    }
+  }
+}
+
+
+.message {
+  $this: &;
+
+  &__title {
+    font-size: var(--font-display-lg);
+    font-weight: bold;
+    margin-bottom: 6rem;
+    @include only_mobile {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    &-min {
+      font-size: var(--font-heading-xl-sm);
+      display: block;
+      @include only_mobile {
+        font-size: unquote("min(1.6rem,7vw)");
+      }
+    }
+    &-blue {
+      position: relative;
+      display: inline-block;
+      font-size: 8rem;
+      letter-spacing: 0.1em;
+      color: var(--color-primary);
+      @include only_mobile {
+        margin-top: 1.5rem;
+      }
+      &::before{
+        content: "リンキー";
+        display: inline-block;
+        font-size: 1.4rem;
+        font-weight: bold;
+        letter-spacing: 0.13em;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        color: var(--color-font);
+        @include min_tablet {
+          font-size: 1.8rem;
+        }
+      }
+      @include only_mobile {
+        font-size: 5rem;
+      }
+      span{
+      &::before {
+        content: "「";
+        color: var(--color-font);
+      }
+      &::after {
+        content: "」";
+        color: var(--color-font);
+      }
+      }
+    }
+  }
+
+  &__contents {
+    display: flex;
+    flex-direction: column;
+    gap: 8rem;
+    @include only_mobile {
+      flex-direction: row-reverse;
+      gap: 1.7rem;
+    }
+  }
+  &__desc {
+    font-size: var(--font-heading-md-sm);
+    @include only_mobile {
+      font-size: 1.5rem;
+    }
+  }
+  &__proof-wrap {
+    position: relative;
+  }
+  &__proof {
+    width: 286px;
+    height: auto;
+    margin-bottom: -1rem;
+    @include only_mobile {
+      width: 97px;
+      height: auto;
+      margin: 0;
+    }
+  }
+  &__small {
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    transform: translateY(100%);
+    width: 100%;
+    line-height: 1.5;
+    color: #8a8d93;
+    font-size: 1.1rem;
+    @include only_mobile {
+      font-size: 8px;
+      padding: 0 $padding_std;
+    }
+
+    @include min_tablet {
+      width: 286px;
+      left: 40px;
+      bottom: -20px;
+    }
+  }
+}
+
+
+.hero {
+  $this: &;
+  position: relative;
+  display: flex;
+  gap: 5.5rem;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 358px;
+
+  @include min_tablet {
+    height: 400px;
+    gap: 7.5rem;
+  }
+  @include min_desktop {
+    height: 500px;
+     gap: 11.5rem;
+  }
+
+  background-size: cover;
+  background-position: center center;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    right: -100px;
+    bottom: 0;
+    transform: translateY(30%);
+    width: 370px;
+    aspect-ratio: 1 / 1.2;
+    background: url(../images/hero_deco.png)center /contain no-repeat;
+
+    @include min_desktop {
+      right: 10px;
+      bottom: 0;
+      width: 640px;
+    }
+  }
+
+  &__title {
+    
+    &-ja {
+      display: block;
+      font-weight: bold;
+      line-height: 1.5;
+      font-size: var(--font-display-md);
+      margin-top: 1.5rem;
+    }
+
+    &-en {
+      display: block;
+      font-size: var(--font-text-base);
+      font-weight: 900;
+      color: var(--color-primary);
+      letter-spacing: .04em;
+    }
+  }
+}
+
+.logo {
+  display: block;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 160px;
+  z-index: 99;
+
+  @include min_tablet {
+    width: 274px;
+  }
+  @include min_desktop {
+    top: 33px;
+    left: 25px;
+    transition: .2s ease-out;
+    &:hover{
+      opacity: .6;
+    }
+  }
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+
+/*********************/
+
+/*  loader  */
+
+/*********************/
+
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--color-white);
+  z-index: 9999;
+
+  &__icon {
+    position: absolute;
+    border-left: 2px solid var(--color-white);
+    border-top: 2px solid var(--color-primary);
+    border-right: 2px solid var(--color-primary);
+    border-bottom: 2px solid var(--color-primary);
+    height: 46px;
+    width: 46px;
+    left: 50%;
+    top: 50%;
+    margin: -23px 0 0 -23px;
+    text-indent: -9999em;
+    font-size: 10px;
+    z-index: 9999;
+    animation: load 0.8s infinite linear;
+  }
+
+  &__icon,
+  &__icon::after {
+    border-radius: 50%;
+    width: 46px;
+    height: 46px;
+  }
+}
+@keyframes load {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

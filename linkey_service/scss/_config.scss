@@ -1,0 +1,95 @@
+$color_theme_gray_dark:#666;
+$color_theme_gray_light:#ddd;
+$color_theme_gray_ultralight:#eee;
+
+$width_tablet: 768px;
+$width_desktop: 1024px;
+
+$padding_std: 24px;
+$padding_wide: 40px;
+
+$grad01: linear-gradient(to right,#2C7AC0,#7364AE,#2C7AC0)0 / 200% 100%;
+$grad02: linear-gradient(to right,#B12D3E,#810515,#B12D3E)0 / 200% 100%;
+
+
+:root {
+  --width-tablet: $width_tablet;
+  --width-desktop: $width_desktop;
+  --width-container: 1440px;
+
+  --color-font: #1D2F3E;
+  --color-primary: #1370A8;
+  --color-red: #B12D3E;
+  --color-white: #ffffff;
+
+  --padding: 2rem;
+  --global-columns: 12;
+
+  --grid-columns-global: [full-start] minmax(var(--padding), auto) [container-start] repeat(var(--global-columns), minmax(calc(36rem / var(--global-columns)), calc(var(--width-container) / var(--global-columns)))) [container-end] minmax(var(--padding), auto) [full-end];
+}
+
+:root {
+--font-display-lg: 50px;
+--font-display-md: 33px;
+--font-heading-xl: 28px;
+--font-heading-xl-sm: 25px;
+--font-heading-lg: 22px;
+--font-heading-lg-sm: 21px;
+--font-heading-md: 19px;
+--font-heading-md-sm: 20px;
+--font-text-base: 16px;
+--font-text-base-sm: 15px;
+--font-text-sm: 15px;
+--font-text-xs: 12px;
+}
+
+@media screen and (min-width: 768px) {
+:root {
+--font-display-lg: 53px;
+--font-display-md: 48px;
+--font-heading-xl: 40px;
+--font-heading-xl-sm: 30px;
+--font-heading-lg: 28px;
+--font-heading-lg-sm: 26px;
+--font-heading-md: 22px;
+--font-heading-md-sm: 22px;
+--font-text-base: 17px;
+--font-text-base-sm: 17px;
+--font-text-sm: 16px;
+--font-text-xs: 12px;
+}
+}
+
+@media screen and (min-width: 1200px) {
+:root {
+--font-display-lg: 55px;
+--font-display-md: 48px;
+--font-heading-xl: 40px;
+--font-heading-xl-sm: 30px;
+--font-heading-lg: 28px;
+--font-heading-lg-sm: 26px;
+--font-heading-md: 22px;
+--font-heading-md-sm: 22px;
+--font-text-base: 17px;
+--font-text-base-sm: 18px;
+--font-text-sm: 16px;
+--font-text-xs: 12px;
+}
+}
+
+@media screen and (min-width: 1600px) {
+:root {
+--font-display-lg: 72px;
+--font-display-md: 58px;
+--font-heading-xl: 55px;
+--font-heading-xl-sm: 40px;
+--font-heading-lg: 36px;
+--font-heading-lg-sm: 32px;
+--font-heading-md: 26px;
+--font-heading-md-sm: 24px;
+--font-text-base: 22px;
+--font-text-base-sm: 20px;
+--font-text-sm: 16px;
+--font-text-xs: 14px;
+}
+}
