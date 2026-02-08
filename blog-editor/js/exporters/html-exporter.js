@@ -205,4 +205,8 @@ class HTMLExporter {
 }
 
 // Export for use in other modules
-window.HTMLExporter = HTMLExporter;
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = HTMLExporter;
+} else if (typeof window !== 'undefined') {
+  window.HTMLExporter = HTMLExporter;
+}

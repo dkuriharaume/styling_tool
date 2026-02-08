@@ -515,4 +515,8 @@ class ListComponent extends HTMLElement {
 customElements.define('list-component', ListComponent);
 
 // Export for use in other modules
-window.ListComponent = ListComponent;
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = ListComponent;
+} else if (typeof window !== 'undefined') {
+  window.ListComponent = ListComponent;
+}

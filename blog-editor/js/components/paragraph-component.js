@@ -88,4 +88,8 @@ class ParagraphComponent extends HTMLElement {
 customElements.define('paragraph-component', ParagraphComponent);
 
 // Export for use in other modules
-window.ParagraphComponent = ParagraphComponent;
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = ParagraphComponent;
+} else if (typeof window !== 'undefined') {
+  window.ParagraphComponent = ParagraphComponent;
+}

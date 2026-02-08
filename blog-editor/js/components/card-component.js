@@ -56,3 +56,10 @@ class CardGridComponent extends HTMLElement {
 }
 
 customElements.define('card-grid', CardGridComponent);
+
+// Export for use in other modules
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = CardGridComponent;
+} else if (typeof window !== 'undefined') {
+  window.CardGridComponent = CardGridComponent;
+}

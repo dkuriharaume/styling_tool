@@ -85,4 +85,8 @@ class HeaderComponent extends HTMLElement {
 customElements.define('header-component', HeaderComponent);
 
 // Export for use in other modules
-window.HeaderComponent = HeaderComponent;
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = HeaderComponent;
+} else if (typeof window !== 'undefined') {
+  window.HeaderComponent = HeaderComponent;
+}

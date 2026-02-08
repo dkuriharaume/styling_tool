@@ -81,6 +81,70 @@ A browser-based WYSIWYG blog post editor that enables non-technical team members
 
 ---
 
+## Refactor Status (Current Implementation)
+
+The codebase has been modularized to reduce risk during ongoing refactors. The following architectural changes are now in place:
+
+- **Module-based JS** (no build step): shared modules attach to `window.BLOG_EDITOR_MODULES`.
+- **Constants & utilities** extracted to dedicated files for reuse and testability.
+- **Editor subsystems** split into modules (palette, editor, properties, UI, drafts, events, selection).
+- **Component registry**: components are registered via `js/components/registry.js`, and the editor uses registry lookups to create defaults and elements.
+- **Formatting toolbar** refactored into a module with a thin entrypoint wrapper.
+- **HTML exporter** supports CommonJS export for unit testing.
+- **App init** moved to `js/init.js` to avoid side effects in `app.js`.
+
+### Updated File Structure (Refactor Snapshot)
+
+```
+blog-editor/
+├── index.html
+├── js/
+│   ├── app.js
+│   ├── init.js
+│   ├── constants.js
+│   ├── utils.js
+│   ├── i18n.js
+│   ├── dialogs.js
+│   ├── formatting-toolbar.js
+│   ├── exporters/
+│   │   └── html-exporter.js
+│   ├── components/
+│   │   ├── header-component.js
+│   │   ├── paragraph-component.js
+│   │   ├── list-component.js
+│   │   ├── card-component.js
+│   │   └── registry.js
+│   └── modules/
+│       ├── palette.js
+│       ├── components.js
+│       ├── exporters.js
+│       ├── editor.js
+│       ├── properties.js
+│       ├── ui.js
+│       ├── drafts.js
+│       ├── events.js
+│       ├── selection.js
+│       └── toolbar.js
+└── __tests__/
+  ├── state.test.js
+  ├── modules.test.js
+  ├── html-exporter.test.js
+  └── components.test.js
+```
+
+---
+
+## Design Policy: Mandatory Pre-Change Review
+
+**All contributors (including AI agents) must read this document before adding new functionality or making substantial modifications.**
+
+Rationale:
+- Ensure changes remain aligned with the LINKEY editor goals and constraints.
+- Preserve the modular structure and avoid regressions.
+- Keep outputs compatible with the existing WordPress theme and the M2O workflow.
+
+---
+
 ## Component Inventory
 
 ### Components from M2O Converter
