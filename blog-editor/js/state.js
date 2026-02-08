@@ -14,7 +14,9 @@ class EditorState {
     // Event listeners
     this.listeners = {
       change: [],
-      select: []
+      select: [],
+      save: [],
+      saving: []
     };
     
     // Initialize with saved state if available
@@ -182,42 +184,175 @@ class EditorState {
   }
   
   /**
-   * Save to localStorage
+   * Save to localStorage (overwrite current draft or create new)
    */
-  save() {
+  save(draftName = null, forceNew = false) {
+    const name = draftName || this.title || 'Untitled Draft';
+    const timestamp = Date.now();
+    
+    // If we have a current draft and not forcing new, update it
+    const id = (this.currentDraftId && !forceNew) ? this.currentDraftId : `draft-${timestamp}`;
+    
     const data = {
+      id,
+      name,
       title: this.title,
       blocks: this.blocks,
-      timestamp: Date.now()
+      timestamp: this.currentDraftTimestamp || timestamp,
+      updatedAt: timestamp
     };
-    localStorage.setItem('linkey-blog-editor-draft', JSON.stringify(data));
+    
+    // Save the draft
+    localStorage.setItem(`linkey-draft-${id}`, JSON.stringify(data));
+    
+    // Update drafts list
+    const draftsList = this.getDraftsList();
+    const existingIndex = draftsList.findIndex(d => d.id === id);
+    
+    if (existingIndex !== -1) {
+      // Update existing entry
+      draftsList[existingIndex].name = name;
+      draftsList[existingIndex].updatedAt = timestamp;
+    } else {
+      // Add new entry
+      draftsList.unshift({ id, name, timestamp, updatedAt: timestamp });
+    }
+    
+    localStorage.setItem('linkey-drafts-list', JSON.stringify(draftsList));
+    
+    // Set as current draft
+    this.currentDraftId = id;
+    this.currentDraftTimestamp = data.timestamp;
+    localStorage.setItem('linkey-current-draft-id', id);
+    
+    return id;
   }
   
   /**
-   * Auto-save with debounce
+   * Save as new draft (always creates new)
+   */
+  saveAs(draftName) {
+    const result = this.save(draftName, true);
+    // Emit save event
+    this.emit('save');
+    return result;
+  }
+  
+  /**
+   * Auto-save with debounce (updates existing draft)
    */
   autoSave() {
     clearTimeout(this.autoSaveTimer);
+    
+    // Emit saving event immediately
+    this.emit('saving');
+    
     this.autoSaveTimer = setTimeout(() => {
-      this.save();
+      if (this.currentDraftId) {
+        // Update existing draft
+        const data = {
+          id: this.currentDraftId,
+          name: this.title || 'Untitled Draft',
+          title: this.title,
+          blocks: this.blocks,
+          timestamp: this.currentDraftTimestamp || Date.now(),
+          updatedAt: Date.now()
+        };
+        
+        localStorage.setItem(`linkey-draft-${this.currentDraftId}`, JSON.stringify(data));
+        
+        // Update in list
+        const draftsList = this.getDraftsList();
+        const index = draftsList.findIndex(d => d.id === this.currentDraftId);
+        if (index !== -1) {
+          draftsList[index].name = data.name;
+          draftsList[index].updatedAt = data.updatedAt;
+          localStorage.setItem('linkey-drafts-list', JSON.stringify(draftsList));
+        }
+        
+        // Emit save event
+        this.emit('save');
+      } else {
+        // Create new draft
+        this.save();
+        // Emit save event
+        this.emit('save');
+      }
     }, 1000);
   }
   
   /**
    * Load from localStorage
    */
-  load() {
+  load(draftId = null) {
     try {
-      const data = localStorage.getItem('linkey-blog-editor-draft');
-      if (data) {
-        const parsed = JSON.parse(data);
-        this.title = parsed.title || '';
-        this.blocks = parsed.blocks || [];
-        this.saveHistory(); // Initialize history
+      // If no draftId specified, load the last opened draft
+      const id = draftId || localStorage.getItem('linkey-current-draft-id');
+      
+      if (id) {
+        const data = localStorage.getItem(`linkey-draft-${id}`);
+        if (data) {
+          const parsed = JSON.parse(data);
+          this.title = parsed.title || '';
+          this.blocks = parsed.blocks || [];
+          this.currentDraftId = parsed.id;
+          this.currentDraftTimestamp = parsed.timestamp;
+          this.saveHistory(); // Initialize history
+          this.emit('change'); // Trigger render
+          return true;
+        }
       }
     } catch (e) {
       console.error('Failed to load saved state:', e);
     }
+    return false;
+  }
+  
+  /**
+   * Get list of all drafts
+   */
+  getDraftsList() {
+    try {
+      const list = localStorage.getItem('linkey-drafts-list');
+      return list ? JSON.parse(list) : [];
+    } catch (e) {
+      return [];
+    }
+  }
+  
+  /**
+   * Delete a draft
+   */
+  deleteDraft(draftId) {
+    // Remove from storage
+    localStorage.removeItem(`linkey-draft-${draftId}`);
+    
+    // Remove from list
+    const draftsList = this.getDraftsList();
+    const filtered = draftsList.filter(d => d.id !== draftId);
+    localStorage.setItem('linkey-drafts-list', JSON.stringify(filtered));
+    
+    // If deleting current draft, clear it
+    if (this.currentDraftId === draftId) {
+      this.currentDraftId = null;
+      this.currentDraftTimestamp = null;
+      localStorage.removeItem('linkey-current-draft-id');
+    }
+  }
+  
+  /**
+   * Create new draft
+   */
+  newDraft() {
+    this.title = '';
+    this.blocks = [];
+    this.selectedBlockId = null;
+    this.history = [];
+    this.historyIndex = -1;
+    this.currentDraftId = null;
+    this.currentDraftTimestamp = null;
+    localStorage.removeItem('linkey-current-draft-id');
+    this.emit('change');
   }
   
   /**

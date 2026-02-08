@@ -38,9 +38,9 @@ class HeaderComponent extends HTMLElement {
       this.handleContentChange(e.target.textContent);
     });
     
-    // Handle Enter key (prevent new line)
+    // Handle Enter key (prevent new line, but allow IME composition)
     header.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
+      if (e.key === 'Enter' && !e.isComposing) {
         e.preventDefault();
         e.target.blur();
       }

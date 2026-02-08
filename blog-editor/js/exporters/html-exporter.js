@@ -30,6 +30,8 @@ class HTMLExporter {
         return this.convertHeader(block);
       case 'paragraph':
         return this.convertParagraph(block);
+      case 'list':
+        return this.convertList(block);
       default:
         return '';
     }
@@ -40,8 +42,11 @@ class HTMLExporter {
    */
   convertHeader(block) {
     const level = block.level || 2;
-    const content = block.content || '';
+    let content = block.content || '';
     const classes = this.getHeaderClasses(level, block.preset);
+    
+    // Clean up unwanted spans and divs
+    content = this.cleanupHTML(content);
     
     return `<h${level} class="${classes}">${content}</h${level}>\n`;
   }
@@ -73,8 +78,11 @@ class HTMLExporter {
    * Convert paragraph block
    */
   convertParagraph(block) {
-    const content = block.content || '';
+    let content = block.content || '';
     const variant = block.variant || 'normal';
+    
+    // Clean up unwanted spans and divs from contentEditable
+    content = this.cleanupHTML(content);
     
     // Build class attribute
     let classes = '';
@@ -85,6 +93,84 @@ class HTMLExporter {
     }
     
     return `<p${classes}>${content}</p>\n`;
+  }
+  
+  /**
+   * Clean up HTML by removing unwanted spans and normalizing formatting
+   */
+  cleanupHTML(html) {
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+    
+    // Remove all span elements but keep their content
+    const spans = temp.querySelectorAll('span');
+    spans.forEach(span => {
+      const parent = span.parentNode;
+      while (span.firstChild) {
+        parent.insertBefore(span.firstChild, span);
+      }
+      parent.removeChild(span);
+    });
+    
+    // Remove div elements but keep their content
+    const divs = temp.querySelectorAll('div');
+    divs.forEach(div => {
+      const parent = div.parentNode;
+      while (div.firstChild) {
+        parent.insertBefore(div.firstChild, div);
+      }
+      parent.removeChild(div);
+    });
+    
+    // Normalize whitespace
+    return temp.innerHTML.trim();
+  }
+  
+  /**
+   * Convert list block
+   */
+  convertList(block) {
+    const listType = block.listType || 'ul';
+    const items = block.items || [];
+    let html = '';
+    
+    if (listType === 'ul') {
+      html += '<ul class="ul">\n';
+      items.forEach(item => {
+        const cleanContent = this.cleanupHTML(item.content || '');
+        html += `  <li>${cleanContent}</li>\n`;
+      });
+      html += '</ul>\n';
+    } else if (listType === 'ol') {
+      html += '<ol class="ol ol--mt">\n';
+      items.forEach(item => {
+        const cleanContent = this.cleanupHTML(item.content || '');
+        html += `  <li>${cleanContent}</li>\n`;
+      });
+      html += '</ol>\n';
+    } else if (listType === 'ol-title') {
+      html += '<ol class="ol ol--title ol--mt">\n';
+      items.forEach(item => {
+        const cleanTitle = this.cleanupHTML(item.title || '');
+        const cleanContent = this.cleanupHTML(item.content || '');
+        html += '  <li>\n';
+        html += `    <h4 class="h4 ol__title">${cleanTitle}</h4>\n`;
+        html += `    <p>${cleanContent}</p>\n`;
+        html += '  </li>\n';
+      });
+      html += '</ol>\n';
+    } else if (listType === 'dl') {
+      html += '<dl class="wide-dl">\n';
+      items.forEach(item => {
+        const cleanTerm = this.cleanupHTML(item.term || '');
+        const cleanDef = this.cleanupHTML(item.definition || '');
+        html += `  <dt>${cleanTerm}</dt>\n`;
+        html += `  <dd>${cleanDef}</dd>\n`;
+      });
+      html += '</dl>\n';
+    }
+    
+    return html;
   }
   
   /**

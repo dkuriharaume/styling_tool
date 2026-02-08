@@ -221,6 +221,175 @@ p.small {
   line-height: 1.8;
 }
 
+/* === LISTS === */
+
+.ul {
+  list-style: none;
+  display: grid;
+  gap: 1rem;
+}
+
+.ul li {
+  position: relative;
+  padding-left: 2rem;
+  font-size: 1.5rem;
+  line-height: 1.86;
+}
+
+@media screen and (min-width: 1024px) {
+  .ul li {
+    font-size: 1.6rem;
+  }
+}
+
+.ul li::before {
+  position: absolute;
+  top: 0.5lh;
+  left: 0;
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #D7D9DD;
+  transform: translateY(-50%);
+}
+
+.ol {
+  counter-reset: number 0;
+  list-style: none;
+}
+
+.ol li {
+  counter-increment: number 1;
+  padding-left: 3.5rem;
+  position: relative;
+  font-size: 1.5rem;
+  line-height: 1.86;
+}
+
+@media screen and (min-width: 1024px) {
+  .ol li {
+    font-size: 1.6rem;
+  }
+}
+
+.ol li::before {
+  content: counter(number, decimal-leading-zero) " ";
+  font-size: 2.4rem;
+  color: var(--color-primary);
+  font-weight: bold;
+  line-height: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+@media screen and (max-width: 767px) {
+  .ol li::before {
+    font-size: 2rem;
+  }
+}
+
+.ol li + li {
+  margin-top: 2.6rem;
+}
+
+@media screen and (max-width: 767px) {
+  .ol li + li {
+    margin-top: 1.3rem;
+  }
+}
+
+.ol li .h4 + p {
+  margin-top: 0 !important;
+}
+
+.ol__title {
+  padding-left: 3.5rem;
+  position: relative;
+}
+
+@media screen and (min-width: 768px) {
+  .ol__title {
+    padding-left: 5rem;
+  }
+}
+
+.ol__title::before {
+  content: counter(number, decimal-leading-zero) " ";
+  font-size: 3.3rem;
+  color: var(--color-primary);
+  font-weight: bold;
+  line-height: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+@media screen and (max-width: 767px) {
+  .ol__title::before {
+    font-size: 2.4rem;
+    top: 3px;
+  }
+}
+
+.ol--title li {
+  padding: 0;
+}
+
+.ol--title li::before {
+  display: none;
+}
+
+.ol--title li + li {
+  margin-top: 4.4rem;
+}
+
+@media screen and (max-width: 767px) {
+  .ol--title li + li {
+    margin-top: 1.5rem;
+  }
+}
+
+.ol--mt {
+  margin-top: 6rem;
+}
+
+/* Dictionary List */
+.wide-dl {
+  display: grid;
+  margin-top: 5rem;
+}
+
+@media screen and (min-width: 1024px) {
+  .wide-dl {
+    grid-template-columns: 20% 80%;
+  }
+}
+
+.wide-dl dt,
+.wide-dl dd {
+  font-size: 1.6rem;
+  border-top: 1px solid #D7D9DD;
+  padding-block: 2.2rem;
+}
+
+@media screen and (min-width: 1024px) {
+  .wide-dl dt,
+  .wide-dl dd {
+    padding-block: 3.4rem;
+  }
+  .wide-dl dt:last-of-type,
+  .wide-dl dd:last-of-type {
+    border-bottom: 1px solid #D7D9DD;
+  }
+}
+
+.wide-dl dt {
+  font-weight: bold;
+}
+
 /* === Base Styling === */
 
 body {
