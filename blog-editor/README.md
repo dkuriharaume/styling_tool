@@ -42,7 +42,20 @@ Your work is automatically saved to browser localStorage every second. Close and
 4. Click "Copy M2O"
 5. Paste the result into your m2h_om_style converter to verify
 
-### 📋 Coming Soon (Phase 2+)
+### �️ Safety & Checkpoints
+
+To avoid regressions during refactors, use the tiny checkpoints in `CHECKPOINTS.md` and the safety lock.
+
+- `SAFETY_LOCK.json` is a manual lock. Keep `allowChanges` set to `false` until the CP-0 checkpoint is done.
+- `tools/safeguard-check.sh` enforces the lock before making edits.
+
+Run the safeguard check:
+
+```bash
+bash tools/safeguard-check.sh
+```
+
+### �📋 Coming Soon (Phase 2+)
 - Paragraph component with text formatting
 - Lists (UL, OL, Dictionary)
 - Cards (2-col, 3-col)

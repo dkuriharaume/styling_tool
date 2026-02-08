@@ -2,6 +2,93 @@
  * LINKEY Blog Editor - Main Application
  */
 
+const VIEWPORT_CONFIG = {
+  desktop: { label: 'Desktop 4K - 3840px' },
+  laptop: { label: 'Laptop Full HD - 1920px' },
+  tablet: { label: 'Tablet - 1024px' },
+  mobile: { label: 'Mobile - 414px' }
+};
+
+const VIEWPORTS = Object.keys(VIEWPORT_CONFIG);
+
+const STORAGE_KEYS = {
+  language: 'linkey-lang',
+  viewport: 'linkey-editor-viewport',
+  scrollPosition: 'blog-editor-scroll-position'
+};
+
+const COMPONENT_DEFS = [
+  // Headers
+  { type: 'header', level: 2, key: 'h2' },
+  { type: 'header', level: 3, key: 'h3' },
+  { type: 'header', level: 4, key: 'h4' },
+  // Paragraphs
+  { type: 'paragraph', variant: 'normal', key: 'p' },
+  { type: 'paragraph', variant: 'small', key: 'p-small' },
+  { type: 'paragraph', variant: 'small-gray', key: 'p-small-gray' },
+  // Lists
+  { type: 'list', listType: 'ul', key: 'ul' },
+  { type: 'list', listType: 'ol', key: 'ol' },
+  { type: 'list', listType: 'ol-title', key: 'ol-title' },
+  { type: 'list', listType: 'dl', key: 'dl' },
+  // Future components (cards, buttons, boxes, images)
+  { type: 'card', subtype: '2-col', key: 'card-2col' },
+  { type: 'card', subtype: '3-col', key: 'card-3col' },
+  { type: 'button', subtype: 'regular', key: 'button' },
+  { type: 'button', subtype: 'large', key: 'button-large' },
+  { type: 'box', subtype: 'basic', key: 'box-basic' },
+  { type: 'box', subtype: 'shadow', key: 'box-shadow' },
+  { type: 'box', subtype: 'summary', key: 'box-summary' },
+  { type: 'box', subtype: 'qa', key: 'box-qa' },
+  { type: 'image', key: 'image' }
+];
+
+const MARGIN_CONFIG = {
+  header: {
+    top: {
+      2: { mobile: 30, desktop: 50 },
+      3: { mobile: 0, desktop: 50 },
+      4: { mobile: 30, desktop: 30 }
+    },
+    bottom: {
+      2: { mobile: 20, desktop: 30 },
+      3: { mobile: 30, desktop: 40 },
+      4: { mobile: 20, desktop: 20 }
+    }
+  },
+  paragraph: {
+    top: { default: 10 },
+    bottom: { default: 0 }
+  },
+  list: {
+    top: { ul: 0, ol: 60, 'ol-title': 60, dl: 50 },
+    bottom: { default: 0 }
+  },
+  card: {
+    top: { mobile: 30, desktop: 50 },
+    bottom: { mobile: 20, desktop: 40 }
+  },
+  button: {
+    top: { mobile: 20, desktop: 30 },
+    bottom: { default: 0 }
+  },
+  box: {
+    top: { mobile: 30, desktop: 40 },
+    bottom: { mobile: 20, desktop: 30 }
+  },
+  image: {
+    top: { mobile: 20, desktop: 30 },
+    bottom: { mobile: 15, desktop: 20 }
+  }
+};
+
+const resolveMarginValue = (values, isMobile) => {
+  if (!values) return 0;
+  if (typeof values === 'number') return values;
+  if (isMobile) return values.mobile ?? values.desktop ?? values.default ?? 0;
+  return values.desktop ?? values.mobile ?? values.default ?? 0;
+};
+
 class BlogEditorApp {
   constructor() {
     this.state = new EditorState();
@@ -13,11 +100,11 @@ class BlogEditorApp {
     this.isDragging = false;
     this.statusTimer = null;
     this.isInDraftsBrowser = false; // Track if user is browsing drafts
-    this.currentLang = localStorage.getItem('linkey-lang') || 'en';
-    
+    this.currentLang = localStorage.getItem(STORAGE_KEYS.language) || 'en';
+
     // Pre-calculate margin collapse lookup table for all combinations
     this.marginLookup = this.buildMarginLookupTable();
-    
+
     // i18n translations
     this.translations = {
       en: {
@@ -109,7 +196,7 @@ class BlogEditorApp {
         }
       }
     };
-    
+
     this.init();
   }
   
@@ -155,7 +242,7 @@ class BlogEditorApp {
    * Setup scroll position persistence
    */
   setupScrollPersistence() {
-    const editorCanvas = document.querySelector('.editor-canvas');
+    const editorCanvas = this.getEditorCanvas();
     if (!editorCanvas) return;
     
     // Save scroll position periodically
@@ -177,9 +264,9 @@ class BlogEditorApp {
    * Save current scroll position
    */
   saveScrollPosition() {
-    const editorCanvas = document.querySelector('.editor-canvas');
+    const editorCanvas = this.getEditorCanvas();
     if (editorCanvas) {
-      localStorage.setItem('blog-editor-scroll-position', editorCanvas.scrollTop);
+      localStorage.setItem(STORAGE_KEYS.scrollPosition, editorCanvas.scrollTop);
     }
   }
   
@@ -187,8 +274,8 @@ class BlogEditorApp {
    * Restore saved scroll position
    */
   restoreScrollPosition() {
-    const editorCanvas = document.querySelector('.editor-canvas');
-    const savedPosition = localStorage.getItem('blog-editor-scroll-position');
+    const editorCanvas = this.getEditorCanvas();
+    const savedPosition = localStorage.getItem(STORAGE_KEYS.scrollPosition);
     
     if (editorCanvas && savedPosition !== null) {
       // Use requestAnimationFrame to ensure DOM is ready
@@ -197,12 +284,19 @@ class BlogEditorApp {
       });
     }
   }
+
+  /**
+   * Get editor canvas element
+   */
+  getEditorCanvas() {
+    return this.getElementBySelector('.editor-canvas');
+  }
   
   /**
    * Setup component palette
    */
   setupPalette() {
-    const paletteItems = document.querySelectorAll('.component-item');
+    const paletteItems = this.getElementsBySelector('.component-item');
     
     paletteItems.forEach(item => {
       item.addEventListener('dragstart', (e) => {
@@ -217,13 +311,13 @@ class BlogEditorApp {
         e.dataTransfer.setData('text/plain', ''); // Required for Firefox
         
         // Add visual feedback
-        document.body.classList.add('dragging');
+        this.getBody().classList.add('dragging');
       });
       
       item.addEventListener('dragend', () => {
         this.isDragging = false;
         this.draggedComponent = null;
-        document.body.classList.remove('dragging');
+        this.getBody().classList.remove('dragging');
         this.clearDropZones();
         this.render(); // Re-render after drag ends
       });
@@ -234,15 +328,21 @@ class BlogEditorApp {
    * Setup editor canvas
    */
   setupCanvas() {
-    const canvas = document.getElementById('canvas-blocks');
-    const canvasWrapper = document.querySelector('.canvas-wrapper');
-    const editorCanvas = document.querySelector('.editor-canvas');
+    const canvas = this.getCanvasBlocks();
+    const canvasWrapper = this.getCanvasWrapper();
+    const editorCanvas = this.getEditorCanvas();
     
     // Auto-scroll configuration
     let autoScrollInterval = null;
+    const clearAutoScroll = () => {
+      if (autoScrollInterval) {
+        clearInterval(autoScrollInterval);
+        autoScrollInterval = null;
+      }
+    };
     
     // Setup title input
-    const titleInput = document.getElementById('canvas-title-input');
+    const titleInput = this.getCanvasTitleInput();
     titleInput.value = this.state.title;
     titleInput.addEventListener('input', (e) => {
       this.state.setTitle(e.target.value);
@@ -251,11 +351,7 @@ class BlogEditorApp {
     // Global dragover prevention to keep drag alive
     document.addEventListener('dragover', (e) => {
       e.preventDefault();
-      if (this.isDragging) {
-        e.dataTransfer.dropEffect = 'move';
-      } else {
-        e.dataTransfer.dropEffect = 'copy';
-      }
+      this.setDropEffect(e);
     });
     
     // Drag over editor canvas - implement continuous auto-scroll based on mouse position
@@ -263,17 +359,10 @@ class BlogEditorApp {
     const scrollTarget = editorCanvas || canvasWrapper;
     scrollTarget.addEventListener('dragover', (e) => {
       e.preventDefault();
-      if (this.isDragging) {
-        e.dataTransfer.dropEffect = 'move';
-      } else {
-        e.dataTransfer.dropEffect = 'copy';
-      }
+      this.setDropEffect(e);
       
       // Clear existing interval
-      if (autoScrollInterval) {
-        clearInterval(autoScrollInterval);
-        autoScrollInterval = null;
-      }
+      clearAutoScroll();
       
       // Get viewport bounds (the scrollable area)
       const rect = scrollTarget.getBoundingClientRect();
@@ -301,8 +390,7 @@ class BlogEditorApp {
           const scrollAmount = Math.max(1, speed);
           scrollTarget.scrollTop -= scrollAmount;
           if (scrollTarget.scrollTop <= 0) {
-            clearInterval(autoScrollInterval);
-            autoScrollInterval = null;
+            clearAutoScroll();
           }
         }, 16); // ~60fps
       } else if (offsetFromCenter > 0) {
@@ -314,8 +402,7 @@ class BlogEditorApp {
             scrollTarget.scrollTop += scrollAmount;
             const currentMaxScroll = scrollTarget.scrollHeight - scrollTarget.clientHeight;
             if (scrollTarget.scrollTop >= currentMaxScroll) {
-              clearInterval(autoScrollInterval);
-              autoScrollInterval = null;
+              clearAutoScroll();
             }
           }, 16); // ~60fps
         }
@@ -324,10 +411,7 @@ class BlogEditorApp {
     
     // Stop auto-scroll on drag leave
     canvas.addEventListener('dragleave', () => {
-      if (autoScrollInterval) {
-        clearInterval(autoScrollInterval);
-        autoScrollInterval = null;
-      }
+      clearAutoScroll();
     });
     
     // Stop auto-scroll on drop
@@ -335,10 +419,7 @@ class BlogEditorApp {
       e.preventDefault();
       
       // Clear auto-scroll
-      if (autoScrollInterval) {
-        clearInterval(autoScrollInterval);
-        autoScrollInterval = null;
-      }
+      clearAutoScroll();
       
       // If dropping on empty canvas, add at the end
       if (this.state.blocks.length === 0) {
@@ -347,11 +428,8 @@ class BlogEditorApp {
     });
     
     // Stop auto-scroll on drag end (via palette)
-    document.body.addEventListener('dragend', () => {
-      if (autoScrollInterval) {
-        clearInterval(autoScrollInterval);
-        autoScrollInterval = null;
-      }
+    this.getBody().addEventListener('dragend', () => {
+      clearAutoScroll();
     });
   }
   
@@ -367,7 +445,7 @@ class BlogEditorApp {
    */
   setupHeader() {
     // New button
-    document.getElementById('btn-new').addEventListener('click', async () => {
+    this.bindHeaderButton('btn-new', async () => {
       const title = await this.showPrompt('Create New Draft', 'Enter a title for your new draft:', 'Untitled Draft');
       if (title) {
         this.state.newDraft();
@@ -377,72 +455,126 @@ class BlogEditorApp {
     });
     
     // Open button
-    document.getElementById('btn-open').addEventListener('click', () => {
+    this.bindHeaderButton('btn-open', () => {
       this.showDraftsBrowser();
     });
     
     // Save As button (create new draft with custom name)
-    document.getElementById('btn-save-as').addEventListener('click', () => {
+    this.bindHeaderButton('btn-save-as', () => {
       this.saveAsNewDraft();
     });
     
     // Export HTML button (in header)
-    document.getElementById('btn-export-html-header').addEventListener('click', async (e) => {
+    this.bindHeaderButton('btn-export-html-header', async (e) => {
       const button = e.currentTarget;
-      const icon = button.querySelector('.file-btn-icon');
-      const label = button.querySelector('.file-btn-label');
-      const originalIcon = icon.textContent;
-      const originalLabel = label.textContent;
+      const parts = this.getExportButtonParts(button);
       
       // Show loading state
-      button.style.pointerEvents = 'none';
-      icon.textContent = '⏳';
-      label.textContent = 'Copying...';
+      this.setExportButtonLoading(button, parts);
       
       const success = await this.htmlExporter.copyToClipboard();
       
       if (success) {
         // Show success state
-        button.classList.add('export-success');
-        icon.textContent = '✓';
-        label.textContent = 'Copied to clipboard!';
+        this.setExportButtonSuccess(button, parts);
         // Don't show status message - button feedback is enough
         
         // Reset after 2 seconds
         setTimeout(() => {
-          button.classList.remove('export-success');
-          icon.textContent = originalIcon;
-          label.textContent = originalLabel;
-          button.style.pointerEvents = '';
+          this.resetExportButton(button, parts, 'export-success');
         }, 2000);
       } else {
         // Show error state
-        button.classList.add('export-error');
-        icon.textContent = '✗';
-        label.textContent = 'Failed to copy';
+        this.setExportButtonError(button, parts);
         this.showToast('Failed to copy to clipboard', 'error');
         
         // Reset after 2 seconds
         setTimeout(() => {
-          button.classList.remove('export-error');
-          icon.textContent = originalIcon;
-          label.textContent = originalLabel;
-          button.style.pointerEvents = '';
+          this.resetExportButton(button, parts, 'export-error');
         }, 2000);
       }
     });
     
     // Modal close button
-    document.getElementById('modal-close').addEventListener('click', () => {
+    this.bindHeaderButton('modal-close', () => {
       this.closeDraftsModal();
     });
     
     // Close modal on background click
-    document.getElementById('drafts-modal').addEventListener('click', (e) => {
+    this.bindHeaderModal((e) => {
       if (e.target.id === 'drafts-modal') {
         this.closeDraftsModal();
       }
     });
+  }
+
+  /**
+   * Bind a click handler to a header button by id
+   */
+  bindHeaderButton(id, handler) {
+    const button = this.getHeaderButton(id);
+    if (!button) return;
+    button.addEventListener('click', handler);
+  }
+
+  /**
+   * Bind a click handler to the drafts modal
+   */
+  bindHeaderModal(handler) {
+    const modal = this.getDraftsModal();
+    if (!modal) return;
+    modal.addEventListener('click', handler);
+  }
+
+  /**
+   * Get export button parts and original text
+   */
+  getExportButtonParts(button) {
+    const icon = button.querySelector('.file-btn-icon');
+    const label = button.querySelector('.file-btn-label');
+    return {
+      icon,
+      label,
+      originalIcon: icon?.textContent || '',
+      originalLabel: label?.textContent || ''
+    };
+  }
+
+  /**
+   * Set export button loading state
+   */
+  setExportButtonLoading(button, parts) {
+    button.style.pointerEvents = 'none';
+    if (parts.icon) parts.icon.textContent = '⏳';
+    if (parts.label) parts.label.textContent = 'Copying...';
+  }
+
+  /**
+   * Set export button success state
+   */
+  setExportButtonSuccess(button, parts) {
+    button.classList.add('export-success');
+    if (parts.icon) parts.icon.textContent = '✓';
+    if (parts.label) parts.label.textContent = 'Copied to clipboard!';
+  }
+
+  /**
+   * Set export button error state
+   */
+  setExportButtonError(button, parts) {
+    button.classList.add('export-error');
+    if (parts.icon) parts.icon.textContent = '✗';
+    if (parts.label) parts.label.textContent = 'Failed to copy';
+  }
+
+  /**
+   * Reset export button state
+   */
+  resetExportButton(button, parts, className) {
+    button.classList.remove(className);
+    if (parts.icon) parts.icon.textContent = parts.originalIcon;
+    if (parts.label) parts.label.textContent = parts.originalLabel;
+    button.style.pointerEvents = '';
   }
   
   /**
@@ -452,9 +584,7 @@ class BlogEditorApp {
    * Show message in status bar
    */
   showStatus(message, type = 'info', duration = 3000) {
-    const statusMessage = document.getElementById('status-message');
-    const statusIcon = document.getElementById('status-icon');
-    const statusText = document.getElementById('status-text');
+    const { statusMessage, statusIcon, statusText } = this.getStatusElements();
     
     if (!statusMessage || !statusIcon || !statusText) return;
     
@@ -483,44 +613,56 @@ class BlogEditorApp {
    * Show toast notification (legacy - now redirects to status bar)
    */
   showToast(message, type = 'info') {
-    this.showStatus(message, type, 3000);
+    this.showStatusWithDefaults(message, type, 3000);
   }
   
   /**
    * Show save indicator briefly
    */
   showSaveIndicator() {
-    // Show in status bar instead
-    this.showStatus('Saved', 'success', 2000);
+    this.showStatusWithDefaults('Saved', 'success', 2000);
+  }
+
+  /**
+   * Show status message with default duration
+   */
+  showStatusWithDefaults(message, type = 'info', duration = 3000) {
+    this.showStatus(message, type, duration);
+  }
+
+  /**
+   * Get status bar elements
+   */
+  getStatusElements() {
+    return {
+      statusMessage: this.getElement('status-message'),
+      statusIcon: this.getElement('status-icon'),
+      statusText: this.getElement('status-text')
+    };
   }
   
   /**
    * Setup viewport toggle
    */
   setupViewportToggle() {
-    const viewportButtons = document.querySelectorAll('.viewport-btn');
+    const viewportButtons = this.getElementsBySelector('.viewport-btn');
     
     // Load saved viewport preference
-    const savedViewport = localStorage.getItem('linkey-editor-viewport');
+    const savedViewport = localStorage.getItem(STORAGE_KEYS.viewport);
     if (savedViewport) {
       this.currentViewport = savedViewport;
-      // Update button active state
-      viewportButtons.forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.viewport === savedViewport);
-      });
+      this.updateActiveButtons(viewportButtons, btn => btn.dataset.viewport === savedViewport);
     }
     
     viewportButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        // Update active state
-        viewportButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+        this.updateActiveButtons(viewportButtons, button => button === btn);
         
         // Update viewport
         this.currentViewport = btn.dataset.viewport;
         
         // Save viewport preference
-        localStorage.setItem('linkey-editor-viewport', this.currentViewport);
+        localStorage.setItem(STORAGE_KEYS.viewport, this.currentViewport);
         
         this.applyViewport();
       });
@@ -531,24 +673,20 @@ class BlogEditorApp {
    * Setup language toggle
    */
   setupLanguageToggle() {
-    const langButtons = document.querySelectorAll('.lang-btn');
+    const langButtons = this.getElementsBySelector('.lang-btn');
     
     // Set active button based on current language
-    langButtons.forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.lang === this.currentLang);
-    });
+    this.updateActiveButtons(langButtons, btn => btn.dataset.lang === this.currentLang);
     
     langButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        // Update active state
-        langButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+        this.updateActiveButtons(langButtons, button => button === btn);
         
         // Update language
         this.currentLang = btn.dataset.lang;
         
-        // Save language preference
-        localStorage.setItem('linkey-lang', this.currentLang);
+    // Save language preference
+    localStorage.setItem(STORAGE_KEYS.language, this.currentLang);
         
         // Apply language to UI
         this.applyLanguage();
@@ -567,13 +705,22 @@ class BlogEditorApp {
     }
     return value || key;
   }
+
+  /**
+   * Update active class on a button group
+   */
+  updateActiveButtons(buttons, isActive) {
+    buttons.forEach(btn => {
+      btn.classList.toggle('active', isActive(btn));
+    });
+  }
   
   /**
    * Apply language to UI
    */
   applyLanguage() {
     // Update all elements with data-i18n attribute
-    document.querySelectorAll('[data-i18n]').forEach(el => {
+    this.getElementsBySelector('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       el.textContent = this.t(key);
     });
@@ -588,24 +735,257 @@ class BlogEditorApp {
    * Apply viewport size to canvas
    */
   applyViewport() {
-    const canvasWrapper = document.querySelector('.canvas-wrapper');
-    const viewportInfo = document.getElementById('viewport-info');
+    const canvasWrapper = this.getCanvasWrapper();
+    const viewportInfo = this.getViewportInfo();
     
     // Remove all viewport classes
-    canvasWrapper.classList.remove('viewport-desktop', 'viewport-laptop', 'viewport-tablet', 'viewport-mobile');
+    VIEWPORTS.forEach(viewport => {
+      canvasWrapper.classList.remove(`viewport-${viewport}`);
+    });
     
     // Add current viewport class
     canvasWrapper.classList.add(`viewport-${this.currentViewport}`);
     
     // Update info text
-    const viewportSizes = {
-      desktop: 'Desktop 4K - 3840px',
-      laptop: 'Laptop Full HD - 1920px',
-      tablet: 'Tablet - 1024px',
-      mobile: 'Mobile - 414px'
+    viewportInfo.textContent = this.getViewportLabel(this.currentViewport);
+  }
+
+  /**
+   * Get canvas wrapper element
+   */
+  getCanvasWrapper() {
+    return this.getElementBySelector('.canvas-wrapper');
+  }
+
+  /**
+   * Get canvas blocks container
+   */
+  getCanvasBlocks() {
+    return this.getElement('canvas-blocks');
+  }
+
+  /**
+   * Get canvas title input
+   */
+  getCanvasTitleInput() {
+    return this.getElement('canvas-title-input');
+  }
+
+  /**
+   * Get viewport info element
+   */
+  getViewportInfo() {
+    return this.getElement('viewport-info');
+  }
+
+  /**
+   * Get header button element
+   */
+  getHeaderButton(id) {
+    return this.getElement(id);
+  }
+
+  /**
+   * Get drafts modal element
+   */
+  getDraftsModal() {
+    return this.getElement('drafts-modal');
+  }
+
+  /**
+   * Get drafts list elements
+   */
+  getDraftsListElements() {
+    return {
+      draftsList: this.getElement('drafts-list'),
+      emptyState: this.getElement('empty-state')
     };
-    
-    viewportInfo.textContent = viewportSizes[this.currentViewport];
+  }
+
+  /**
+   * Get properties panel container
+   */
+  getPropertiesPanel() {
+    return this.getElement('properties-content');
+  }
+
+  /**
+   * Get a control inside the properties panel
+   */
+  getPropertiesControl(id) {
+    return this.getPanelElement(`#${id}`);
+  }
+
+  /**
+   * Generic getElementById helper
+   */
+  getElement(id) {
+    return document.getElementById(id);
+  }
+
+  /**
+   * Generic querySelector helper
+   */
+  getElementBySelector(selector) {
+    return document.querySelector(selector);
+  }
+
+  /**
+   * Get document body
+   */
+  getBody() {
+    return document.body;
+  }
+
+  /**
+   * Generic querySelectorAll helper
+   */
+  getElementsBySelector(selector) {
+    return document.querySelectorAll(selector);
+  }
+
+  /**
+   * Get file operations element
+   */
+  getFileOperationsElement() {
+    return this.getPanelElement('.file-operations');
+  }
+
+  /**
+   * Get block properties container
+   */
+  getBlockPropertiesContainer() {
+    return this.getPanelElement('.block-properties');
+  }
+
+  /**
+   * Get drafts browser element
+   */
+  getDraftsBrowserElement() {
+    return this.getPanelElement('.drafts-browser');
+  }
+
+  /**
+   * Get drafts back button
+   */
+  getDraftsBackButton() {
+    return this.getPanelElement('#btn-back-to-files');
+  }
+
+  /**
+   * Get draft item elements
+   */
+  getDraftItemElements() {
+    return this.getPanelElements('.draft-item');
+  }
+
+  /**
+   * Get draft delete buttons
+   */
+  getDraftDeleteButtons() {
+    return this.getPanelElements('.btn-delete-draft');
+  }
+
+  /**
+   * Query within the properties panel
+   */
+  getPanelElement(selector) {
+    const panel = this.getPropertiesPanel();
+    if (!panel) return null;
+    return panel.querySelector(selector);
+  }
+
+  /**
+   * Query all elements within the properties panel
+   */
+  getPanelElements(selector) {
+    const panel = this.getPropertiesPanel();
+    if (!panel) return [];
+    return panel.querySelectorAll(selector);
+  }
+
+  /**
+   * Check if a target is inside a selector
+   */
+  isInside(target, selector) {
+    return !!(target && target.closest(selector));
+  }
+
+  /**
+   * Check if an element is content editable
+   */
+  isEditableElement(element) {
+    return !!(element && (element.isContentEditable || element.contentEditable === 'true'));
+  }
+
+  /**
+   * Clear selected block state
+   */
+  clearSelectedBlock() {
+    if (this.state.selectedBlockId) {
+      this.state.selectBlock(null);
+    }
+  }
+
+  /**
+   * Update selection classes for blocks
+   */
+  updateSelectedBlockStyles(selectedId) {
+    this.getElementsBySelector('.editor-block').forEach(el => {
+      if (el.dataset.blockId === selectedId) {
+        el.classList.add('selected');
+      } else {
+        el.classList.remove('selected');
+      }
+    });
+  }
+
+  /**
+   * Get confirm dialog elements
+   */
+  getConfirmDialogElements() {
+    return {
+      dialog: this.getElement('confirm-dialog'),
+      titleEl: this.getElement('confirm-title'),
+      messageEl: this.getElement('confirm-message'),
+      okBtn: this.getElement('confirm-ok'),
+      cancelBtn: this.getElement('confirm-cancel')
+    };
+  }
+
+  /**
+   * Get prompt dialog elements
+   */
+  getPromptDialogElements() {
+    return {
+      dialog: this.getElement('prompt-dialog'),
+      titleEl: this.getElement('prompt-title'),
+      messageEl: this.getElement('prompt-message'),
+      inputEl: this.getElement('prompt-input'),
+      okBtn: this.getElement('prompt-ok'),
+      cancelBtn: this.getElement('prompt-cancel')
+    };
+  }
+
+  /**
+   * Set drag drop effect based on current drag state
+   */
+  setDropEffect(event) {
+    event.dataTransfer.dropEffect = this.isDragging ? 'move' : 'copy';
+  }
+
+  /**
+   * Get viewport label for UI
+   */
+  getViewportLabel(viewport) {
+    return VIEWPORT_CONFIG[viewport]?.label || '';
+  }
+
+  /**
+   * Check if viewport is mobile/tablet
+   */
+  isMobileViewport(viewport) {
+    return viewport === 'mobile' || viewport === 'tablet';
   }
   
   /**
@@ -657,12 +1037,12 @@ class BlogEditorApp {
   setupGlobalClickHandler() {
     document.addEventListener('click', (e) => {
       // Check if click is on canvas or inside editor blocks
-      const clickedInsideBlock = e.target.closest('.editor-block');
-      const clickedInsideCanvas = e.target.closest('.editor-canvas');
-      const clickedInsideProperties = e.target.closest('.properties-panel');
-      const clickedInsideModal = e.target.closest('.modal-content');
-      const clickedInsideToolbar = e.target.closest('.formatting-toolbar');
-      const clickedInsidePalette = e.target.closest('.component-palette');
+  const clickedInsideBlock = this.isInside(e.target, '.editor-block');
+  const clickedInsideCanvas = this.isInside(e.target, '.editor-canvas');
+  const clickedInsideProperties = this.isInside(e.target, '.properties-panel');
+  const clickedInsideModal = this.isInside(e.target, '.modal-content');
+  const clickedInsideToolbar = this.isInside(e.target, '.formatting-toolbar');
+  const clickedInsidePalette = this.isInside(e.target, '.component-palette');
       
       // If clicked on canvas (not on a block) while in draft browser, close it and show file operations
       if (clickedInsideCanvas && !clickedInsideBlock && this.isInDraftsBrowser) {
@@ -671,31 +1051,25 @@ class BlogEditorApp {
       }
       
       // If viewing file operations, don't close them when clicking on canvas
-      const isViewingFileOperations = !this.isInDraftsBrowser && document.querySelector('.file-operations');
+      const isViewingFileOperations = !this.isInDraftsBrowser && this.getFileOperationsElement();
       if (clickedInsideCanvas && !clickedInsideBlock && isViewingFileOperations) {
         // Just deselect any selected block, but keep file operations open
-        if (this.state.selectedBlockId) {
-          this.state.selectBlock(null);
-        }
+        this.clearSelectedBlock();
         return;
       }
       
       // If clicked outside all interactive areas, deselect
       if (!clickedInsideBlock && !clickedInsideProperties && !clickedInsideModal && !clickedInsideToolbar && !clickedInsidePalette) {
-        if (this.state.selectedBlockId) {
-          this.state.selectBlock(null);
-        }
+        this.clearSelectedBlock();
       }
     });
     
     // Also handle clicks on the canvas background (not on blocks)
-    const canvas = document.getElementById('canvas-blocks');
+    const canvas = this.getCanvasBlocks();
     canvas.addEventListener('click', (e) => {
       // If clicking directly on canvas (not on a block), deselect
       if (e.target === canvas || e.target.classList.contains('empty-state')) {
-        if (this.state.selectedBlockId) {
-          this.state.selectBlock(null);
-        }
+        this.clearSelectedBlock();
       }
     });
   }
@@ -706,21 +1080,19 @@ class BlogEditorApp {
   setupBlurHandler() {
     document.addEventListener('focusout', (e) => {
       // Check if focus is leaving a contentEditable element
-      if (e.target.isContentEditable || e.target.contentEditable === 'true') {
+  if (this.isEditableElement(e.target)) {
         // Use setTimeout to allow focus to move to new element
         setTimeout(() => {
           // Check if new focus target is not another contentEditable element
           const newFocus = document.activeElement;
-          const isEditingAnotherElement = newFocus && (newFocus.isContentEditable || newFocus.contentEditable === 'true');
-          const isInPropertiesPanel = newFocus && newFocus.closest('.properties-panel');
-          const isInModal = newFocus && newFocus.closest('.modal-content');
-          const isInToolbar = newFocus && newFocus.closest('.formatting-toolbar');
+          const isEditingAnotherElement = this.isEditableElement(newFocus);
+          const isInPropertiesPanel = this.isInside(newFocus, '.properties-panel');
+          const isInModal = this.isInside(newFocus, '.modal-content');
+          const isInToolbar = this.isInside(newFocus, '.formatting-toolbar');
           
           // If not editing another element and not in UI panels, deselect
           if (!isEditingAnotherElement && !isInPropertiesPanel && !isInModal && !isInToolbar) {
-            if (this.state.selectedBlockId) {
-              this.state.selectBlock(null);
-            }
+            this.clearSelectedBlock();
           }
         }, 0);
       }
@@ -731,8 +1103,8 @@ class BlogEditorApp {
    * Render all blocks
    */
   render() {
-    const canvas = document.getElementById('canvas-blocks');
-    const titleInput = document.getElementById('canvas-title-input');
+    const canvas = this.getCanvasBlocks();
+    const titleInput = this.getCanvasTitleInput();
     
     // Update title input to match state
     if (titleInput && titleInput.value !== this.state.title) {
@@ -825,43 +1197,16 @@ class BlogEditorApp {
    */
   buildMarginLookupTable() {
     const table = {};
-    const viewports = ['desktop', 'laptop', 'tablet', 'mobile'];
-    
-    // Define all possible component types and their variants
-    const components = [
-      // Headers
-      { type: 'header', level: 2, key: 'h2' },
-      { type: 'header', level: 3, key: 'h3' },
-      { type: 'header', level: 4, key: 'h4' },
-      // Paragraphs
-      { type: 'paragraph', variant: 'normal', key: 'p' },
-      { type: 'paragraph', variant: 'small', key: 'p-small' },
-      { type: 'paragraph', variant: 'small-gray', key: 'p-small-gray' },
-      // Lists
-      { type: 'list', listType: 'ul', key: 'ul' },
-      { type: 'list', listType: 'ol', key: 'ol' },
-      { type: 'list', listType: 'ol-title', key: 'ol-title' },
-      { type: 'list', listType: 'dl', key: 'dl' },
-      // Future components (cards, buttons, boxes, images)
-      { type: 'card', subtype: '2-col', key: 'card-2col' },
-      { type: 'card', subtype: '3-col', key: 'card-3col' },
-      { type: 'button', subtype: 'regular', key: 'button' },
-      { type: 'button', subtype: 'large', key: 'button-large' },
-      { type: 'box', subtype: 'basic', key: 'box-basic' },
-      { type: 'box', subtype: 'shadow', key: 'box-shadow' },
-      { type: 'box', subtype: 'summary', key: 'box-summary' },
-      { type: 'box', subtype: 'qa', key: 'box-qa' },
-      { type: 'image', key: 'image' }
-    ];
+    const viewports = VIEWPORTS;
     
     // Calculate for all combinations
     viewports.forEach(viewport => {
-      const isMobile = viewport === 'mobile' || viewport === 'tablet';
+      const isMobile = this.isMobileViewport(viewport);
       
-      components.forEach(prev => {
+      COMPONENT_DEFS.forEach(prev => {
         const prevBottom = this.getComponentBottomMargin(prev, isMobile);
         
-        components.forEach(current => {
+        COMPONENT_DEFS.forEach(current => {
           const currentTop = this.getComponentTopMargin(current, isMobile);
           
           // Calculate collapsed margin
@@ -885,57 +1230,46 @@ class BlogEditorApp {
    * Get bottom margin for a component (used in lookup table building)
    */
   getComponentBottomMargin(component, isMobile) {
-    switch (component.type) {
-      case 'header':
-        if (component.level === 2) return isMobile ? 20 : 30;
-        if (component.level === 3) return isMobile ? 30 : 40;
-        if (component.level === 4) return 20;
-        break;
-      case 'paragraph':
-        return 0; // Paragraphs only have top margin
-      case 'list':
-        return 0; // Lists have internal spacing only
-      case 'card':
-        return isMobile ? 20 : 40; // Assume cards need spacing
-      case 'button':
-        return 0;
-      case 'box':
-        return isMobile ? 20 : 30;
-      case 'image':
-        return isMobile ? 15 : 20;
+    const config = MARGIN_CONFIG[component.type];
+    if (!config) return 0;
+
+    if (component.type === 'header') {
+      return resolveMarginValue(config.bottom?.[component.level], isMobile);
     }
-    return 0;
+
+    if (component.type === 'list') {
+      return resolveMarginValue(config.bottom?.default, isMobile);
+    }
+
+    return resolveMarginValue(config.bottom, isMobile);
   }
   
   /**
    * Get top margin for a component (used in lookup table building)
    */
   getComponentTopMargin(component, isMobile) {
-    switch (component.type) {
-      case 'header':
-        if (component.level === 2) return isMobile ? 30 : 50;
-        if (component.level === 3) return isMobile ? 0 : 50;
-        if (component.level === 4) return 30;
-        break;
-      case 'paragraph':
-        return 10; // All paragraphs (including small) have 1rem top
-      case 'list':
-        if (component.listType === 'ol' || component.listType === 'ol-title') return 60;
-        if (component.listType === 'dl') return 50;
-        if (component.listType === 'ul') return 0;
-        break;
-      case 'card':
-        return isMobile ? 30 : 50;
-      case 'button':
-        return isMobile ? 20 : 30;
-      case 'box':
-        return isMobile ? 30 : 40;
-      case 'image':
-        return isMobile ? 20 : 30;
+    const config = MARGIN_CONFIG[component.type];
+    if (!config) return 0;
+
+    if (component.type === 'header') {
+      return resolveMarginValue(config.top?.[component.level], isMobile);
     }
-    return 0;
+
+    if (component.type === 'list') {
+      const listKey = this.getListKey(component.listType);
+      return resolveMarginValue(config.top?.[listKey], isMobile);
+    }
+
+    return resolveMarginValue(config.top, isMobile);
   }
   
+  /**
+   * Normalize list key
+   */
+  getListKey(listType) {
+    return listType || 'ul';
+  }
+
   /**
    * Get lookup key for a block
    */
@@ -948,7 +1282,7 @@ class BlogEditorApp {
       }
       return 'p';
     } else if (block.type === 'list') {
-      return block.listType;
+      return this.getListKey(block.listType);
     } else if (block.type === 'card') {
       return `card-${block.subtype || '2-col'}`;
     } else if (block.type === 'button') {
@@ -993,78 +1327,43 @@ class BlogEditorApp {
    * Get bottom margin for a block type (in pixels, at base 10px font-size)
    */
   getBottomMargin(block) {
-    const viewport = this.currentViewport;
-    const isMobile = viewport === 'mobile' || viewport === 'tablet';
-    
-    switch (block.type) {
-      case 'header':
-        // h2: margin: 5rem 0 3rem → bottom: 30px
-        // h3: margin: 5rem 0 4rem → bottom: 40px  
-        // h4: margin-bottom: 2rem → bottom: 20px
-        if (block.level === 2) {
-          return isMobile ? 20 : 30;
-        } else if (block.level === 3) {
-          return isMobile ? 30 : 40;
-        } else if (block.level === 4) {
-          return 20;
-        }
-        break;
-      case 'paragraph':
-        if (block.variant === 'small' || block.variant === 'small-gray') {
-          return 0; // .small has no explicit bottom margin
-        }
-        return 0; // p:not(:first-child) only has margin-top
-      case 'list':
-        // Lists generally don't have bottom margin, spacing is internal
-        return 0;
-    }
-    
-    return 0;
+    return this.getBlockMarginValue(block, 'bottom');
   }
   
   /**
    * Get top margin for a block type (in pixels, at base 10px font-size)
    */
   getTopMargin(block) {
+    return this.getBlockMarginValue(block, 'top');
+  }
+
+  /**
+   * Resolve margin value for a block
+   */
+  getBlockMarginValue(block, edge) {
     const viewport = this.currentViewport;
-    const isMobile = viewport === 'mobile' || viewport === 'tablet';
-    
-    switch (block.type) {
-      case 'header':
-        // h2: margin: 5rem 0 3rem → top: 50px
-        // h3: margin: 5rem 0 4rem → top: 50px  
-        // h4: margin-top: 3rem → top: 30px
-        if (block.level === 2) {
-          return isMobile ? 30 : 50;
-        } else if (block.level === 3) {
-          return isMobile ? 0 : 50; // Mobile: margin: 0 0 3rem
-        } else if (block.level === 4) {
-          return 30;
-        }
-        break;
-      case 'paragraph':
-        if (block.variant === 'small' || block.variant === 'small-gray') {
-          // .small by itself has no top margin
-          // .small--mt has margin-top: 4rem (40px) on desktop, 2rem (20px) on mobile
-          // But we don't have a separate --mt tracking, so default to base paragraph spacing
-          return 10;
-        }
-        // p:not(:first-child) has margin-top: 1rem
-        return 10;
-      case 'list':
-        // .ol--mt has margin-top: 6rem (60px)
-        // .wide-dl has margin-top: 5rem (50px)
-        if (block.listType === 'ol' || block.listType === 'ol-title') {
-          return 60;
-        } else if (block.listType === 'dl') {
-          return 50;
-        } else if (block.listType === 'ul') {
-          return 0; // UL has no explicit top margin
-        }
-        return 0;
+    const isMobile = this.isMobileViewport(viewport);
+    const config = MARGIN_CONFIG[block.type];
+
+    if (!config) return 0;
+
+    if (block.type === 'header') {
+      return resolveMarginValue(config[edge]?.[block.level], isMobile);
     }
-    
-    return 0;
+
+    if (block.type === 'paragraph') {
+      return resolveMarginValue(config[edge]?.default, isMobile);
+    }
+
+    if (block.type === 'list') {
+      if (edge === 'top') {
+        const listKey = this.getListKey(block.listType);
+        return resolveMarginValue(config[edge]?.[listKey], isMobile);
+      }
+      return resolveMarginValue(config[edge]?.default, isMobile);
+    }
+
+    return resolveMarginValue(config[edge], isMobile);
   }
   
   /**
@@ -1101,7 +1400,7 @@ class BlogEditorApp {
    * Clear all drop zone highlights
    */
   clearDropZones() {
-    document.querySelectorAll('.drop-zone').forEach(zone => {
+    this.getElementsBySelector('.drop-zone').forEach(zone => {
       zone.classList.remove('active');
     });
   }
@@ -1213,7 +1512,7 @@ class BlogEditorApp {
       
       // Create custom drag image - clone the wrapper with all styles
       const dragImage = wrapper.cloneNode(true);
-      const canvasWrapper = document.querySelector('.canvas-wrapper');
+    const canvasWrapper = this.getCanvasWrapper();
       
       // Position off-screen but keep it in the canvas wrapper to inherit zoom
       dragImage.style.position = 'absolute';
@@ -1256,12 +1555,11 @@ class BlogEditorApp {
       // Defer DOM manipulations to avoid interfering with drag
       setTimeout(() => {
         wrapper.classList.add('dragging-block');
-        document.body.classList.add('dragging');
+        this.getBody().classList.add('dragging');
         
         // Hide adjacent drop zones
         const draggedIndex = this.state.blocks.findIndex(b => b.id === block.id);
-        const dropZones = document.querySelectorAll('.drop-zone');
-        dropZones.forEach((zone) => {
+        this.getElementsBySelector('.drop-zone').forEach((zone) => {
           const position = parseInt(zone.dataset.position);
           if (position === draggedIndex || position === draggedIndex + 1) {
             zone.style.display = 'none';
@@ -1275,7 +1573,7 @@ class BlogEditorApp {
       this.isDragging = false;
       this.draggedBlock = null;
       wrapper.classList.remove('dragging-block');
-      document.body.classList.remove('dragging');
+  this.getBody().classList.remove('dragging');
       this.clearDropZones();
       
       // Re-render to clean up drop zones and fix spacing
@@ -1374,13 +1672,7 @@ class BlogEditorApp {
    */
   handleBlockSelect(id) {
     // Update visual selection
-    document.querySelectorAll('.editor-block').forEach(el => {
-      if (el.dataset.blockId === id) {
-        el.classList.add('selected');
-      } else {
-        el.classList.remove('selected');
-      }
-    });
+    this.updateSelectedBlockStyles(id);
     
     // Update properties panel
     this.updatePropertiesPanel();
@@ -1390,7 +1682,7 @@ class BlogEditorApp {
    * Update properties panel
    */
   updatePropertiesPanel() {
-    const panel = document.getElementById('properties-content');
+    const panel = this.getPropertiesPanel();
     const selectedBlock = this.state.getSelectedBlock();
     
     if (!selectedBlock) {
@@ -1403,7 +1695,7 @@ class BlogEditorApp {
       this.showFileOperations();
       
       // Clear block properties when nothing is selected
-      const propsContainer = panel.querySelector('.block-properties');
+      const propsContainer = this.getBlockPropertiesContainer();
       if (propsContainer) {
         propsContainer.remove();
       }
@@ -1417,19 +1709,19 @@ class BlogEditorApp {
     }
     
     // Hide file operations when block is selected
-    const fileOps = panel.querySelector('.file-operations');
+    const fileOps = this.getFileOperationsElement();
     if (fileOps) {
       fileOps.style.display = 'none';
     }
     
     // Remove draft browser if it's showing
-    const draftsBrowser = panel.querySelector('.drafts-browser');
+    const draftsBrowser = this.getDraftsBrowserElement();
     if (draftsBrowser) {
       draftsBrowser.remove();
     }
     
     // Create properties container if not exists
-    let propsContainer = panel.querySelector('.block-properties');
+    let propsContainer = this.getBlockPropertiesContainer();
     if (!propsContainer) {
       propsContainer = document.createElement('div');
       propsContainer.className = 'block-properties';
@@ -1487,19 +1779,19 @@ class BlogEditorApp {
     `;
     
     // Setup property change listeners
-    document.getElementById('prop-level').addEventListener('change', (e) => {
+    this.getPropertiesControl('prop-level').addEventListener('change', (e) => {
       this.state.updateBlock(block.id, { level: parseInt(e.target.value) });
     });
     
-    document.getElementById('prop-preset').addEventListener('change', (e) => {
+    this.getPropertiesControl('prop-preset').addEventListener('change', (e) => {
       this.state.updateBlock(block.id, { preset: e.target.value });
     });
     
-    document.getElementById('prop-content').addEventListener('input', (e) => {
+    this.getPropertiesControl('prop-content').addEventListener('input', (e) => {
       this.state.updateBlock(block.id, { content: e.target.value });
     });
     
-    document.getElementById('prop-delete').addEventListener('click', async () => {
+    this.getPropertiesControl('prop-delete').addEventListener('click', async () => {
       const confirmed = await this.showConfirm('Delete Block', 'Are you sure you want to delete this block?');
       if (confirmed) {
         this.state.deleteBlock(block.id);
@@ -1532,11 +1824,11 @@ class BlogEditorApp {
     `;
     
     // Setup property change listeners
-    document.getElementById('prop-variant').addEventListener('change', (e) => {
+    this.getPropertiesControl('prop-variant').addEventListener('change', (e) => {
       this.state.updateBlock(block.id, { variant: e.target.value });
     });
     
-    document.getElementById('prop-delete').addEventListener('click', async () => {
+    this.getPropertiesControl('prop-delete').addEventListener('click', async () => {
       const confirmed = await this.showConfirm('Delete Block', 'Are you sure you want to delete this block?');
       if (confirmed) {
         this.state.deleteBlock(block.id);
@@ -1578,7 +1870,7 @@ class BlogEditorApp {
     `;
     
     // Setup property change listeners
-    document.getElementById('prop-list-type').addEventListener('change', (e) => {
+    this.getPropertiesControl('prop-list-type').addEventListener('change', (e) => {
       const newType = e.target.value;
       const oldType = block.listType;
       
@@ -1668,15 +1960,15 @@ class BlogEditorApp {
       this.state.updateBlock(block.id, { listType: newType, items: newItems });
     });
     
-    document.getElementById('prop-add-item').addEventListener('mousedown', (e) => {
+    this.getPropertiesControl('prop-add-item').addEventListener('mousedown', (e) => {
       e.preventDefault(); // Prevent focus changes
-      const component = document.querySelector(`[data-block-id="${block.id}"] list-component`);
+      const component = this.getElementBySelector(`[data-block-id="${block.id}"] list-component`);
       if (component) {
         component.addItem();
       }
     });
     
-    document.getElementById('prop-delete').addEventListener('click', async () => {
+    this.getPropertiesControl('prop-delete').addEventListener('click', async () => {
       const confirmed = await this.showConfirm('Delete Block', 'Are you sure you want to delete this block?');
       if (confirmed) {
         this.state.deleteBlock(block.id);
@@ -1689,7 +1981,7 @@ class BlogEditorApp {
    */
   showFileOperations() {
     this.isInDraftsBrowser = false;
-    const panel = document.getElementById('properties-content');
+    const panel = this.getPropertiesPanel();
     
     // Get recent drafts
     const drafts = this.state.getDraftsList();
@@ -1758,7 +2050,7 @@ class BlogEditorApp {
     
     // Attach event listeners for recent files
     recentDrafts.forEach(draft => {
-      const btn = panel.querySelector(`[data-draft-id="${draft.id}"]`);
+      const btn = this.getPanelElement(`[data-draft-id="${draft.id}"]`);
       if (btn && draft.id !== this.state.currentDraftId) {
         btn.addEventListener('click', () => {
           this.loadDraft(draft.id);
@@ -1775,7 +2067,7 @@ class BlogEditorApp {
    */
   showDraftsBrowser() {
     this.isInDraftsBrowser = true;
-    const panel = document.getElementById('properties-content');
+    const panel = this.getPropertiesPanel();
     const drafts = this.state.getDraftsList();
     
     if (drafts.length === 0) {
@@ -1825,7 +2117,7 @@ class BlogEditorApp {
     }
     
     // Add event listeners
-    const backBtn = document.getElementById('btn-back-to-files');
+    const backBtn = this.getDraftsBackButton();
     if (backBtn) {
       backBtn.addEventListener('click', () => {
         this.showFileOperations();
@@ -1833,7 +2125,7 @@ class BlogEditorApp {
     }
     
     // Add listeners for clicking on draft cards (open draft)
-    panel.querySelectorAll('.draft-item').forEach(item => {
+    this.getDraftItemElements().forEach(item => {
       item.addEventListener('click', (e) => {
         // Don't trigger if clicking on delete button
         if (e.target.closest('.btn-delete-draft')) {
@@ -1848,7 +2140,7 @@ class BlogEditorApp {
     });
     
     // Add listeners for delete button
-    panel.querySelectorAll('.btn-delete-draft').forEach(btn => {
+    this.getDraftDeleteButtons().forEach(btn => {
       btn.addEventListener('click', async (e) => {
         e.stopPropagation();
         const draftId = btn.dataset.id;
@@ -1875,9 +2167,8 @@ class BlogEditorApp {
    * Old modal function - keeping structure for now
    */
   openDraftsModalOld() {
-    const modal = document.getElementById('drafts-modal');
-    const draftsList = document.getElementById('drafts-list');
-    const emptyState = document.getElementById('empty-state');
+    const modal = this.getDraftsModal();
+    const { draftsList, emptyState } = this.getDraftsListElements();
     
     // Get all drafts
     const drafts = this.state.getDraftsList();
@@ -1954,7 +2245,7 @@ class BlogEditorApp {
    * Close drafts manager modal
    */
   closeDraftsModal() {
-    const modal = document.getElementById('drafts-modal');
+    const modal = this.getDraftsModal();
     modal.classList.remove('show');
   }
   
@@ -2014,11 +2305,7 @@ class BlogEditorApp {
    */
   showConfirm(title, message) {
     return new Promise((resolve) => {
-      const dialog = document.getElementById('confirm-dialog');
-      const titleEl = document.getElementById('confirm-title');
-      const messageEl = document.getElementById('confirm-message');
-      const okBtn = document.getElementById('confirm-ok');
-      const cancelBtn = document.getElementById('confirm-cancel');
+      const { dialog, titleEl, messageEl, okBtn, cancelBtn } = this.getConfirmDialogElements();
       
       titleEl.textContent = title;
       messageEl.textContent = message;
@@ -2042,7 +2329,7 @@ class BlogEditorApp {
       };
       
       const handleBackdrop = (e) => {
-        if (e.target.id === 'confirm-dialog') {
+        if (e.target === dialog) {
           handleCancel();
         }
       };
@@ -2058,12 +2345,7 @@ class BlogEditorApp {
    */
   showPrompt(title, message, defaultValue = '') {
     return new Promise((resolve) => {
-      const dialog = document.getElementById('prompt-dialog');
-      const titleEl = document.getElementById('prompt-title');
-      const messageEl = document.getElementById('prompt-message');
-      const inputEl = document.getElementById('prompt-input');
-      const okBtn = document.getElementById('prompt-ok');
-      const cancelBtn = document.getElementById('prompt-cancel');
+      const { dialog, titleEl, messageEl, inputEl, okBtn, cancelBtn } = this.getPromptDialogElements();
       
       titleEl.textContent = title;
       messageEl.textContent = message;
@@ -2124,7 +2406,7 @@ class BlogEditorApp {
       };
       
       const handleBackdrop = (e) => {
-        if (e.target.id === 'prompt-dialog') {
+        if (e.target === dialog) {
           handleCancel();
         }
       };

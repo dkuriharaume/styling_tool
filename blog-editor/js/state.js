@@ -409,4 +409,8 @@ class EditorState {
 }
 
 // Export for use in other modules
-window.EditorState = EditorState;
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = EditorState;
+} else if (typeof window !== 'undefined') {
+  window.EditorState = EditorState;
+}
