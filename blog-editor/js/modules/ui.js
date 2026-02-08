@@ -73,26 +73,46 @@
       // Show loading state
       app.setExportButtonLoading(button, parts);
 
-      const success = await app.htmlExporter.copyToClipboard();
+      // Safety reset in case clipboard promise hangs
+      const safetyTimer = setTimeout(() => {
+        app.resetExportButton(button, parts, 'export-success');
+        app.resetExportButton(button, parts, 'export-error');
+      }, 5000);
+      try {
+        if (!app.htmlExporter) {
+          throw new Error('HTML exporter unavailable');
+        }
 
-      if (success) {
-        // Show success state
-        app.setExportButtonSuccess(button, parts);
-        // Don't show status message - button feedback is enough
+        const success = await app.htmlExporter.copyToClipboard();
 
-        // Reset after 2 seconds
-        setTimeout(() => {
-          app.resetExportButton(button, parts, 'export-success');
-        }, 2000);
-      } else {
-        // Show error state
+        if (success) {
+          // Show success state
+          app.setExportButtonSuccess(button, parts);
+          // Don't show status message - button feedback is enough
+
+          // Reset after 2 seconds
+          setTimeout(() => {
+            app.resetExportButton(button, parts, 'export-success');
+          }, 2000);
+        } else {
+          // Show error state
+          app.setExportButtonError(button, parts);
+          app.showToast('Failed to copy to clipboard', 'error');
+
+          // Reset after 2 seconds
+          setTimeout(() => {
+            app.resetExportButton(button, parts, 'export-error');
+          }, 2000);
+        }
+      } catch (err) {
         app.setExportButtonError(button, parts);
         app.showToast('Failed to copy to clipboard', 'error');
 
-        // Reset after 2 seconds
         setTimeout(() => {
           app.resetExportButton(button, parts, 'export-error');
         }, 2000);
+      } finally {
+        clearTimeout(safetyTimer);
       }
     });
 
@@ -112,6 +132,8 @@
   const bindHeaderButton = (app, id, handler) => {
     const button = app.getHeaderButton(id);
     if (!button) return;
+    if (button.dataset.bound === 'true') return;
+    button.dataset.bound = 'true';
     button.addEventListener('click', handler);
   };
 
@@ -124,16 +146,22 @@
   const getExportButtonParts = (app, button) => {
     const icon = button.querySelector('.file-btn-icon');
     const label = button.querySelector('.file-btn-label');
+    if (!button.dataset.originalLabel && label?.textContent) {
+      button.dataset.originalLabel = label.textContent;
+    }
     return {
       icon,
       label,
       originalIcon: icon?.textContent || '',
-      originalLabel: label?.textContent || ''
+      originalLabel: button.dataset.originalLabel || label?.textContent || ''
     };
   };
 
   const setExportButtonLoading = (app, button, parts) => {
     button.style.pointerEvents = 'none';
+    if (!button.dataset.originalLabel && parts.label?.textContent) {
+      button.dataset.originalLabel = parts.label.textContent;
+    }
     if (parts.icon) parts.icon.textContent = '⏳';
     if (parts.label) parts.label.textContent = 'Copying...';
   };
@@ -153,7 +181,12 @@
   const resetExportButton = (app, button, parts, className) => {
     button.classList.remove(className);
     if (parts.icon) parts.icon.textContent = parts.originalIcon;
-    if (parts.label) parts.label.textContent = parts.originalLabel;
+    if (parts.label) {
+      const original = button.dataset.originalLabel || parts.originalLabel;
+      if (original) {
+        parts.label.textContent = original;
+      }
+    }
     button.style.pointerEvents = '';
   };
 
@@ -167,6 +200,16 @@
     const { statusMessage, statusIcon, statusText } = app.getStatusElements();
 
     if (!statusMessage || !statusIcon || !statusText) return;
+
+    // Ensure export button label isn't stuck on "Copying..."
+    const exportBtn = app.getHeaderButton('btn-export-html-header');
+    if (exportBtn) {
+      const parts = app.getExportButtonParts(exportBtn);
+      if (parts.label && parts.label.textContent === 'Copying...') {
+        app.resetExportButton(exportBtn, parts, 'export-success');
+        app.resetExportButton(exportBtn, parts, 'export-error');
+      }
+    }
 
     // Remove existing type classes
     statusMessage.classList.remove('success', 'error', 'info', 'saving');

@@ -215,15 +215,22 @@
     zone.className = 'drop-zone';
     zone.dataset.position = position;
 
+    const label = document.createElement('span');
+    label.className = 'drop-zone-label';
+    label.textContent = '➕ Drop here';
+    zone.appendChild(label);
+
     zone.addEventListener('dragover', (e) => {
       e.preventDefault();
       e.stopPropagation();
       zone.classList.add('active');
       app.dropPosition = position;
+      label.textContent = '➕ Drop component here';
     });
 
     zone.addEventListener('dragleave', () => {
       zone.classList.remove('active');
+      label.textContent = '➕ Drop here';
     });
 
     zone.addEventListener('drop', (e) => {
@@ -231,6 +238,7 @@
       e.stopPropagation();
       console.log('Drop on zone at position:', position);
       zone.classList.remove('active');
+      label.textContent = '➕ Drop here';
       app.handleDrop(position);
     });
 
@@ -301,17 +309,23 @@
       e.dataTransfer.effectAllowed = 'move';
       e.dataTransfer.setData('text/plain', block.id);
 
-      // Create custom drag image - clone the wrapper with all styles
+      const rect = wrapper.getBoundingClientRect();
+      const rawWidth = wrapper.offsetWidth || rect.width;
+      const rawHeight = wrapper.offsetHeight || rect.height;
       const dragImage = wrapper.cloneNode(true);
       const canvasWrapper = app.getCanvasWrapper();
 
-      // Position off-screen but keep it in the canvas wrapper to inherit zoom
-      dragImage.style.position = 'absolute';
+      // Position off-screen and size to the original block
+      dragImage.style.position = 'fixed';
       dragImage.style.top = '-9999px';
-      dragImage.style.left = '0';
-      dragImage.style.opacity = '0.8';
+      dragImage.style.left = '-9999px';
+      dragImage.style.width = `${rawWidth}px`;
+      dragImage.style.height = `${rawHeight}px`;
+      dragImage.style.boxSizing = 'border-box';
+      dragImage.style.opacity = '0.85';
       dragImage.style.pointerEvents = 'none';
       dragImage.style.zIndex = '10000';
+      dragImage.style.overflow = 'visible';
 
       // Remove the drag handle and toolbar from the clone
       const clonedHandle = dragImage.querySelector('.drag-handle');
@@ -325,13 +339,53 @@
       dragImage.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.3)';
       dragImage.style.background = 'white';
 
-      // Append to canvas-wrapper so it inherits zoom
-      canvasWrapper.appendChild(dragImage);
+      dragImage.classList.add('drag-preview');
+      if (canvasWrapper) {
+        canvasWrapper.classList.forEach((className) => {
+          if (className.startsWith('viewport-')) {
+            dragImage.classList.add(className);
+          }
+        });
+      }
 
-      // Set the drag image
+      // If this is a list block, suppress list content to avoid default ghost
+      if (block.type === 'list') {
+        dragImage.innerHTML = '';
+        const label = document.createElement('div');
+        label.textContent = 'List block';
+        label.style.display = 'flex';
+        label.style.alignItems = 'center';
+        label.style.justifyContent = 'center';
+        label.style.width = '100%';
+        label.style.height = '100%';
+        label.style.color = '#666';
+        label.style.fontSize = '13px';
+        dragImage.appendChild(label);
+      }
+
+      // Match canvas zoom without double-scaling or clipping
+      let zoomScale = 1;
+      if (canvasWrapper) {
+        const wrapperStyle = window.getComputedStyle(canvasWrapper);
+        const zoomValue = parseFloat(wrapperStyle.zoom);
+        if (!Number.isNaN(zoomValue) && zoomValue > 0) {
+          zoomScale = zoomValue;
+        } else {
+          const wrapperRect = canvasWrapper.getBoundingClientRect();
+          const wrapperOffsetWidth = canvasWrapper.offsetWidth || wrapperRect.width;
+          if (wrapperOffsetWidth) {
+            zoomScale = wrapperRect.width / wrapperOffsetWidth;
+          }
+        }
+      }
+
+      if (!Number.isNaN(zoomScale) && zoomScale !== 1) {
+        dragImage.style.zoom = zoomScale;
+      }
+
+      document.body.appendChild(dragImage);
       e.dataTransfer.setDragImage(dragImage, 20, 20);
 
-      // Remove the clone after a brief delay
       setTimeout(() => {
         if (dragImage.parentNode) {
           dragImage.parentNode.removeChild(dragImage);
@@ -342,11 +396,23 @@
       app.isDragging = true;
       app.draggedBlock = block;
       app.draggedComponent = null;
+      app.getBody().classList.add('dragging');
+      document.documentElement.classList.add('dragging');
+
+      // Block native list drag ghosts while dragging a block
+      if (!app._listDragBlocker) {
+        app._listDragBlocker = (evt) => {
+          if (evt.target && evt.target.closest && evt.target.closest('ul, ol, dl')) {
+            evt.preventDefault();
+            evt.stopPropagation();
+          }
+        };
+        document.addEventListener('dragstart', app._listDragBlocker, true);
+      }
 
       // Defer DOM manipulations to avoid interfering with drag
       setTimeout(() => {
         wrapper.classList.add('dragging-block');
-        app.getBody().classList.add('dragging');
 
         // Hide adjacent drop zones
         const draggedIndex = app.state.blocks.findIndex(b => b.id === block.id);
@@ -365,6 +431,11 @@
       app.draggedBlock = null;
       wrapper.classList.remove('dragging-block');
       app.getBody().classList.remove('dragging');
+      document.documentElement.classList.remove('dragging');
+      if (app._listDragBlocker) {
+        document.removeEventListener('dragstart', app._listDragBlocker, true);
+        app._listDragBlocker = null;
+      }
       app.clearDropZones();
 
       // Re-render to clean up drop zones and fix spacing

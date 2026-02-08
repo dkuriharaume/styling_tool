@@ -297,9 +297,17 @@ class EditorState {
           this.blocks = parsed.blocks || [];
           this.currentDraftId = parsed.id;
           this.currentDraftTimestamp = parsed.timestamp;
+          localStorage.setItem('linkey-current-draft-id', parsed.id);
           this.saveHistory(); // Initialize history
           this.emit('change'); // Trigger render
           return true;
+        }
+
+        // If loading last-opened draft and it's missing, clear stale reference
+        if (!draftId) {
+          this.currentDraftId = null;
+          this.currentDraftTimestamp = null;
+          localStorage.removeItem('linkey-current-draft-id');
         }
       }
     } catch (e) {

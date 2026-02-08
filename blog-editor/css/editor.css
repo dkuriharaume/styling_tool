@@ -22,6 +22,10 @@
   padding: 0;
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 14px;
@@ -35,7 +39,16 @@ body {
 .app-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
+  position: fixed;
+  inset: 0;
+}
+
+@supports (height: 100dvh) {
+  .app-container {
+    min-height: 100dvh;
+  }
 }
 
 .app-header {
@@ -48,6 +61,7 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   z-index: 100;
   gap: 2rem;
+  flex: 0 0 auto;
 }
 
 .header-top {
@@ -247,6 +261,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 
@@ -262,6 +277,10 @@ body {
 }
 
 .viewport-info {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
   margin-top: 4px;
   font-size: 12px;
   color: #666;
@@ -322,7 +341,8 @@ body {
 .app-body {
   display: grid;
   grid-template-columns: 250px 1fr 300px;
-  height: calc(100vh - 61px);
+  flex: 1 1 auto;
+  min-height: 0;
   overflow: hidden;
 }
 
@@ -642,48 +662,60 @@ body {
 }
 
 .canvas-wrapper.viewport-desktop .h1,
-.canvas-wrapper.viewport-desktop .section__title {
+.canvas-wrapper.viewport-desktop .section__title,
+.drag-preview.viewport-desktop .h1,
+.drag-preview.viewport-desktop .section__title {
   font-size: 45px;
   padding-left: 7rem;
   margin: 12rem 0 4rem;
 }
 
-.canvas-wrapper.viewport-desktop .h2 {
+.canvas-wrapper.viewport-desktop .h2,
+.drag-preview.viewport-desktop .h2 {
   font-size: 35px;
   margin: 5rem 0 3.5rem;
 }
 
-.canvas-wrapper.viewport-desktop .h3 {
+.canvas-wrapper.viewport-desktop .h3,
+.drag-preview.viewport-desktop .h3 {
   font-size: 28px;
   margin: 5rem 0 3rem !important;
   padding: 1.4rem;
 }
 
-.canvas-wrapper.viewport-desktop .h4 {
+.canvas-wrapper.viewport-desktop .h4,
+.drag-preview.viewport-desktop .h4 {
   font-size: 24px;
   margin-top: 3rem;
   margin-bottom: 2rem;
 }
 
-.canvas-wrapper.viewport-desktop p {
+.canvas-wrapper.viewport-desktop p,
+.drag-preview.viewport-desktop p {
   font-size: 16px !important; /* Override rem-based sizing from theme */
 }
 
-.canvas-wrapper.viewport-desktop p * {
+.canvas-wrapper.viewport-desktop p *,
+.drag-preview.viewport-desktop p * {
   font-size: inherit !important; /* Ensure all children inherit parent font-size */
 }
 
-.canvas-wrapper.viewport-desktop p.small {
+.canvas-wrapper.viewport-desktop p.small,
+.drag-preview.viewport-desktop p.small {
   font-size: 12px !important;
 }
 
 .canvas-wrapper.viewport-desktop .ul li,
-.canvas-wrapper.viewport-desktop .ol li {
+.canvas-wrapper.viewport-desktop .ol li,
+.drag-preview.viewport-desktop .ul li,
+.drag-preview.viewport-desktop .ol li {
   font-size: 16px !important; /* Override rem-based sizing from theme */
 }
 
 .canvas-wrapper.viewport-desktop .wide-dl dt,
-.canvas-wrapper.viewport-desktop .wide-dl dd {
+.canvas-wrapper.viewport-desktop .wide-dl dd,
+.drag-preview.viewport-desktop .wide-dl dt,
+.drag-preview.viewport-desktop .wide-dl dd {
   font-size: 16px !important;
 }
 
@@ -698,60 +730,75 @@ body {
 }
 
 .canvas-wrapper.viewport-laptop .h1,
-.canvas-wrapper.viewport-laptop .section__title {
+.canvas-wrapper.viewport-laptop .section__title,
+.drag-preview.viewport-laptop .h1,
+.drag-preview.viewport-laptop .section__title {
   font-size: 35px;
   padding-left: 7rem;
   margin: 12rem 0 4rem;
 }
 
-.canvas-wrapper.viewport-laptop .h2 {
+.canvas-wrapper.viewport-laptop .h2,
+.drag-preview.viewport-laptop .h2 {
   font-size: 28px;
   margin: 5rem 0 3.5rem;
 }
 
-.canvas-wrapper.viewport-laptop .h3 {
+.canvas-wrapper.viewport-laptop .h3,
+.drag-preview.viewport-laptop .h3 {
   font-size: 23px;
   margin: 5rem 0 3rem !important;
   padding: 1.4rem;
 }
 
-.canvas-wrapper.viewport-laptop .h4 {
+.canvas-wrapper.viewport-laptop .h4,
+.drag-preview.viewport-laptop .h4 {
   font-size: 20px;
   margin-top: 3rem;
   margin-bottom: 2rem;
 }
 
-.canvas-wrapper.viewport-laptop p {
+.canvas-wrapper.viewport-laptop p,
+.drag-preview.viewport-laptop p {
   font-size: 15px !important; /* Tablet breakpoint uses 1.5rem = 15px */
 }
 
-.canvas-wrapper.viewport-laptop p * {
+.canvas-wrapper.viewport-laptop p *,
+.drag-preview.viewport-laptop p * {
   font-size: inherit !important; /* Ensure all children inherit parent font-size */
 }
 
-.canvas-wrapper.viewport-laptop p.small {
+.canvas-wrapper.viewport-laptop p.small,
+.drag-preview.viewport-laptop p.small {
   font-size: 12px !important;
 }
 
 .canvas-wrapper.viewport-laptop .ul li,
-.canvas-wrapper.viewport-laptop .ol li {
+.canvas-wrapper.viewport-laptop .ol li,
+.drag-preview.viewport-laptop .ul li,
+.drag-preview.viewport-laptop .ol li {
   font-size: 15px !important; /* Match paragraph font size */
 }
 
-.canvas-wrapper.viewport-laptop .ol li::before {
+.canvas-wrapper.viewport-laptop .ol li::before,
+.drag-preview.viewport-laptop .ol li::before {
   font-size: 24px;
 }
 
-.canvas-wrapper.viewport-laptop .ol li + li {
+.canvas-wrapper.viewport-laptop .ol li + li,
+.drag-preview.viewport-laptop .ol li + li {
   margin-top: 26px;
 }
 
-.canvas-wrapper.viewport-laptop .ol__title::before {
+.canvas-wrapper.viewport-laptop .ol__title::before,
+.drag-preview.viewport-laptop .ol__title::before {
   font-size: 33px;
 }
 
 .canvas-wrapper.viewport-laptop .wide-dl dt,
-.canvas-wrapper.viewport-laptop .wide-dl dd {
+.canvas-wrapper.viewport-laptop .wide-dl dd,
+.drag-preview.viewport-laptop .wide-dl dt,
+.drag-preview.viewport-laptop .wide-dl dd {
   font-size: 15px !important;
 }
 
@@ -766,60 +813,75 @@ body {
 }
 
 .canvas-wrapper.viewport-tablet .h1,
-.canvas-wrapper.viewport-tablet .section__title {
+.canvas-wrapper.viewport-tablet .section__title,
+.drag-preview.viewport-tablet .h1,
+.drag-preview.viewport-tablet .section__title {
   font-size: 35px;
   padding-left: 7rem;
   margin: 12rem 0 4rem;
 }
 
-.canvas-wrapper.viewport-tablet .h2 {
+.canvas-wrapper.viewport-tablet .h2,
+.drag-preview.viewport-tablet .h2 {
   font-size: 28px;
   margin: 5rem 0 3.5rem;
 }
 
-.canvas-wrapper.viewport-tablet .h3 {
+.canvas-wrapper.viewport-tablet .h3,
+.drag-preview.viewport-tablet .h3 {
   font-size: 23px;
   margin: 5rem 0 3rem !important;
   padding: 1.4rem;
 }
 
-.canvas-wrapper.viewport-tablet .h4 {
+.canvas-wrapper.viewport-tablet .h4,
+.drag-preview.viewport-tablet .h4 {
   font-size: 20px;
   margin-top: 3rem;
   margin-bottom: 2rem;
 }
 
-.canvas-wrapper.viewport-tablet p {
+.canvas-wrapper.viewport-tablet p,
+.drag-preview.viewport-tablet p {
   font-size: 15px !important;
 }
 
-.canvas-wrapper.viewport-tablet p * {
+.canvas-wrapper.viewport-tablet p *,
+.drag-preview.viewport-tablet p * {
   font-size: inherit !important; /* Ensure all children inherit parent font-size */
 }
 
-.canvas-wrapper.viewport-tablet p.small {
+.canvas-wrapper.viewport-tablet p.small,
+.drag-preview.viewport-tablet p.small {
   font-size: 12px !important;
 }
 
 .canvas-wrapper.viewport-tablet .ul li,
-.canvas-wrapper.viewport-tablet .ol li {
+.canvas-wrapper.viewport-tablet .ol li,
+.drag-preview.viewport-tablet .ul li,
+.drag-preview.viewport-tablet .ol li {
   font-size: 15px !important;
 }
 
-.canvas-wrapper.viewport-tablet .ol li::before {
+.canvas-wrapper.viewport-tablet .ol li::before,
+.drag-preview.viewport-tablet .ol li::before {
   font-size: 24px;
 }
 
-.canvas-wrapper.viewport-tablet .ol li + li {
+.canvas-wrapper.viewport-tablet .ol li + li,
+.drag-preview.viewport-tablet .ol li + li {
   margin-top: 26px;
 }
 
-.canvas-wrapper.viewport-tablet .ol__title::before {
+.canvas-wrapper.viewport-tablet .ol__title::before,
+.drag-preview.viewport-tablet .ol__title::before {
   font-size: 33px;
 }
 
 .canvas-wrapper.viewport-tablet .wide-dl dt,
-.canvas-wrapper.viewport-tablet .wide-dl dd {
+.canvas-wrapper.viewport-tablet .wide-dl dd,
+.drag-preview.viewport-tablet .wide-dl dt,
+.drag-preview.viewport-tablet .wide-dl dd {
   font-size: 15px !important;
 }
 
@@ -834,67 +896,84 @@ body {
 }
 
 .canvas-wrapper.viewport-mobile .h1,
-.canvas-wrapper.viewport-mobile .section__title {
+.canvas-wrapper.viewport-mobile .section__title,
+.drag-preview.viewport-mobile .h1,
+.drag-preview.viewport-mobile .section__title {
   padding-left: 4.3rem;
   margin: 5rem 0 2.6rem;
   font-size: 26px;
 }
 
 .canvas-wrapper.viewport-mobile .h1::before,
-.canvas-wrapper.viewport-mobile .section__title::before {
+.canvas-wrapper.viewport-mobile .section__title::before,
+.drag-preview.viewport-mobile .h1::before,
+.drag-preview.viewport-mobile .section__title::before {
   width: 27px;
   height: 8px;
   border-radius: 16px;
   top: 17px;
 }
 
-.canvas-wrapper.viewport-mobile .h2 {
+.canvas-wrapper.viewport-mobile .h2,
+.drag-preview.viewport-mobile .h2 {
   margin: 4rem 0 2.5rem;
   font-size: 23px;
 }
 
-.canvas-wrapper.viewport-mobile .h3 {
+.canvas-wrapper.viewport-mobile .h3,
+.drag-preview.viewport-mobile .h3 {
   margin: 3rem 0 2rem !important;
   padding: 1.2rem;
   font-size: 19px;
 }
 
-.canvas-wrapper.viewport-mobile .h4 {
+.canvas-wrapper.viewport-mobile .h4,
+.drag-preview.viewport-mobile .h4 {
   font-size: 19px;
 }
 
-.canvas-wrapper.viewport-mobile p {
+.canvas-wrapper.viewport-mobile p,
+.drag-preview.viewport-mobile p {
   font-size: 15px !important;
 }
 
-.canvas-wrapper.viewport-mobile p * {
+.canvas-wrapper.viewport-mobile p *,
+.drag-preview.viewport-mobile p * {
   font-size: inherit !important; /* Ensure all children inherit parent font-size */
 }
 
-.canvas-wrapper.viewport-mobile p.small {
+.canvas-wrapper.viewport-mobile p.small,
+.drag-preview.viewport-mobile p.small {
   font-size: 12px !important;
 }
 
 .canvas-wrapper.viewport-mobile .ul li,
-.canvas-wrapper.viewport-mobile .ol li {
+.canvas-wrapper.viewport-mobile .ol li,
+.drag-preview.viewport-mobile .ul li,
+.drag-preview.viewport-mobile .ol li {
   font-size: 15px !important;
 }
 
-.canvas-wrapper.viewport-mobile .ol li::before {
+.canvas-wrapper.viewport-mobile .ol li::before,
+.drag-preview.viewport-mobile .ol li::before {
   font-size: 20px;
 }
 
-.canvas-wrapper.viewport-mobile .ol li + li {
+.canvas-wrapper.viewport-mobile .ol li + li,
+.drag-preview.viewport-mobile .ol li + li {
   margin-top: 13px;
 }
 
-.canvas-wrapper.viewport-mobile .ol__title::before {
+.canvas-wrapper.viewport-mobile .ol__title::before,
+.drag-preview.viewport-mobile .ol__title::before {
   font-size: 24px;
   top: 3px;
 }
 
 .canvas-wrapper.viewport-mobile .wide-dl dt,
-.canvas-wrapper.viewport-mobile .wide-dl dd {
+.canvas-wrapper.viewport-mobile .wide-dl dd,
+.drag-preview.viewport-mobile .wide-dl dt,
+.drag-preview.viewport-mobile .wide-dl dd {
   font-size: 15px !important;
 }
 
@@ -960,13 +1039,25 @@ body {
 }
 
 /* Reduce z-index of blocks during dragging to let drop zones be on top */
-body.dragging .editor-block {
+body.dragging .editor-block,
+html.dragging .editor-block {
   z-index: 1;
   pointer-events: none;
 }
 
-body.dragging .editor-block > *:not(.drag-handle):not(.block-toolbar) {
+body.dragging .editor-block > *:not(.drag-handle):not(.block-toolbar),
+html.dragging .editor-block > *:not(.drag-handle):not(.block-toolbar) {
   pointer-events: none;
+}
+
+body.dragging ul,
+body.dragging ol,
+body.dragging dl,
+html.dragging ul,
+html.dragging ol,
+html.dragging dl {
+  -webkit-user-drag: none;
+  user-drag: none;
 }
 
 .editor-block > *:not(.drag-handle):not(.block-toolbar) {
@@ -1152,8 +1243,17 @@ dd.dragging-list-item {
   z-index: 10;
 }
 
+.drop-zone-label {
+  display: none;
+  color: #999;
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
 /* Show drop zones when dragging */
-body.dragging .drop-zone {
+body.dragging .drop-zone,
+html.dragging .drop-zone {
   min-height: 40px;
   height: 40px;
   margin: 6px 0;
@@ -1165,35 +1265,35 @@ body.dragging .drop-zone {
   pointer-events: auto;
 }
 
-body.dragging .drop-zone:hover {
-  background: #e3f2fd;
-  border-color: var(--editor-primary);
+body.dragging .drop-zone .drop-zone-label,
+html.dragging .drop-zone .drop-zone-label {
+  display: inline;
 }
 
-body.dragging .drop-zone::before {
-  content: "➕ Drop here";
-  color: #999;
-  font-size: 12px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  white-space: nowrap;
+body.dragging .drop-zone:hover,
+html.dragging .drop-zone:hover {
+  background: #dbeeff;
+  border-color: var(--editor-primary);
+  box-shadow: 0 0 0 2px rgba(44, 122, 192, 0.15) inset, 0 6px 16px rgba(44, 122, 192, 0.15);
+}
+
+body.dragging .drop-zone::before,
+html.dragging .drop-zone::before {
+  content: "";
 }
 
 .drop-zone.active {
   min-height: 60px;
-  background: var(--editor-active);
+  background: rgba(44, 122, 192, 0.12);
   border: 2px dashed var(--editor-primary);
   color: var(--editor-primary);
   font-size: 13px;
   font-weight: 500;
+  box-shadow: 0 0 0 2px rgba(44, 122, 192, 0.15) inset, 0 8px 20px rgba(44, 122, 192, 0.2);
 }
 
 .drop-zone.active::before {
-  content: "➕ Drop component here";
-  color: var(--editor-primary);
-  font-weight: 600;
+  content: "";
 }
 
 /* === PROPERTIES PANEL === */

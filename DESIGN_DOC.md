@@ -145,6 +145,12 @@ Rationale:
 
 ---
 
+## Lessons Learned (UI/Layout)
+
+- **Viewport clipping/strip issue**: Fixed by pinning `.app-container` to the viewport (`position: fixed; inset: 0`) instead of relying on `100vh` calculations. On some browsers/zoom combos, `100vh` can be shorter than the actual visible area, causing header clipping and a visible bottom strip.
+
+---
+
 ## Component Inventory
 
 ### Components from M2O Converter

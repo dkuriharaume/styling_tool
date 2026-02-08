@@ -22,12 +22,14 @@
 
         // Add visual feedback
         app.getBody().classList.add('dragging');
+        document.documentElement.classList.add('dragging');
       });
 
       item.addEventListener('dragend', () => {
         app.isDragging = false;
         app.draggedComponent = null;
         app.getBody().classList.remove('dragging');
+        document.documentElement.classList.remove('dragging');
         app.clearDropZones();
         app.render(); // Re-render after drag ends
       });

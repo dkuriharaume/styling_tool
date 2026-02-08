@@ -99,6 +99,20 @@
   const loadLastEditedDraft = (app) => {
     const drafts = app.state.getDraftsList();
 
+    // Prefer the last opened draft if available
+    if (app.state.load()) {
+      const currentId = app.state.currentDraftId;
+      const currentDraft = drafts.find(d => d.id === currentId);
+      if (currentDraft) {
+        app.showStatus(`✓ ${app.t('status.loaded')}: ${currentDraft.name}`, 'success', 2000);
+        console.log(`Loaded last opened draft: ${currentDraft.name}`);
+      } else {
+        app.showStatus(`✓ ${app.t('status.loaded')}`, 'success', 2000);
+        console.log('Loaded last opened draft.');
+      }
+      return;
+    }
+
     if (drafts.length === 0) {
       // No drafts exist, stay with new draft
       app.showStatus(`✓ ${app.t('status.pageLoaded')}`, 'success', 2000);
@@ -112,15 +126,16 @@
       return timeB - timeA;
     });
 
-    // Load the most recently edited draft
-    const lastDraft = sortedDrafts[0];
-    if (lastDraft && lastDraft.id) {
-      app.state.load(lastDraft.id);
-      app.showStatus(`✓ ${app.t('status.loaded')}: ${lastDraft.name}`, 'success', 2000);
-      console.log(`Loaded last edited draft: ${lastDraft.name}`);
-    } else {
-      app.showStatus(`✓ ${app.t('status.pageLoaded')}`, 'success', 2000);
+    // Load the most recently edited available draft
+    for (const draft of sortedDrafts) {
+      if (draft && draft.id && app.state.load(draft.id)) {
+        app.showStatus(`✓ ${app.t('status.loaded')}: ${draft.name}`, 'success', 2000);
+        console.log(`Loaded last edited draft: ${draft.name}`);
+        return;
+      }
     }
+
+    app.showStatus(`✓ ${app.t('status.pageLoaded')}`, 'success', 2000);
   };
 
   modules.drafts = {

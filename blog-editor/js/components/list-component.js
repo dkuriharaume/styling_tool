@@ -55,6 +55,11 @@ class ListComponent extends HTMLElement {
   renderUnorderedList() {
     const ul = document.createElement('ul');
     ul.className = 'ul';
+    ul.addEventListener('dragstart', (e) => {
+      if (document.body.classList.contains('dragging')) {
+        e.preventDefault();
+      }
+    });
     
     // Add drop handler to the list container
     ul.addEventListener('drop', (e) => {
@@ -103,6 +108,12 @@ class ListComponent extends HTMLElement {
         li.classList.add('dragging-list-item');
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('text/plain', index);
+        const img = document.createElement('div');
+        img.style.width = '0';
+        img.style.height = '0';
+        document.body.appendChild(img);
+        e.dataTransfer.setDragImage(img, 0, 0);
+        setTimeout(() => img.remove(), 0);
       });
       
       li.addEventListener('dragend', () => {
@@ -137,6 +148,11 @@ class ListComponent extends HTMLElement {
   renderOrderedList() {
     const ol = document.createElement('ol');
     ol.className = 'ol ol--mt';
+    ol.addEventListener('dragstart', (e) => {
+      if (document.body.classList.contains('dragging')) {
+        e.preventDefault();
+      }
+    });
     
     // Add drop handler to the list container
     ol.addEventListener('drop', (e) => {
@@ -185,6 +201,12 @@ class ListComponent extends HTMLElement {
         li.classList.add('dragging-list-item');
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('text/plain', index);
+        const img = document.createElement('div');
+        img.style.width = '0';
+        img.style.height = '0';
+        document.body.appendChild(img);
+        e.dataTransfer.setDragImage(img, 0, 0);
+        setTimeout(() => img.remove(), 0);
       });
       
       li.addEventListener('dragend', () => {
@@ -219,6 +241,11 @@ class ListComponent extends HTMLElement {
   renderOrderedListWithTitles() {
     const ol = document.createElement('ol');
     ol.className = 'ol ol--title ol--mt';
+    ol.addEventListener('dragstart', (e) => {
+      if (document.body.classList.contains('dragging')) {
+        e.preventDefault();
+      }
+    });
     
     // Add drop handler to the list container
     ol.addEventListener('drop', (e) => {
@@ -277,6 +304,12 @@ class ListComponent extends HTMLElement {
         li.classList.add('dragging-list-item');
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('text/plain', index);
+        const img = document.createElement('div');
+        img.style.width = '0';
+        img.style.height = '0';
+        document.body.appendChild(img);
+        e.dataTransfer.setDragImage(img, 0, 0);
+        setTimeout(() => img.remove(), 0);
       });
       
       li.addEventListener('dragend', () => {
@@ -312,6 +345,11 @@ class ListComponent extends HTMLElement {
   renderDictionaryList() {
     const dl = document.createElement('dl');
     dl.className = 'wide-dl';
+    dl.addEventListener('dragstart', (e) => {
+      if (document.body.classList.contains('dragging')) {
+        e.preventDefault();
+      }
+    });
     
     // Add drop handler to the list container
     dl.addEventListener('drop', (e) => {
@@ -378,6 +416,12 @@ class ListComponent extends HTMLElement {
         dd.classList.add('dragging-list-item');
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('text/plain', index);
+        const img = document.createElement('div');
+        img.style.width = '0';
+        img.style.height = '0';
+        document.body.appendChild(img);
+        e.dataTransfer.setDragImage(img, 0, 0);
+        setTimeout(() => img.remove(), 0);
       });
       
       dt.addEventListener('dragend', () => {
