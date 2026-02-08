@@ -1,0 +1,219 @@
+/* 
+ * LINKEY Theme Styles - Extracted from WordPress Theme
+ * For use in Blog Editor Preview
+ */
+
+:root {
+  /* Colors */
+  --color-font: #1D2F3E;
+  --color-primary: #1370A8;
+  --color-red: #B12D3E;
+  --color-white: #ffffff;
+  
+  /* Font Sizes - Mobile */
+  --font-display-lg: 50px;
+  --font-display-md: 30px;
+  --font-heading-xl: 26px;
+  --font-heading-xl-sm: 23px;
+  --font-heading-lg: 21px;
+  --font-heading-lg-sm: 19px;
+  --font-heading-md: 19px;
+  --font-heading-md-sm: 1.6rem;
+  --font-text-base: 16px;
+  --font-text-base-sm: 15px;
+  --font-text-sm: 15px;
+  --font-text-xs: 12px;
+}
+
+@media screen and (min-width: 768px) {
+  :root {
+    /* Font Sizes - Tablet */
+    --font-display-lg: 43px;
+    --font-display-md: 42px;
+    --font-heading-xl: 35px;
+    --font-heading-xl-sm: 28px;
+    --font-heading-lg: 26px;
+    --font-heading-lg-sm: 23px;
+    --font-heading-md: 20px;
+    --font-heading-md-sm: 1.7rem;
+    --font-text-base: 17px;
+    --font-text-base-sm: 17px;
+    --font-text-sm: 16px;
+    --font-text-xs: 12px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  :root {
+    /* Font Sizes - Desktop */
+    --font-display-lg: 62px;
+    --font-display-md: 52px;
+    --font-heading-xl: 45px;
+    --font-heading-xl-sm: 35px;
+    --font-heading-lg: 32px;
+    --font-heading-lg-sm: 28px;
+    --font-heading-md: 24px;
+    --font-heading-md-sm: 1.8rem;
+    --font-text-base: 2.0rem;
+    --font-text-base-sm: 20px;
+    --font-text-sm: 16px;
+    --font-text-xs: 12px;
+  }
+}
+
+/* === HEADERS === */
+
+.h1, .section__title {
+  display: block;
+  font-size: var(--font-heading-xl);
+  color: var(--color-font);
+  position: relative;
+  padding-left: 7rem;
+  margin: 12rem 0 4rem;
+  text-align: left;
+  font-weight: bold;
+  line-height: 1.5;
+}
+
+@media screen and (max-width: 767px) {
+  .h1, .section__title {
+    padding-left: 4.3rem;
+    margin: 5rem 0 2.6rem;
+  }
+}
+
+.h1::before, .section__title::before {
+  content: "";
+  display: inline-block;
+  width: 50px;
+  height: 13px;
+  border-radius: 13px;
+  background: linear-gradient(to right, #2C7AC0, #7364AE, #2C7AC0) 0/200% 100%;
+  position: absolute;
+  top: 0.6em;
+  left: 0;
+}
+
+@media screen and (max-width: 767px) {
+  .h1::before, .section__title::before {
+    width: 27px;
+    height: 8px;
+    border-radius: 16px;
+    top: 17px;
+  }
+}
+
+.h2 {
+  display: block;
+  font-size: var(--font-heading-xl-sm);
+  color: var(--color-primary);
+  font-weight: bold;
+  margin: 5rem 0 3.5rem;
+  line-height: 1.5;
+}
+
+@media screen and (max-width: 767px) {
+  .h2 {
+    margin: 4rem 0 2.5rem;
+  }
+}
+
+.h2--blue {
+  color: var(--color-primary);
+}
+
+.h2--red {
+  color: var(--color-red);
+}
+
+.h3 {
+  font-size: var(--font-heading-lg-sm);
+  font-weight: bold;
+  line-height: 1.6;
+  letter-spacing: 0.06em;
+  margin: 5rem 0 3rem !important;
+  background: #F4F5F7;
+  border-radius: 10px;
+  padding: 1.4rem;
+}
+
+@media screen and (max-width: 767px) {
+  .h3 {
+    margin: 3rem 0 2rem !important;
+    padding: 1.2rem;
+  }
+}
+
+.h4 {
+  font-size: var(--font-heading-md);
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  line-height: 1.7;
+  font-weight: bold;
+}
+
+.h4--blue {
+  color: var(--color-primary);
+}
+
+.h4--red {
+  color: var(--color-red);
+}
+
+/* === TEXT DECORATIONS === */
+
+.strong {
+  font-weight: bold;
+  color: var(--color-font);
+}
+
+.strong--info {
+  background: linear-gradient(transparent 60%, #FFEB3B 60%);
+  padding: 0 0.2em;
+}
+
+.strong--warning {
+  background: linear-gradient(transparent 60%, #FF9999 60%);
+  padding: 0 0.2em;
+}
+
+.small {
+  font-size: var(--font-text-xs);
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  color: var(--color-primary);
+}
+
+.small--gray {
+  color: #8a8d93;
+}
+
+.txtlink {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.txtlink:hover {
+  opacity: 0.7;
+}
+
+/* === PARAGRAPHS === */
+
+p {
+  font-size: var(--font-text-base);
+  line-height: 1.8;
+  margin: 0 0 2rem;
+  color: var(--color-font);
+}
+
+/* === Base Styling === */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--color-font);
+  line-height: 1.8;
+}
+
+* {
+  box-sizing: border-box;
+}
