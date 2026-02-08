@@ -56,8 +56,65 @@ class M2OExporter {
    * Convert paragraph block
    */
   convertParagraph(block) {
-    const content = block.content || '';
+    let content = block.content || '';
+    
+    // Convert HTML formatting to M2O markdown
+    content = this.convertHTMLToM2O(content);
+    
+    // Add variant markers for small text
+    const variant = block.variant || 'normal';
+    if (variant === 'small') {
+      return `{small}\n${content}\n\n`;
+    } else if (variant === 'small-gray') {
+      return `{small-gray}\n${content}\n\n`;
+    }
+    
     return `${content}\n\n`;
+  }
+  
+  /**
+   * Convert HTML formatting to M2O markdown syntax
+   */
+  convertHTMLToM2O(html) {
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+    
+    // Process nodes recursively
+    return this.processNode(temp);
+  }
+  
+  /**
+   * Process a node and its children
+   */
+  processNode(node) {
+    let result = '';
+    
+    for (const child of node.childNodes) {
+      if (child.nodeType === Node.TEXT_NODE) {
+        result += child.textContent;
+      } else if (child.nodeType === Node.ELEMENT_NODE) {
+        const tagName = child.tagName.toLowerCase();
+        const className = child.className || '';
+        const innerText = this.processNode(child);
+        
+        if (tagName === 'strong') {
+          if (className.includes('strong--info')) {
+            result += `**${innerText}** {info}`;
+          } else if (className.includes('strong--warning')) {
+            result += `**${innerText}** {warning}`;
+          } else {
+            result += `**${innerText}**`;
+          }
+        } else if (tagName === 'a') {
+          const href = child.getAttribute('href') || '';
+          result += `[${innerText}](${href})`;
+        } else {
+          result += innerText;
+        }
+      }
+    }
+    
+    return result;
   }
   
   /**

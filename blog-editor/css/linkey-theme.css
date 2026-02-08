@@ -168,13 +168,11 @@
 }
 
 .strong--info {
-  background: linear-gradient(transparent 60%, #FFEB3B 60%);
-  padding: 0 0.2em;
+  color: var(--color-primary);
 }
 
 .strong--warning {
-  background: linear-gradient(transparent 60%, #FF9999 60%);
-  padding: 0 0.2em;
+  color: var(--color-red);
 }
 
 .small {
@@ -200,10 +198,27 @@
 /* === PARAGRAPHS === */
 
 p {
-  font-size: var(--font-text-base);
-  line-height: 1.8;
-  margin: 0 0 2rem;
+  font-size: 1.5rem;
+  line-height: 1.86;
+  letter-spacing: 0.07em;
+  margin: 0;
   color: var(--color-font);
+}
+
+@media screen and (min-width: 1024px) {
+  p {
+    font-size: 1.6rem;
+  }
+}
+
+p:not(:first-child) {
+  margin-top: 1rem;
+}
+
+/* Override paragraph font-size for small text */
+p.small {
+  font-size: var(--font-text-xs) !important;
+  line-height: 1.8;
 }
 
 /* === Base Styling === */

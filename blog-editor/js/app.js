@@ -42,7 +42,8 @@ class BlogEditorApp {
       item.addEventListener('dragstart', (e) => {
         this.draggedComponent = {
           type: item.dataset.type,
-          subtype: item.dataset.subtype
+          subtype: item.dataset.subtype,
+          variant: item.dataset.variant
         };
         e.dataTransfer.effectAllowed = 'copy';
         e.dataTransfer.setData('text/plain', ''); // Required for Firefox
@@ -303,6 +304,12 @@ class BlogEditorApp {
           preset: component.subtype === '2' ? 'blue' : 'default',
           content: 'New Heading'
         };
+      case 'paragraph':
+        return {
+          type: 'paragraph',
+          variant: component.variant || 'normal',
+          content: 'Click to start typing...'
+        };
       default:
         return { type: component.type };
     }
@@ -380,6 +387,10 @@ class BlogEditorApp {
         const header = document.createElement('header-component');
         header.setData(block);
         return header;
+      case 'paragraph':
+        const paragraph = document.createElement('paragraph-component');
+        paragraph.setData(block);
+        return paragraph;
       default:
         const div = document.createElement('div');
         div.textContent = `Unknown component: ${block.type}`;
@@ -424,6 +435,9 @@ class BlogEditorApp {
     switch (selectedBlock.type) {
       case 'header':
         this.renderHeaderProperties(selectedBlock);
+        break;
+      case 'paragraph':
+        this.renderParagraphProperties(selectedBlock);
         break;
       default:
         panel.innerHTML = '<p>No properties available</p>';
@@ -477,6 +491,44 @@ class BlogEditorApp {
     
     document.getElementById('prop-content').addEventListener('input', (e) => {
       this.state.updateBlock(block.id, { content: e.target.value });
+    });
+    
+    document.getElementById('prop-delete').addEventListener('click', () => {
+      if (confirm('Delete this block?')) {
+        this.state.deleteBlock(block.id);
+      }
+    });
+  }
+  
+  /**
+   * Render paragraph properties
+   */
+  renderParagraphProperties(block) {
+    const panel = document.getElementById('properties-content');
+    
+    panel.innerHTML = `
+      <h3>Paragraph Settings</h3>
+      
+      <div class="property-group">
+        <label>Text Variant</label>
+        <select id="prop-variant">
+          <option value="normal" ${block.variant === 'normal' ? 'selected' : ''}>Normal</option>
+          <option value="small" ${block.variant === 'small' ? 'selected' : ''}>Small (Highlighted)</option>
+          <option value="small-gray" ${block.variant === 'small-gray' ? 'selected' : ''}>Small (Gray)</option>
+        </select>
+      </div>
+      
+      <div class="property-group">
+        <label>Content</label>
+        <div class="property-note">Select text in the editor to format it (bold, info, warning, link).</div>
+      </div>
+      
+      <button class="btn btn-danger btn-small" id="prop-delete">Delete Block</button>
+    `;
+    
+    // Setup property change listeners
+    document.getElementById('prop-variant').addEventListener('change', (e) => {
+      this.state.updateBlock(block.id, { variant: e.target.value });
     });
     
     document.getElementById('prop-delete').addEventListener('click', () => {

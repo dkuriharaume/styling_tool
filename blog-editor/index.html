@@ -55,13 +55,25 @@
         </div>
         
         <div class="palette-section">
-          <h3>Coming Soon</h3>
-          <div class="component-item" style="opacity: 0.5; cursor: not-allowed;" draggable="false">
+          <h3>Text</h3>
+          <div class="component-item" draggable="true" data-type="paragraph" data-variant="normal">
             <span class="icon">📄</span>
             <span class="label">Paragraph</span>
           </div>
-          <div class="component-item" style="opacity: 0.5; cursor: not-allowed;" draggable="false">
+          <div class="component-item" draggable="true" data-type="paragraph" data-variant="small">
+            <span class="icon">📝</span>
+            <span class="label">Small Text</span>
+          </div>
+          <div class="component-item" draggable="true" data-type="paragraph" data-variant="small-gray">
             <span class="icon">📋</span>
+            <span class="label">Small Gray Text</span>
+          </div>
+        </div>
+        
+        <div class="palette-section">
+          <h3>Coming Soon</h3>
+          <div class="component-item" style="opacity: 0.5; cursor: not-allowed;" draggable="false">
+            <span class="icon"></span>
             <span class="label">List</span>
           </div>
           <div class="component-item" style="opacity: 0.5; cursor: not-allowed;" draggable="false">
@@ -112,7 +124,9 @@
   <script src="js/state.js"></script>
   <script src="js/exporters/m2o-exporter.js"></script>
   <script src="js/exporters/html-exporter.js"></script>
+  <script src="js/formatting-toolbar.js"></script>
   <script src="js/components/header-component.js"></script>
+  <script src="js/components/paragraph-component.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

@@ -74,7 +74,17 @@ class HTMLExporter {
    */
   convertParagraph(block) {
     const content = block.content || '';
-    return `<p>${content}</p>\n`;
+    const variant = block.variant || 'normal';
+    
+    // Build class attribute
+    let classes = '';
+    if (variant === 'small') {
+      classes = ' class="small"';
+    } else if (variant === 'small-gray') {
+      classes = ' class="small small--gray"';
+    }
+    
+    return `<p${classes}>${content}</p>\n`;
   }
   
   /**
