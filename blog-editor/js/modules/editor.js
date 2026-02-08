@@ -348,19 +348,38 @@
         });
       }
 
-      // If this is a list block, suppress list content to avoid default ghost
+      // If this is a list block, keep list preview but disable item dragging UI
       if (block.type === 'list') {
-        dragImage.innerHTML = '';
-        const label = document.createElement('div');
-        label.textContent = 'List block';
-        label.style.display = 'flex';
-        label.style.alignItems = 'center';
-        label.style.justifyContent = 'center';
-        label.style.width = '100%';
-        label.style.height = '100%';
-        label.style.color = '#666';
-        label.style.fontSize = '13px';
-        dragImage.appendChild(label);
+        const sourceListComponent = wrapper.querySelector('list-component');
+        const targetListComponent = dragImage.querySelector('list-component');
+        if (sourceListComponent && targetListComponent) {
+          const sourceList = sourceListComponent.querySelector('ul, ol, dl');
+          if (sourceList) {
+            targetListComponent.replaceWith(sourceList.cloneNode(true));
+          }
+        }
+
+        const previewList = dragImage.querySelector('ul, ol, dl');
+        const listType = block.listType || 'ul';
+        if (previewList) {
+          if (listType === 'ul') {
+            previewList.className = 'ul';
+          } else if (listType === 'ol') {
+            previewList.className = 'ol ol--mt';
+          } else if (listType === 'ol-title') {
+            previewList.className = 'ol ol--title ol--mt';
+          } else if (listType === 'dl') {
+            previewList.className = 'wide-dl';
+          }
+        }
+
+        dragImage.querySelectorAll('li').forEach((item) => {
+          item.draggable = false;
+          item.removeAttribute('draggable');
+        });
+        dragImage.querySelectorAll('.list-item-delete').forEach((button) => {
+          button.remove();
+        });
       }
 
       // Match canvas zoom without double-scaling or clipping
