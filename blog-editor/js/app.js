@@ -452,9 +452,13 @@ class BlogEditorApp {
     if (!file) return;
     try {
       const text = await file.text();
-      const blocks = markdownImporterModule.parseMarkdownToBlocks
+      const rawBlocks = markdownImporterModule.parseMarkdownToBlocks
         ? markdownImporterModule.parseMarkdownToBlocks(text)
         : [];
+      const blocks = rawBlocks.map(block => ({
+        ...block,
+        id: this.state.generateId()
+      }));
 
       if (!blocks.length) {
         this.showStatus('No blocks parsed from markdown', 'error');

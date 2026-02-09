@@ -81,6 +81,12 @@
       fileOps.style.display = 'none';
     }
 
+    // Remove drafts backup controls in editing context
+    const draftsBackup = panel.querySelector('.drafts-backup');
+    if (draftsBackup) {
+      draftsBackup.remove();
+    }
+
     // Remove draft browser if it's showing
     const draftsBrowser = app.getDraftsBrowserElement();
     if (draftsBrowser) {

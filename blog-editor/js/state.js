@@ -382,6 +382,23 @@ class EditorState {
   generateDraftId() {
     return `draft-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`;
   }
+
+  /**
+   * Ensure all blocks have unique ids
+   */
+  ensureBlockIds(blocks = []) {
+    const used = new Set();
+    return (Array.isArray(blocks) ? blocks : []).map(block => {
+      const next = { ...block };
+      let id = next.id;
+      if (!id || used.has(id)) {
+        id = this.generateId();
+      }
+      used.add(id);
+      next.id = id;
+      return next;
+    });
+  }
   
   /**
    * Export to JSON
@@ -429,7 +446,6 @@ class EditorState {
         name: entry.name,
         title: entry.name || '',
         blocks: [],
-        timestamp: entry.timestamp || Date.now(),
         updatedAt: entry.updatedAt || entry.timestamp || Date.now()
       };
     }).filter(Boolean);
@@ -518,7 +534,7 @@ class EditorState {
   fromJSON(data) {
     if (data.version === '1.0') {
       this.title = data.title || '';
-      this.blocks = data.blocks || [];
+      this.blocks = this.ensureBlockIds(data.blocks || []);
       this.saveHistory();
       this.emit('change');
       this.autoSave();
@@ -531,7 +547,7 @@ class EditorState {
   applyDraftData(data) {
     if (!data) return false;
     this.title = data.title || data.name || '';
-    this.blocks = Array.isArray(data.blocks) ? data.blocks : [];
+    this.blocks = this.ensureBlockIds(Array.isArray(data.blocks) ? data.blocks : []);
     this.currentDraftId = data.id || null;
     this.currentDraftTimestamp = data.timestamp || Date.now();
     if (this.currentDraftId) {

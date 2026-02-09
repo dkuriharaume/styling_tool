@@ -1268,7 +1268,7 @@ html.dragging dl {
 
 .editor-block:hover .block-toolbar,
 .editor-block.selected .block-toolbar {
-  display: flex;
+  display: none;
 }
 
 .block-toolbar button {
