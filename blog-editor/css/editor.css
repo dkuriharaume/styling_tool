@@ -710,6 +710,20 @@ body {
   color: var(--color-font);
 }
 
+.row__item.drag-over {
+  position: relative;
+}
+
+.row__item.drag-over::after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 2px dashed var(--editor-primary);
+  border-radius: 16px;
+  background: rgba(44, 122, 192, 0.08);
+  pointer-events: none;
+}
+
 .img-responsive {
   max-width: 100%;
   height: auto;

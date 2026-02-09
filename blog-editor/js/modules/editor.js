@@ -382,6 +382,21 @@
         });
       }
 
+      // If this is a card block, replace the custom element with its rendered content
+      if (block.type === 'card') {
+        const sourceCard = wrapper.querySelector('card-component');
+        const targetCard = dragImage.querySelector('card-component');
+        if (sourceCard && targetCard) {
+          const fragment = document.createDocumentFragment();
+          const container = document.createElement('div');
+          container.innerHTML = sourceCard.innerHTML;
+          while (container.firstChild) {
+            fragment.appendChild(container.firstChild);
+          }
+          targetCard.replaceWith(fragment);
+        }
+      }
+
       // Match canvas zoom without double-scaling or clipping
       let zoomScale = 1;
       if (canvasWrapper) {

@@ -49,6 +49,7 @@ class CardComponent extends HTMLElement {
 
       const article = document.createElement('article');
       article.className = 'thmb-card thmb-card--simple';
+      item.draggable = true;
 
       const head = document.createElement('h3');
       head.className = 'thmb-card__title';
@@ -75,6 +76,89 @@ class CardComponent extends HTMLElement {
         this.dispatchContentChange();
       });
 
+      head.addEventListener('dragstart', (e) => {
+        e.stopPropagation();
+      });
+
+      body.addEventListener('dragstart', (e) => {
+        e.stopPropagation();
+      });
+
+      item.addEventListener('dragstart', (e) => {
+        if (document.body.classList.contains('dragging')) {
+          e.preventDefault();
+          return;
+        }
+        e.stopPropagation();
+        item.classList.add('dragging-card');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', String(index));
+        const dragImage = article.cloneNode(true);
+        dragImage.style.position = 'fixed';
+        dragImage.style.top = '-9999px';
+        dragImage.style.left = '-9999px';
+        dragImage.style.width = `${article.offsetWidth}px`;
+        dragImage.style.height = `${article.offsetHeight}px`;
+        dragImage.style.pointerEvents = 'none';
+        dragImage.style.zIndex = '10000';
+
+        const canvasWrapper = this.closest('.canvas-wrapper');
+        let zoomScale = 1;
+        if (canvasWrapper) {
+          const wrapperStyle = window.getComputedStyle(canvasWrapper);
+          const zoomValue = parseFloat(wrapperStyle.zoom);
+          if (!Number.isNaN(zoomValue) && zoomValue > 0) {
+            zoomScale = zoomValue;
+          } else {
+            const wrapperRect = canvasWrapper.getBoundingClientRect();
+            const wrapperOffsetWidth = canvasWrapper.offsetWidth || wrapperRect.width;
+            if (wrapperOffsetWidth) {
+              zoomScale = wrapperRect.width / wrapperOffsetWidth;
+            }
+          }
+        }
+
+        if (!Number.isNaN(zoomScale) && zoomScale !== 1) {
+          dragImage.style.zoom = zoomScale;
+        }
+
+        document.body.appendChild(dragImage);
+        e.dataTransfer.setDragImage(dragImage, 20, 20);
+        setTimeout(() => dragImage.remove(), 0);
+      });
+
+      item.addEventListener('dragend', () => {
+        item.classList.remove('dragging-card');
+        this.reorderCards(row);
+      });
+
+      item.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        e.dataTransfer.dropEffect = 'move';
+
+        const dragging = row.querySelector('.dragging-card');
+        if (!dragging || dragging === item) return;
+
+        const rect = item.getBoundingClientRect();
+        const midpoint = rect.top + rect.height / 2;
+        if (e.clientY < midpoint) {
+          item.classList.add('drag-over');
+          item.classList.add('drag-over-before');
+          item.classList.remove('drag-over-after');
+          item.parentNode.insertBefore(dragging.closest('.row__item'), item);
+        } else {
+          item.classList.add('drag-over');
+          item.classList.add('drag-over-after');
+          item.classList.remove('drag-over-before');
+          item.parentNode.insertBefore(dragging.closest('.row__item'), item.nextSibling);
+        }
+      });
+
+      item.addEventListener('dragleave', () => {
+        item.classList.remove('drag-over', 'drag-over-before', 'drag-over-after');
+      });
+
       article.appendChild(head);
       article.appendChild(img);
       article.appendChild(body);
@@ -88,6 +172,24 @@ class CardComponent extends HTMLElement {
 
     this.innerHTML = '';
     this.appendChild(wrapper);
+  }
+
+  reorderCards(row) {
+    const items = Array.from(row.querySelectorAll('.row__item'));
+    const newOrder = [];
+
+    items.forEach(item => {
+      const oldIndex = parseInt(item.dataset.index, 10);
+      if (!Number.isNaN(oldIndex) && this.data.cards[oldIndex]) {
+        newOrder.push({ ...this.data.cards[oldIndex] });
+      }
+    });
+
+    if (newOrder.length) {
+      this.data.cards = newOrder;
+      this.render();
+      this.dispatchContentChange();
+    }
   }
 
   addCard() {
