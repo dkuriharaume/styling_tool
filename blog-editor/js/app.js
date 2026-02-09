@@ -5,6 +5,7 @@ const {
   VIEWPORT_CONFIG = {},
   VIEWPORTS = [],
   STORAGE_KEYS = {},
+  SERVER_CONFIG = {},
   COMPONENT_DEFS = [],
   MARGIN_CONFIG = {},
   resolveMarginValue = () => 0
@@ -88,6 +89,7 @@ class BlogEditorApp {
     this.setupGlobalClickHandler();
     this.setupBlurHandler();
     this.setupScrollPersistence();
+    this.bindDraftBackupButtons();
     
     // Listen to state changes
     this.state.on('change', () => {
@@ -99,6 +101,7 @@ class BlogEditorApp {
     this.state.on('select', (id) => this.handleBlockSelect(id));
     this.state.on('saving', () => this.showStatus(this.t('status.saving'), 'saving', 0));
     this.state.on('save', () => this.showSaveIndicator());
+    this.state.on('save', () => this.syncCurrentDraftToServer());
     
     // Apply saved language
     this.applyLanguage();
@@ -112,6 +115,127 @@ class BlogEditorApp {
     
     // Restore scroll position after render
     this.restoreScrollPosition();
+  }
+
+  /**
+   * Bind draft backup buttons if present
+   */
+  bindDraftBackupButtons() {
+    const exportBtn = this.getElement('btn-export-drafts');
+    if (exportBtn && exportBtn.dataset.bound !== 'true') {
+      exportBtn.dataset.bound = 'true';
+      exportBtn.addEventListener('click', () => this.exportDraftsToFile());
+    }
+
+    const exportCurrentBtn = this.getElement('btn-export-current-draft');
+    if (exportCurrentBtn && exportCurrentBtn.dataset.bound !== 'true') {
+      exportCurrentBtn.dataset.bound = 'true';
+      exportCurrentBtn.addEventListener('click', () => this.exportCurrentDraftToFile());
+    }
+
+    const importBtn = this.getElement('btn-import-drafts');
+    if (importBtn && importBtn.dataset.bound !== 'true') {
+      importBtn.dataset.bound = 'true';
+      importBtn.addEventListener('click', () => this.openDraftsImportDialog());
+    }
+
+    const fileInput = this.getElement('drafts-file-input');
+    if (fileInput && fileInput.dataset.bound !== 'true') {
+      fileInput.dataset.bound = 'true';
+      fileInput.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) this.importDraftsFromFile(file);
+      });
+    }
+  }
+
+  /**
+   * Resolve server base URL
+   */
+  getServerBaseUrl() {
+    const stored = localStorage.getItem(STORAGE_KEYS.serverUrl);
+    return stored || SERVER_CONFIG.baseUrl;
+  }
+
+  /**
+   * Whether server sync is enabled
+   */
+  isServerEnabled() {
+    return SERVER_CONFIG.enabled && !!this.getServerBaseUrl();
+  }
+
+  /**
+   * Fetch all drafts from server
+   */
+  async fetchServerDrafts() {
+    if (!this.isServerEnabled()) return [];
+    const baseUrl = this.getServerBaseUrl();
+    const res = await fetch(`${baseUrl}/drafts`);
+    if (!res.ok) throw new Error('Failed to fetch drafts');
+    return res.json();
+  }
+
+  /**
+   * Fetch a single draft from server
+   */
+  async fetchServerDraft(draftId) {
+    if (!this.isServerEnabled()) return null;
+    const baseUrl = this.getServerBaseUrl();
+    const res = await fetch(`${baseUrl}/drafts/${draftId}`);
+    if (!res.ok) return null;
+    return res.json();
+  }
+
+  /**
+   * Save current draft to server
+   */
+  async syncCurrentDraftToServer() {
+    if (!this.isServerEnabled()) return;
+    const baseUrl = this.getServerBaseUrl();
+    const payload = this.state.exportCurrentDraft();
+    try {
+      await fetch(`${baseUrl}/drafts/${payload.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch (e) {
+      console.warn('Server sync failed', e);
+    }
+  }
+
+  /**
+   * Delete draft on server
+   */
+  async deleteServerDraft(draftId) {
+    if (!this.isServerEnabled()) return false;
+    const baseUrl = this.getServerBaseUrl();
+    const res = await fetch(`${baseUrl}/drafts/${draftId}`, { method: 'DELETE' });
+    return res.ok;
+  }
+
+  /**
+   * Sync all local drafts to server
+   */
+  async syncAllDraftsToServer() {
+    if (!this.isServerEnabled()) return;
+    const drafts = this.state.getDraftsList();
+    const baseUrl = this.getServerBaseUrl();
+
+    for (const entry of drafts) {
+      const raw = localStorage.getItem(`linkey-draft-${entry.id}`);
+      if (!raw) continue;
+      try {
+        const payload = JSON.parse(raw);
+        await fetch(`${baseUrl}/drafts/${payload.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      } catch (e) {
+        console.warn('Failed to sync draft', entry.id, e);
+      }
+    }
   }
   
   /**
@@ -279,6 +403,9 @@ class BlogEditorApp {
       const text = await file.text();
       const payload = JSON.parse(text);
       const result = this.state.importDrafts(payload);
+      if (this.isServerEnabled()) {
+        await this.syncAllDraftsToServer();
+      }
       if (result.imported || result.updated) {
         this.showStatus(`Imported ${result.imported + result.updated} drafts`, 'success');
       } else {

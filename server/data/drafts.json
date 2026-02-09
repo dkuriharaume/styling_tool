@@ -1,0 +1,699 @@
+{
+  "drafts": [
+    {
+      "id": "draft-1770562036998",
+      "name": "テストブログ 1-2",
+      "title": "テストブログ 1-2",
+      "blocks": [
+        {
+          "id": "block-1770519282330-xr3ima8tw",
+          "type": "header",
+          "level": 1,
+          "preset": "default",
+          "content": "もうテストはじめてます！"
+        },
+        {
+          "id": "block-1770520418802-c9qcqfae3",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "他のテキストブロック。<span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span>"
+        },
+        {
+          "id": "block-1770519416665-5inv2azd4",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "日本語を書いている途中で、エディターが完了と間違えるのはもうなさそう。<div>大丈夫か。</div><div>大丈夫そう。</div>"
+        },
+        {
+          "id": "block-1770523685924-ltf59e024",
+          "type": "paragraph",
+          "variant": "small",
+          "content": "ここが注意書き"
+        },
+        {
+          "id": "block-1770519764117-oaqm15oa7",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "かなりすべて良さそうなのよね。"
+        },
+        {
+          "id": "block-1770529529097-fomrcxeon",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "<span style=\"font-size: 15px; letter-spacing: 1.05px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span>"
+        },
+        {
+          "id": "block-1770519734402-gp7p0jdhg",
+          "type": "header",
+          "level": 2,
+          "preset": "red",
+          "content": "原材料"
+        },
+        {
+          "id": "block-1770519738950-3z4e269c9",
+          "type": "list",
+          "listType": "ol",
+          "items": [
+            {
+              "content": "卵 : 普通のたまご"
+            },
+            {
+              "content": "小麦粉 : 普通の小麦粉"
+            },
+            {
+              "content": "パン粉 : 普通のパン粉"
+            },
+            {
+              "content": "豚肉 : 普通の豚肉"
+            },
+            {
+              "content": "塩コショウ : 普通の塩コショウ"
+            }
+          ]
+        },
+        {
+          "id": "block-1770529636094-v53o42v4o",
+          "type": "header",
+          "level": 3,
+          "preset": "default",
+          "content": "会社情報"
+        },
+        {
+          "id": "block-1770530640668-qobcmjko0",
+          "type": "list",
+          "listType": "dl",
+          "items": [
+            {
+              "term": "会社名",
+              "definition": "株式会社ユーエムイー"
+            },
+            {
+              "term": "代表者",
+              "definition": "内野 雅和"
+            },
+            {
+              "term": "所在地",
+              "definition": "〒 108-0028 東京都港区芝浦 3-13-3 芝浦 SEC ビル 3F"
+            },
+            {
+              "term": "事業内容",
+              "definition": "スマートホーム事業"
+            }
+          ]
+        },
+        {
+          "id": "block-1770531698898-p3m5z2uci",
+          "type": "paragraph",
+          "variant": "small",
+          "content": "※ 情報は掲載時のものです。"
+        },
+        {
+          "id": "block-1770556213467-r1i0kb0xf",
+          "type": "paragraph",
+          "variant": "small-gray",
+          "content": "なんちゃって"
+        },
+        {
+          "id": "block-1770560991261-dc3l2yg6h",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "テキストブロック。<span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span>"
+        },
+        {
+          "id": "block-1770531711948-fya99jmai",
+          "type": "header",
+          "level": 4,
+          "preset": "blue",
+          "content": "謎の料理の作り方"
+        },
+        {
+          "id": "block-1770537826085-1tub4jxi7",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "これでみんなも一人前の料理人♫"
+        },
+        {
+          "id": "block-1770527333197-jbffeqwgt",
+          "type": "list",
+          "listType": "ol",
+          "items": [
+            {
+              "content": "粉をふります"
+            },
+            {
+              "content": "混ぜます"
+            },
+            {
+              "content": "食べます"
+            },
+            {
+              "content": "なじませます"
+            },
+            {
+              "content": "揚げます"
+            }
+          ]
+        },
+        {
+          "id": "block-1770546442839-bnmd54nl3",
+          "type": "header",
+          "level": 2,
+          "preset": "blue",
+          "content": "New Heading"
+        }
+      ],
+      "timestamp": 1770519782898,
+      "updatedAt": 1770562161283
+    },
+    {
+      "id": "draft-1770560267301",
+      "name": "Untitled Draft 4",
+      "title": "Untitled Draft 4",
+      "blocks": [
+        {
+          "id": "block-1770560271898-jili51y0i",
+          "type": "header",
+          "level": 4,
+          "preset": "default",
+          "content": "4 本目"
+        },
+        {
+          "id": "block-1770596190773-emm4ognmu",
+          "type": "header",
+          "level": 2,
+          "preset": "blue",
+          "content": "New Heading"
+        },
+        {
+          "id": "block-1770595389840-7teep2ae9",
+          "type": "card",
+          "subtype": "2-col",
+          "cards": [
+            {
+              "title": "Card 2",
+              "content": "Card content",
+              "image": "https://www.linkey-lock.com/wp-content/uploads/2025/05/2634fefd9b745aa48f169e9a26c89cf8-1.png",
+              "alt": ""
+            },
+            {
+              "title": "Card 1",
+              "content": "Card content",
+              "image": "https://www.linkey-lock.com/wp-content/uploads/2025/05/2634fefd9b745aa48f169e9a26c89cf8-1.png",
+              "alt": ""
+            }
+          ]
+        },
+        {
+          "id": "block-1770596196739-8emujuxt5",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "Click to start typing..."
+        },
+        {
+          "id": "block-1770595403056-8pdjagwyh",
+          "type": "card",
+          "subtype": "3-col",
+          "cards": [
+            {
+              "title": "Card 2",
+              "content": "Card content",
+              "image": "https://www.linkey-lock.com/wp-content/uploads/2025/05/2634fefd9b745aa48f169e9a26c89cf8-1.png",
+              "alt": ""
+            },
+            {
+              "title": "Card 3",
+              "content": "Card content",
+              "image": "https://www.linkey-lock.com/wp-content/uploads/2025/05/2634fefd9b745aa48f169e9a26c89cf8-1.png",
+              "alt": ""
+            },
+            {
+              "title": "Card 1",
+              "content": "Card content",
+              "image": "https://www.linkey-lock.com/wp-content/uploads/2025/05/2634fefd9b745aa48f169e9a26c89cf8-1.png",
+              "alt": ""
+            }
+          ]
+        }
+      ],
+      "timestamp": 1770560267301,
+      "updatedAt": 1770596811226
+    },
+    {
+      "id": "draft-1770537867203",
+      "name": "テストブログ 3",
+      "title": "テストブログ 3",
+      "blocks": [
+        {
+          "id": "block-1770537950150-3s7bybjmj",
+          "type": "header",
+          "level": 1,
+          "preset": "default",
+          "content": "試しに書いてみる"
+        },
+        {
+          "id": "block-1770537872117-gn7sdw5zx",
+          "type": "list",
+          "listType": "ol-title",
+          "items": [
+            {
+              "title": "さて、どんなものかな",
+              "content": "なかなかいまのところ良さそうだけど。"
+            },
+            {
+              "title": "Third point",
+              "content": "Description here"
+            },
+            {
+              "title": "これからたくさんバグが出てくるだろうね",
+              "content": "望むところよ。すべて駆逐してみせる (AI が)OK。"
+            }
+          ]
+        }
+      ],
+      "timestamp": 1770537867203,
+      "updatedAt": 1770556851007
+    },
+    {
+      "id": "draft-1770520953413",
+      "name": "新しいドラフト 2",
+      "title": "新しいドラフト 2",
+      "blocks": [
+        {
+          "id": "block-1770531733247-1euvgfj3d",
+          "type": "header",
+          "level": 1,
+          "preset": "default",
+          "content": "新しいドラフト"
+        },
+        {
+          "id": "block-1770531808368-qzrpsmsva",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "テスト・テスト。テストあるのみ。日本語入力時のエンター押下による編集解除の問題は解決したっぽい。"
+        },
+        {
+          "id": "block-1770535834042-8lsns1h4f",
+          "type": "paragraph",
+          "variant": "small-gray",
+          "content": "※ 注意書きはこんな感じに。"
+        },
+        {
+          "id": "block-1770535858986-b6vdyzf3h",
+          "type": "header",
+          "level": 2,
+          "preset": "blue",
+          "content": "Header 2"
+        },
+        {
+          "id": "block-1770535944294-6h1y9ao40",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "ヘッダー配下の通常テキストはこんな感じに入力。<div>複数行も当然可能。</div><div>装飾テキスト類 (<strong class=\"strong strong--info\">青太字</strong>、<strong class=\"strong\">通常太字</strong>、<strong class=\"strong strong--warning\">赤太字</strong>) も普通に入力可能。</div>"
+        },
+        {
+          "id": "block-1770552344561-rl4ezvx2s",
+          "type": "header",
+          "level": 4,
+          "preset": "red",
+          "content": "New Heading"
+        },
+        {
+          "id": "block-1770552355060-i8tzk4l9y",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "<span style=\"font-size: 15px; letter-spacing: 1.05px;\">テスト・テスト。テストあるのみ。日本語入力時のエンター押下による編集解除の問題は解決したっぽい。</span>"
+        },
+        {
+          "id": "block-1770552375393-dtu7dvvoo",
+          "type": "header",
+          "level": 4,
+          "preset": "default",
+          "content": "Lists"
+        },
+        {
+          "id": "block-1770552383876-gk6cjf1xp",
+          "type": "list",
+          "listType": "dl",
+          "items": [
+            {
+              "term": "商品名",
+              "definition": "LINKEY Plus"
+            },
+            {
+              "term": "値段",
+              "definition": "120,000 JPY"
+            },
+            {
+              "term": "レビュー",
+              "definition": "⭐️⭐️⭐️⭐️"
+            }
+          ]
+        }
+      ],
+      "timestamp": 1770520953413,
+      "updatedAt": 1770552432561
+    },
+    {
+      "id": "draft-1770519782898",
+      "name": "テストブログ 1",
+      "title": "テストブログ 1",
+      "blocks": [
+        {
+          "id": "block-1770519282330-xr3ima8tw",
+          "type": "header",
+          "level": 1,
+          "preset": "default",
+          "content": "今からテスト始めるよ！"
+        },
+        {
+          "id": "block-1770519416665-5inv2azd4",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "日本語を書いている途中で、エディターが完了と間違えるのはもうなさそう。<div>大丈夫か。</div><div>大丈夫そう。</div>"
+        },
+        {
+          "id": "block-1770523685924-ltf59e024",
+          "type": "paragraph",
+          "variant": "small",
+          "content": "ここが注意書き"
+        },
+        {
+          "id": "block-1770529529097-fomrcxeon",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "<span style=\"font-size: 15px; letter-spacing: 1.05px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span>"
+        },
+        {
+          "id": "block-1770519764117-oaqm15oa7",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "かなりすべて良さそうなのよね。"
+        },
+        {
+          "id": "block-1770520418802-c9qcqfae3",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "他のテキストブロック。<span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span><span style=\"font-size: 25.6px; letter-spacing: 1.792px;\">他のテキストブロック。</span>"
+        },
+        {
+          "id": "block-1770519734402-gp7p0jdhg",
+          "type": "header",
+          "level": 2,
+          "preset": "blue",
+          "content": "原材料"
+        },
+        {
+          "id": "block-1770519738950-3z4e269c9",
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "卵 : 普通のたまご"
+            },
+            {
+              "content": "小麦粉 : 普通の小麦粉"
+            },
+            {
+              "content": "パン粉 : 普通のパン粉"
+            },
+            {
+              "content": "豚肉 : 普通の豚肉"
+            },
+            {
+              "content": "塩コショウ : 普通の塩コショウ"
+            }
+          ]
+        },
+        {
+          "id": "block-1770529636094-v53o42v4o",
+          "type": "header",
+          "level": 3,
+          "preset": "default",
+          "content": "会社情報"
+        },
+        {
+          "id": "block-1770530640668-qobcmjko0",
+          "type": "list",
+          "listType": "dl",
+          "items": [
+            {
+              "term": "会社名",
+              "definition": "株式会社ユーエムイー"
+            },
+            {
+              "term": "代表者",
+              "definition": "内野 雅和"
+            },
+            {
+              "term": "所在地",
+              "definition": "〒 108-0028 東京都港区芝浦 3-13-3 芝浦 SEC ビル 3F"
+            },
+            {
+              "term": "事業内容",
+              "definition": "スマートホーム事業"
+            }
+          ]
+        },
+        {
+          "id": "block-1770531698898-p3m5z2uci",
+          "type": "paragraph",
+          "variant": "small",
+          "content": "※ 情報は掲載時のものです。"
+        },
+        {
+          "id": "block-1770556213467-r1i0kb0xf",
+          "type": "paragraph",
+          "variant": "small-gray",
+          "content": "なんちゃって"
+        },
+        {
+          "id": "block-1770560991261-dc3l2yg6h",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "テキストブロック。<span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span>"
+        },
+        {
+          "id": "block-1770531711948-fya99jmai",
+          "type": "header",
+          "level": 4,
+          "preset": "blue",
+          "content": "謎の料理の作り方"
+        },
+        {
+          "id": "block-1770537826085-1tub4jxi7",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "これでみんなも一人前の料理人♫"
+        },
+        {
+          "id": "block-1770527333197-jbffeqwgt",
+          "type": "list",
+          "listType": "ol",
+          "items": [
+            {
+              "content": "粉をふります"
+            },
+            {
+              "content": "混ぜます"
+            },
+            {
+              "content": "食べます"
+            },
+            {
+              "content": "なじませます"
+            },
+            {
+              "content": "揚げます"
+            }
+          ]
+        },
+        {
+          "id": "block-1770546442839-bnmd54nl3",
+          "type": "header",
+          "level": 2,
+          "preset": "blue",
+          "content": "New Heading"
+        },
+        {
+          "id": "block-1770563678956-04qdnhlbj",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "<span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span><span style=\"font-size: 15px; letter-spacing: 1.05px;\">テキストブロック。</span>"
+        }
+      ],
+      "timestamp": 1770519782898,
+      "updatedAt": 1770591838794
+    },
+    {
+      "id": "draft-1770600814058",
+      "name": "このツールの使い方",
+      "title": "このツールの使い方",
+      "blocks": [
+        {
+          "id": "block-1770600816477-bo86lknm2",
+          "type": "header",
+          "level": 1,
+          "preset": "default",
+          "content": "このツールの使い方"
+        },
+        {
+          "id": "block-1770600864428-yy9vp8xwu",
+          "type": "paragraph",
+          "variant": "small",
+          "content": "2026.02.09 ver by 栗原"
+        },
+        {
+          "id": "block-1770600842260-i92iij0t9",
+          "type": "header",
+          "level": 4,
+          "preset": "default",
+          "content": "ステップを簡単にまとめると"
+        },
+        {
+          "id": "block-1770600884695-jygutetpd",
+          "type": "list",
+          "listType": "ol",
+          "items": [
+            {
+              "content": "新規ドラフトを作成 (右のパネルから)"
+            },
+            {
+              "content": "左のパレットからドラッグ & ドロップで要素をドキュメントに配置"
+            },
+            {
+              "content": "要素をクリックしてテキストを編集"
+            },
+            {
+              "content": "右上のボタンでHTML をクリップボードにコピー"
+            },
+            {
+              "content": "Wordpress の記事編集画面にコードをペースト"
+            }
+          ]
+        },
+        {
+          "id": "block-1770601015529-fq7uh8v21",
+          "type": "header",
+          "level": 2,
+          "preset": "blue",
+          "content": "現状できないこと (未実装機能の ToDo)"
+        },
+        {
+          "id": "block-1770601058680-0t8nd2aye",
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "すでにある文書ファイル (Google Document など) のインポート & 自動スタイリング"
+            },
+            {
+              "content": "複雑なコンポーネント (目次、関連記事、要約、顧客の声ボックスなど) の実装"
+            }
+          ]
+        },
+        {
+          "id": "block-1770601689270-tcihm23bo",
+          "type": "header",
+          "level": 2,
+          "preset": "blue",
+          "content": "詳しい使い方"
+        },
+        {
+          "id": "block-1770601722537-93z3fi45d",
+          "type": "header",
+          "level": 3,
+          "preset": "default",
+          "content": "ナビゲーション"
+        },
+        {
+          "id": "block-1770601752072-tt7no0suv",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "ツール画面は 4 つに分割されている。"
+        },
+        {
+          "id": "block-1770601777305-jrn897sga",
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "ヘッダー (ページ上部)"
+            },
+            {
+              "content": "パレット (ページ左)"
+            },
+            {
+              "content": "プロパティ (ページ右)"
+            },
+            {
+              "content": "エディター (ページ中央)"
+            }
+          ]
+        },
+        {
+          "id": "block-1770601885624-0x7lsmp99",
+          "type": "header",
+          "level": 4,
+          "preset": "blue",
+          "content": "ヘッダー"
+        },
+        {
+          "id": "block-1770601900424-vx4f73im4",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "中央にあるのが<strong class=\"strong strong--info\">ビューの選択ツール</strong>。様々なデバイスでどのように表示されるかをプレビューできる。<div>右に<strong class=\"strong strong--info\">言語トグル</strong>と <strong class=\"strong strong--info\">HTML エクスポート</strong>ボタン。前者では UI の言語変更、後者は HTML コードをクリップボードにコピーできる。</div>"
+        },
+        {
+          "id": "block-1770602041958-j0bblpsix",
+          "type": "header",
+          "level": 4,
+          "preset": "blue",
+          "content": "パレット"
+        },
+        {
+          "id": "block-1770602055641-4aebzw3mm",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "様々な装飾要素 (見出し、パラグラフ、箇条書き) の<strong class=\"strong strong--info\">コンポーネント</strong>をドラッグ &amp; ドロップで文書内に配置できる。追加要素も続々実装予定。"
+        },
+        {
+          "id": "block-1770602156176-yg6h2ufja",
+          "type": "header",
+          "level": 4,
+          "preset": "blue",
+          "content": "プロパティ"
+        },
+        {
+          "id": "block-1770602171616-u9v6hm43e",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "エディターで何が選択されているか (コンテキスト) によって、表示される関連ツールやコマンドが変わる。<div>何も選択されていない状態では、ファイル系のコマンドが表示される。</div><div><br></div>"
+        },
+        {
+          "id": "block-1770602286291-fh75z5os0",
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "新規ドラフトの作成 : 新しい文書ファイルを作成する"
+            },
+            {
+              "content": "ドラフトを開く : 作成済みの文書ファイルの閲覧や選択。削除もここから。"
+            },
+            {
+              "content": "名前をつけて保存 : 現在のファイルをコピーして別名で保存。バックアップ等に。"
+            }
+          ]
+        },
+        {
+          "id": "block-1770602430259-ycxxcmkdw",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "<br><div>その他、\"ドラフトをバックアップ\" 系のコマンド群は現状無視で OK。<br></div>"
+        }
+      ],
+      "timestamp": 1770644965116,
+      "updatedAt": 1770644965116
+    }
+  ]
+}

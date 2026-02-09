@@ -78,6 +78,7 @@
     const name = await app.showPrompt('Save As', 'Enter draft name:', app.state.title || 'Untitled Draft');
     if (name !== null && name.trim() !== '') {
       app.state.saveAs(name);
+      app.syncCurrentDraftToServer();
       app.showStatus('Draft saved as new!', 'success');
     }
   };
@@ -87,16 +88,52 @@
     modal.classList.remove('show');
   };
 
-  const loadDraft = (app, draftId) => {
+  const loadDraft = async (app, draftId) => {
+    if (app.isServerEnabled()) {
+      try {
+        const data = await app.fetchServerDraft(draftId);
+        if (data && app.state.applyDraftData(data)) {
+          app.closeDraftsModal();
+          app.showStatus('Draft loaded', 'success');
+          return true;
+        }
+      } catch (e) {
+        console.warn('Server load failed, falling back to local.', e);
+      }
+    }
+
     if (app.state.load(draftId)) {
       app.closeDraftsModal();
       app.showStatus('Draft loaded', 'success');
-    } else {
-      app.showStatus('Failed to load draft', 'error');
+      return true;
     }
+
+    app.showStatus('Failed to load draft', 'error');
+    return false;
   };
 
-  const loadLastEditedDraft = (app) => {
+  const loadLastEditedDraft = async (app) => {
+    if (app.isServerEnabled()) {
+      try {
+        const drafts = await app.fetchServerDrafts();
+        const sortedDrafts = drafts.sort((a, b) => {
+          const timeA = a.updatedAt || a.timestamp || 0;
+          const timeB = b.updatedAt || b.timestamp || 0;
+          return timeB - timeA;
+        });
+
+        if (sortedDrafts.length > 0) {
+          const latest = sortedDrafts[0];
+          if (latest && latest.id) {
+            const loaded = await loadDraft(app, latest.id);
+            if (loaded) return;
+          }
+        }
+      } catch (e) {
+        console.warn('Server drafts unavailable, using local drafts.', e);
+      }
+    }
+
     const drafts = app.state.getDraftsList();
 
     // Prefer the last opened draft if available

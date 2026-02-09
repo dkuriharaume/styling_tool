@@ -5,8 +5,44 @@
 (() => {
   const modules = window.BLOG_EDITOR_MODULES || {};
 
-  const setupProperties = () => {
-    // Will be populated when a block is selected
+  const setupProperties = (app) => {
+    const panel = app.getPropertiesPanel();
+    if (!panel || panel.dataset.bound === 'true') return;
+    panel.dataset.bound = 'true';
+
+    panel.addEventListener('click', async (e) => {
+      const target = e.target.closest('button');
+      if (!target) return;
+
+      switch (target.id) {
+        case 'btn-new': {
+          const title = await app.showPrompt('Create New Draft', 'Enter a title for your new draft:', 'Untitled Draft');
+          if (title) {
+            app.state.newDraft();
+            app.state.setTitle(title);
+            app.showStatus('New draft created', 'success');
+          }
+          break;
+        }
+        case 'btn-open':
+          app.showDraftsBrowser();
+          break;
+        case 'btn-save-as':
+          app.saveAsNewDraft();
+          break;
+        case 'btn-export-current-draft':
+          app.exportCurrentDraftToFile();
+          break;
+        case 'btn-export-drafts':
+          app.exportDraftsToFile();
+          break;
+        case 'btn-import-drafts':
+          app.openDraftsImportDialog();
+          break;
+        default:
+          break;
+      }
+    });
   };
 
   const updatePropertiesPanel = (app) => {
@@ -415,12 +451,22 @@
     });
   };
 
-  const showFileOperations = (app) => {
+  const showFileOperations = async (app) => {
     app.isInDraftsBrowser = false;
     const panel = app.getPropertiesPanel();
 
     // Get recent drafts
-    const drafts = app.state.getDraftsList();
+    let drafts = app.state.getDraftsList();
+    if (app.isServerEnabled()) {
+      try {
+        const serverDrafts = await app.fetchServerDrafts();
+        if (serverDrafts.length > 0) {
+          drafts = serverDrafts;
+        }
+      } catch (e) {
+        console.warn('Failed to load server drafts, using local list.', e);
+      }
+    }
     const recentDrafts = drafts
       .sort((a, b) => {
         const timeA = a.updatedAt || a.timestamp || 0;
@@ -481,32 +527,32 @@
             </div>
           </button>
         </div>
+      </div>
 
-        <div class="file-section">
-          <h4>${app.t('fileOps.drafts')}</h4>
-          <button class="file-btn" id="btn-export-current-draft">
-            <span class="file-btn-icon">⬇️</span>
-            <div class="file-btn-content">
-              <span class="file-btn-label">${app.t('fileOps.exportCurrentDraft')}</span>
-              <span class="file-btn-desc">${app.t('fileOps.exportCurrentDraftDesc')}</span>
-            </div>
-          </button>
-          <button class="file-btn" id="btn-export-drafts">
-            <span class="file-btn-icon">⬇️</span>
-            <div class="file-btn-content">
-              <span class="file-btn-label">${app.t('fileOps.exportDrafts')}</span>
-              <span class="file-btn-desc">${app.t('fileOps.exportDraftsDesc')}</span>
-            </div>
-          </button>
-          <button class="file-btn" id="btn-import-drafts">
-            <span class="file-btn-icon">⬆️</span>
-            <div class="file-btn-content">
-              <span class="file-btn-label">${app.t('fileOps.importDrafts')}</span>
-              <span class="file-btn-desc">${app.t('fileOps.importDraftsDesc')}</span>
-            </div>
-          </button>
-          <input type="file" id="drafts-file-input" accept="application/json" style="display:none" />
-        </div>
+      <div class="drafts-backup">
+        <h4>${app.t('fileOps.drafts')}</h4>
+        <button class="file-btn" id="btn-export-current-draft">
+          <span class="file-btn-icon">⬇️</span>
+          <div class="file-btn-content">
+            <span class="file-btn-label">${app.t('fileOps.exportCurrentDraft')}</span>
+            <span class="file-btn-desc">${app.t('fileOps.exportCurrentDraftDesc')}</span>
+          </div>
+        </button>
+        <button class="file-btn" id="btn-export-drafts">
+          <span class="file-btn-icon">⬇️</span>
+          <div class="file-btn-content">
+            <span class="file-btn-label">${app.t('fileOps.exportDrafts')}</span>
+            <span class="file-btn-desc">${app.t('fileOps.exportDraftsDesc')}</span>
+          </div>
+        </button>
+        <button class="file-btn" id="btn-import-drafts">
+          <span class="file-btn-icon">⬆️</span>
+          <div class="file-btn-content">
+            <span class="file-btn-label">${app.t('fileOps.importDrafts')}</span>
+            <span class="file-btn-desc">${app.t('fileOps.importDraftsDesc')}</span>
+          </div>
+        </button>
+        <input type="file" id="drafts-file-input" accept="application/json" style="display:none" />
       </div>
     `;
 
@@ -523,27 +569,6 @@
     // Re-attach event listeners
     app.setupHeader();
 
-    const exportBtn = app.getPanelElement('#btn-export-drafts');
-    if (exportBtn) {
-      exportBtn.addEventListener('click', () => {
-        app.exportDraftsToFile();
-      });
-    }
-
-    const exportCurrentBtn = app.getPanelElement('#btn-export-current-draft');
-    if (exportCurrentBtn) {
-      exportCurrentBtn.addEventListener('click', () => {
-        app.exportCurrentDraftToFile();
-      });
-    }
-
-    const importBtn = app.getPanelElement('#btn-import-drafts');
-    if (importBtn) {
-      importBtn.addEventListener('click', () => {
-        app.openDraftsImportDialog();
-      });
-    }
-
     const fileInput = app.getElement('drafts-file-input');
     if (fileInput && fileInput.dataset.bound !== 'true') {
       fileInput.dataset.bound = 'true';
@@ -556,10 +581,48 @@
     }
   };
 
-  const showDraftsBrowser = (app) => {
+  const showDraftsBrowser = async (app) => {
     app.isInDraftsBrowser = true;
     const panel = app.getPropertiesPanel();
-    const drafts = app.state.getDraftsList();
+    let drafts = app.state.getDraftsList();
+    if (app.isServerEnabled()) {
+      try {
+        const serverDrafts = await app.fetchServerDrafts();
+        if (serverDrafts.length > 0) {
+          drafts = serverDrafts;
+        }
+      } catch (e) {
+        console.warn('Failed to load server drafts, using local list.', e);
+      }
+    }
+
+    const backupControls = `
+      <div class="drafts-backup">
+        <h4>${app.t('fileOps.drafts')}</h4>
+        <button class="file-btn" id="btn-export-current-draft">
+          <span class="file-btn-icon">⬇️</span>
+          <div class="file-btn-content">
+            <span class="file-btn-label">${app.t('fileOps.exportCurrentDraft')}</span>
+            <span class="file-btn-desc">${app.t('fileOps.exportCurrentDraftDesc')}</span>
+          </div>
+        </button>
+        <button class="file-btn" id="btn-export-drafts">
+          <span class="file-btn-icon">⬇️</span>
+          <div class="file-btn-content">
+            <span class="file-btn-label">${app.t('fileOps.exportDrafts')}</span>
+            <span class="file-btn-desc">${app.t('fileOps.exportDraftsDesc')}</span>
+          </div>
+        </button>
+        <button class="file-btn" id="btn-import-drafts">
+          <span class="file-btn-icon">⬆️</span>
+          <div class="file-btn-content">
+            <span class="file-btn-label">${app.t('fileOps.importDrafts')}</span>
+            <span class="file-btn-desc">${app.t('fileOps.importDraftsDesc')}</span>
+          </div>
+        </button>
+        <input type="file" id="drafts-file-input" accept="application/json" style="display:none" />
+      </div>
+    `;
 
     if (drafts.length === 0) {
       panel.innerHTML = `
@@ -572,6 +635,7 @@
             <p>No saved drafts found</p>
             <p style="font-size: 12px; color: #999;">Create a new draft to get started</p>
           </div>
+          ${backupControls}
         </div>
       `;
     } else {
@@ -603,6 +667,7 @@
           <div class="drafts-list">
             ${draftsHtml}
           </div>
+          ${backupControls}
         </div>
       `;
     }
@@ -615,15 +680,26 @@
       });
     }
 
+    const fileInput = app.getElement('drafts-file-input');
+    if (fileInput && fileInput.dataset.bound !== 'true') {
+      fileInput.dataset.bound = 'true';
+      fileInput.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) {
+          app.importDraftsFromFile(file);
+        }
+      });
+    }
+
     // Add listeners for clicking on draft cards (open draft)
     app.getDraftItemElements().forEach(item => {
-      item.addEventListener('click', (e) => {
+      item.addEventListener('click', async (e) => {
         // Don't trigger if clicking on delete button
         if (e.target.closest('.btn-delete-draft')) {
           return;
         }
         const draftId = item.dataset.id;
-        app.loadDraft(draftId);
+        await app.loadDraft(draftId);
         // Stay in the browser - don't close it
         // Refresh the list to update the "Current" badge
         app.showDraftsBrowser();
@@ -638,6 +714,9 @@
         const draft = drafts.find(d => d.id === draftId);
         const confirmed = await app.showConfirm('Delete Draft', `Are you sure you want to delete "${draft.name}"?`);
         if (confirmed) {
+          if (app.isServerEnabled()) {
+            await app.deleteServerDraft(draftId);
+          }
           app.state.deleteDraft(draftId);
           app.showStatus('Draft deleted', 'success');
           app.showDraftsBrowser(); // Refresh list

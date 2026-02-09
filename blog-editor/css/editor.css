@@ -1879,6 +1879,26 @@ html.dragging .drop-zone::before {
   line-height: 1.5;
 }
 
+.drafts-backup {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.drafts-backup h4 {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.5px;
+}
+
+.drafts-backup .btn {
+  width: 100%;
+}
+
 .property-card-list {
   display: flex;
   flex-direction: column;

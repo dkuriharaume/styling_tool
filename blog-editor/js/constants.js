@@ -15,7 +15,13 @@
   const STORAGE_KEYS = {
     language: 'linkey-lang',
     viewport: 'linkey-editor-viewport',
-    scrollPosition: 'blog-editor-scroll-position'
+    scrollPosition: 'blog-editor-scroll-position',
+    serverUrl: 'linkey-server-url'
+  };
+
+  const SERVER_CONFIG = {
+    enabled: true,
+    baseUrl: 'http://localhost:3001'
   };
 
   const COMPONENT_DEFS = [
@@ -94,6 +100,7 @@
     VIEWPORT_CONFIG,
     VIEWPORTS,
     STORAGE_KEYS,
+    SERVER_CONFIG,
     COMPONENT_DEFS,
     MARGIN_CONFIG,
     resolveMarginValue

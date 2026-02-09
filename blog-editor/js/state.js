@@ -524,6 +524,23 @@ class EditorState {
       this.autoSave();
     }
   }
+
+  /**
+   * Apply full draft data (used for server loads)
+   */
+  applyDraftData(data) {
+    if (!data) return false;
+    this.title = data.title || data.name || '';
+    this.blocks = Array.isArray(data.blocks) ? data.blocks : [];
+    this.currentDraftId = data.id || null;
+    this.currentDraftTimestamp = data.timestamp || Date.now();
+    if (this.currentDraftId) {
+      localStorage.setItem('linkey-current-draft-id', this.currentDraftId);
+    }
+    this.saveHistory();
+    this.emit('change');
+    return true;
+  }
   
   /**
    * Event emitter

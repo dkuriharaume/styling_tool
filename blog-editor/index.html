@@ -153,6 +153,33 @@
         <!-- Properties Panel -->
         <div class="properties-panel">
           <div id="properties-content">
+            <div class="drafts-backup">
+              <div class="file-section">
+                <h4 data-i18n="fileOps.drafts">Drafts Backup</h4>
+                <button class="file-btn" id="btn-export-current-draft">
+                  <span class="file-btn-icon">⬇️</span>
+                  <div class="file-btn-content">
+                    <span class="file-btn-label" data-i18n="fileOps.exportCurrentDraft">Export Current Draft</span>
+                    <span class="file-btn-desc" data-i18n="fileOps.exportCurrentDraftDesc">Download the current draft as JSON</span>
+                  </div>
+                </button>
+                <button class="file-btn" id="btn-export-drafts">
+                  <span class="file-btn-icon">⬇️</span>
+                  <div class="file-btn-content">
+                    <span class="file-btn-label" data-i18n="fileOps.exportDrafts">Export Drafts</span>
+                    <span class="file-btn-desc" data-i18n="fileOps.exportDraftsDesc">Download all drafts as a JSON file</span>
+                  </div>
+                </button>
+                <button class="file-btn" id="btn-import-drafts">
+                  <span class="file-btn-icon">⬆️</span>
+                  <div class="file-btn-content">
+                    <span class="file-btn-label" data-i18n="fileOps.importDrafts">Import Drafts</span>
+                    <span class="file-btn-desc" data-i18n="fileOps.importDraftsDesc">Restore drafts from a JSON backup</span>
+                  </div>
+                </button>
+                <input type="file" id="drafts-file-input" accept="application/json" style="display:none" />
+              </div>
+            </div>
             <!-- File Operations (shown when no block selected) -->
             <div class="file-operations">
               <div class="file-section">
