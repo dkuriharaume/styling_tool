@@ -515,6 +515,12 @@
           listType: e.detail.data.type,
           items: e.detail.data.items
         });
+      } else if (block.type === 'card') {
+        // Card component sends subtype and cards
+        app.state.updateBlock(block.id, {
+          subtype: e.detail.data.subtype,
+          cards: e.detail.data.cards
+        });
       } else {
         // Other components send content
         app.state.updateBlock(block.id, { content: e.detail.content });

@@ -67,6 +67,9 @@
       case 'list':
         app.renderListProperties(selectedBlock, propsContainer);
         break;
+      case 'card':
+        app.renderCardProperties(selectedBlock, propsContainer);
+        break;
       default:
         propsContainer.innerHTML = '<p>No properties available</p>';
     }
@@ -295,6 +298,123 @@
     });
   };
 
+  const renderCardProperties = (app, block, container) => {
+    const cards = Array.isArray(block.cards) ? block.cards : [];
+    const subtype = block.subtype || '2-col';
+
+    const cardsHtml = cards.map((card, index) => {
+      return `
+        <div class="property-card-item" data-card-index="${index}">
+          <div class="property-group">
+            <label>Title</label>
+            <input type="text" class="prop-card-title" value="${app.escapeHtml(card.title || '')}" />
+          </div>
+          <div class="property-group">
+            <label>Content</label>
+            <textarea class="prop-card-content">${app.escapeHtml(card.content || '')}</textarea>
+          </div>
+          <div class="property-group">
+            <label>Image URL</label>
+            <input type="text" class="prop-card-image" value="${app.escapeHtml(card.image || '')}" />
+          </div>
+          <button class="btn btn-secondary btn-small prop-remove-card">Remove Card</button>
+        </div>
+      `;
+    }).join('');
+
+    container.innerHTML = `
+      <h3>${app.t('properties.card')}</h3>
+
+      <div class="property-group">
+        <label>${app.t('properties.columns')}</label>
+        <select id="prop-card-columns">
+          <option value="2-col" ${subtype === '2-col' ? 'selected' : ''}>2 Columns</option>
+          <option value="3-col" ${subtype === '3-col' ? 'selected' : ''}>3 Columns</option>
+        </select>
+      </div>
+
+      <div class="property-group">
+        <label>${app.t('properties.cards')}</label>
+        <div class="property-note">${app.t('properties.cardsNote')}</div>
+      </div>
+
+      <div class="property-card-list">
+        ${cardsHtml}
+      </div>
+
+      <button class="btn btn-secondary btn-small" id="prop-add-card">${app.t('properties.addCard')}</button>
+      <button class="btn btn-danger btn-small" id="prop-delete">${app.t('properties.deleteBlock')}</button>
+    `;
+
+    app.getPropertiesControl('prop-card-columns').addEventListener('change', (e) => {
+      const nextSubtype = e.target.value;
+      app.state.updateBlock(block.id, { subtype: nextSubtype });
+    });
+
+    const cardItems = app.getPanelElements('.property-card-item');
+    cardItems.forEach((item) => {
+      const index = parseInt(item.dataset.cardIndex, 10);
+      const titleInput = item.querySelector('.prop-card-title');
+      const contentInput = item.querySelector('.prop-card-content');
+      const imageInput = item.querySelector('.prop-card-image');
+      const removeBtn = item.querySelector('.prop-remove-card');
+
+      if (titleInput) {
+        titleInput.addEventListener('input', () => {
+          const updated = block.cards.map((card, cardIndex) =>
+            cardIndex === index ? { ...card, title: titleInput.value } : card
+          );
+          app.state.updateBlock(block.id, { cards: updated });
+        });
+      }
+
+      if (contentInput) {
+        contentInput.addEventListener('input', () => {
+          const updated = block.cards.map((card, cardIndex) =>
+            cardIndex === index ? { ...card, content: contentInput.value } : card
+          );
+          app.state.updateBlock(block.id, { cards: updated });
+        });
+      }
+
+      if (imageInput) {
+        imageInput.addEventListener('input', () => {
+          const updated = block.cards.map((card, cardIndex) =>
+            cardIndex === index ? { ...card, image: imageInput.value } : card
+          );
+          app.state.updateBlock(block.id, { cards: updated });
+        });
+      }
+
+      if (removeBtn) {
+        removeBtn.addEventListener('click', () => {
+          if (block.cards.length <= 1) return;
+          const updated = block.cards.filter((_, cardIndex) => cardIndex !== index);
+          app.state.updateBlock(block.id, { cards: updated });
+        });
+      }
+    });
+
+    app.getPropertiesControl('prop-add-card').addEventListener('click', () => {
+      const count = block.cards.length + 1;
+      const placeholder = 'https://www.linkey-lock.com/wp-content/uploads/2025/05/2634fefd9b745aa48f169e9a26c89cf8-1.png';
+      const updated = block.cards.concat({
+        title: `Card ${count}`,
+        content: 'Card content',
+        image: placeholder,
+        alt: ''
+      });
+      app.state.updateBlock(block.id, { cards: updated });
+    });
+
+    app.getPropertiesControl('prop-delete').addEventListener('click', async () => {
+      const confirmed = await app.showConfirm('Delete Block', 'Are you sure you want to delete this block?');
+      if (confirmed) {
+        app.state.deleteBlock(block.id);
+      }
+    });
+  };
+
   const showFileOperations = (app) => {
     app.isInDraftsBrowser = false;
     const panel = app.getPropertiesPanel();
@@ -474,6 +594,7 @@
     renderHeaderProperties,
     renderParagraphProperties,
     renderListProperties,
+    renderCardProperties,
     showFileOperations,
     showDraftsBrowser
   };

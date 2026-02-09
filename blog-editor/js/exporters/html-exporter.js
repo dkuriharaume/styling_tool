@@ -32,6 +32,8 @@ class HTMLExporter {
         return this.convertParagraph(block);
       case 'list':
         return this.convertList(block);
+      case 'card':
+        return this.convertCard(block);
       default:
         return '';
     }
@@ -170,6 +172,37 @@ class HTMLExporter {
       html += '</dl>\n';
     }
     
+    return html;
+  }
+
+  /**
+   * Convert card block
+   */
+  convertCard(block) {
+    const subtype = block.subtype || '2-col';
+    const cards = block.cards || [];
+    const itemClass = subtype === '3-col'
+      ? 'row__item row__item--tablet-6 row__item--desktop-4'
+      : 'row__item row__item--tablet-6 row__item--desktop-6';
+
+    let html = '<div class="row row--std">\n';
+
+    cards.forEach(card => {
+      const title = this.cleanupHTML(card.title || '');
+      const content = this.cleanupHTML(card.content || '');
+      const image = card.image || '';
+      const alt = card.alt || '';
+
+      html += `  <div class="${itemClass}">\n`;
+      html += '    <article class="thmb-card thmb-card--simple">\n';
+      html += `      <h3 class="thmb-card__title">${title}</h3>\n`;
+      html += `      <img class="thmb-card__img img-responsive" src="${image}" alt="${alt}">\n`;
+      html += `      <div class="thmb-card__body">${content}</div>\n`;
+      html += '    </article>\n';
+      html += '  </div>\n';
+    });
+
+    html += '</div>\n';
     return html;
   }
   

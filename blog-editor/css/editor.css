@@ -617,6 +617,127 @@ body {
   font-weight: 600;
 }
 
+/* === ROW LAYOUT (Theme) === */
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.row__item {
+  width: 100%;
+}
+
+.row--std {
+  margin: -24px;
+}
+
+.row--std .row__item {
+  padding: 24px;
+}
+
+.card-row-wrapper {
+  padding: 24px;
+}
+
+@media screen and (min-width: 768px) {
+  .row__item--tablet-6 {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .row__item--desktop-4 {
+    width: 33.3333%;
+  }
+
+  .row__item--desktop-6 {
+    width: 50%;
+  }
+}
+
+.canvas-wrapper.viewport-mobile .row__item,
+.canvas-wrapper.viewport-mobile .row__item--tablet-6,
+.canvas-wrapper.viewport-mobile .row__item--desktop-4,
+.canvas-wrapper.viewport-mobile .row__item--desktop-6 {
+  width: 100% !important;
+}
+
+.canvas-wrapper.viewport-tablet .row__item,
+.canvas-wrapper.viewport-tablet .row__item--tablet-6,
+.canvas-wrapper.viewport-tablet .row__item--desktop-4,
+.canvas-wrapper.viewport-tablet .row__item--desktop-6 {
+  width: 50% !important;
+}
+
+/* === CARDS (Theme-aligned preview) === */
+
+.thmb-card {
+  position: relative;
+  text-align: center;
+  padding: 60px;
+  box-shadow: 0 0 15px rgba(5, 28, 46, 0.12);
+  background: #fff;
+  border-radius: 40px;
+  height: 100%;
+}
+
+.thmb-card--simple {
+  text-align: left;
+}
+
+.thmb-card__title {
+  font-size: var(--font-heading-lg);
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  margin-bottom: 40px;
+  line-height: 1.5;
+  color: var(--color-font);
+}
+
+.thmb-card__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+  border-radius: 20px;
+}
+
+.thmb-card__body {
+  font-size: var(--font-text-sm);
+  letter-spacing: 0.06em;
+  line-height: 1.86;
+  color: var(--color-font);
+}
+
+.img-responsive {
+  max-width: 100%;
+  height: auto;
+}
+
+@media screen and (max-width: 767px) {
+  .row--std {
+    margin: -10px;
+  }
+
+  .row--std .row__item {
+    padding: 10px;
+  }
+
+  .card-row-wrapper {
+    padding: 10px;
+  }
+
+  .thmb-card {
+    padding: 35px 25px;
+    border-radius: 30px;
+  }
+
+  .thmb-card__title {
+    margin-bottom: 20px;
+  }
+}
+
 /* === EDITOR CANVAS === */
 
 .editor-canvas {
@@ -1742,6 +1863,24 @@ html.dragging .drop-zone::before {
   font-style: italic;
   margin-top: 0.5rem;
   line-height: 1.5;
+}
+
+.property-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.property-card-item {
+  border: 1px solid var(--editor-border);
+  border-radius: 8px;
+  padding: 1rem;
+  background: #fff;
+}
+
+.property-card-item .property-group {
+  margin-bottom: 1rem;
 }
 
 /* === BUTTONS === */
