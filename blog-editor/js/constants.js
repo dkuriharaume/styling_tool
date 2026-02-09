@@ -21,7 +21,7 @@
 
   const SERVER_CONFIG = {
     enabled: true,
-    baseUrl: 'http://localhost:3001'
+    baseUrl: 'https://styling-tool-server.onrender.com'
   };
 
   const COMPONENT_DEFS = [
