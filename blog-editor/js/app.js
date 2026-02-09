@@ -41,9 +41,10 @@ const uiModule = MODULES.ui || {};
 const draftsModule = MODULES.drafts || {};
 const eventsModule = MODULES.events || {};
 const selectionModule = MODULES.selection || {};
+const markdownImporterModule = MODULES.markdownImporter || {};
 
-if (!MODULES.palette || !MODULES.components || !MODULES.exporters || !MODULES.editor || !MODULES.properties || !MODULES.ui || !MODULES.drafts || !MODULES.events || !MODULES.selection) {
-  console.warn('BLOG_EDITOR_MODULES not fully loaded. Ensure palette/components/exporters/editor/properties/ui/drafts/events/selection modules are loaded before app.js.');
+if (!MODULES.palette || !MODULES.components || !MODULES.exporters || !MODULES.editor || !MODULES.properties || !MODULES.ui || !MODULES.drafts || !MODULES.events || !MODULES.selection || !MODULES.markdownImporter) {
+  console.warn('BLOG_EDITOR_MODULES not fully loaded. Ensure palette/components/exporters/editor/properties/ui/drafts/events/selection/markdown-importer modules are loaded before app.js.');
 }
 
 if (!window.BLOG_EDITOR_UTILS) {
@@ -139,12 +140,27 @@ class BlogEditorApp {
       importBtn.addEventListener('click', () => this.openDraftsImportDialog());
     }
 
+    const importMarkdownBtn = this.getElement('btn-import-markdown');
+    if (importMarkdownBtn && importMarkdownBtn.dataset.bound !== 'true') {
+      importMarkdownBtn.dataset.bound = 'true';
+      importMarkdownBtn.addEventListener('click', () => this.openMarkdownImportDialog());
+    }
+
     const fileInput = this.getElement('drafts-file-input');
     if (fileInput && fileInput.dataset.bound !== 'true') {
       fileInput.dataset.bound = 'true';
       fileInput.addEventListener('change', (e) => {
         const file = e.target.files && e.target.files[0];
         if (file) this.importDraftsFromFile(file);
+      });
+    }
+
+    const markdownInput = this.getElement('markdown-file-input');
+    if (markdownInput && markdownInput.dataset.bound !== 'true') {
+      markdownInput.dataset.bound = 'true';
+      markdownInput.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) this.importMarkdownFromFile(file);
       });
     }
   }
@@ -395,6 +411,17 @@ class BlogEditorApp {
   }
 
   /**
+   * Open file picker for markdown import
+   */
+  openMarkdownImportDialog() {
+    const input = this.getElement('markdown-file-input');
+    if (input) {
+      input.value = '';
+      input.click();
+    }
+  }
+
+  /**
    * Import drafts from selected file
    */
   async importDraftsFromFile(file) {
@@ -415,6 +442,42 @@ class BlogEditorApp {
     } catch (e) {
       console.error('Draft import failed:', e);
       this.showStatus('Draft import failed', 'error');
+    }
+  }
+
+  /**
+   * Import markdown file and convert to blocks
+   */
+  async importMarkdownFromFile(file) {
+    if (!file) return;
+    try {
+      const text = await file.text();
+      const blocks = markdownImporterModule.parseMarkdownToBlocks
+        ? markdownImporterModule.parseMarkdownToBlocks(text)
+        : [];
+
+      if (!blocks.length) {
+        this.showStatus('No blocks parsed from markdown', 'error');
+        return;
+      }
+
+      const rawName = file.name || 'Imported Markdown';
+      const title = rawName.replace(/\.[^/.]+$/, '').trim() || 'Imported Markdown';
+
+      this.state.newDraft();
+      this.state.title = title;
+      this.state.blocks = blocks;
+      this.state.saveAs(title);
+
+      if (this.isServerEnabled()) {
+        await this.syncCurrentDraftToServer();
+      }
+
+      this.render();
+      this.showStatus('Markdown imported', 'success');
+    } catch (e) {
+      console.error('Markdown import failed:', e);
+      this.showStatus('Markdown import failed', 'error');
     }
   }
   

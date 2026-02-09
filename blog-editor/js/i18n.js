@@ -32,7 +32,9 @@
         exportCurrentDraft: 'Export Current Draft',
         exportCurrentDraftDesc: 'Download the current draft as JSON',
         importDrafts: 'Import Drafts',
-        importDraftsDesc: 'Restore drafts from a JSON backup'
+          importDraftsDesc: 'Restore drafts from a JSON backup',
+          importMarkdown: 'Import Markdown',
+          importMarkdownDesc: 'Convert an M2H-style .md file into a draft'
       },
       palette: {
         headers: 'Headers',
@@ -89,7 +91,9 @@
         exportCurrentDraft: '現在のドラフトを書き出し',
         exportCurrentDraftDesc: '現在のドラフトをJSONで保存',
         importDrafts: 'ドラフトを読み込み',
-        importDraftsDesc: 'JSONバックアップから復元'
+          importDraftsDesc: 'JSONバックアップから復元',
+          importMarkdown: 'Markdownを読み込み',
+          importMarkdownDesc: 'M2H形式の.mdをドラフトに変換'
       },
       palette: {
         headers: '見出し',

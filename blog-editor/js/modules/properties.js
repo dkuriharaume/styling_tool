@@ -39,6 +39,9 @@
         case 'btn-import-drafts':
           app.openDraftsImportDialog();
           break;
+        case 'btn-import-markdown':
+          app.openMarkdownImportDialog();
+          break;
         default:
           break;
       }
@@ -552,7 +555,15 @@
             <span class="file-btn-desc">${app.t('fileOps.importDraftsDesc')}</span>
           </div>
         </button>
+        <button class="file-btn" id="btn-import-markdown">
+          <span class="file-btn-icon">📝</span>
+          <div class="file-btn-content">
+            <span class="file-btn-label">${app.t('fileOps.importMarkdown')}</span>
+            <span class="file-btn-desc">${app.t('fileOps.importMarkdownDesc')}</span>
+          </div>
+        </button>
         <input type="file" id="drafts-file-input" accept="application/json" style="display:none" />
+        <input type="file" id="markdown-file-input" accept="text/markdown,.md" style="display:none" />
       </div>
     `;
 
@@ -576,6 +587,17 @@
         const file = e.target.files && e.target.files[0];
         if (file) {
           app.importDraftsFromFile(file);
+        }
+      });
+    }
+
+    const markdownInput = app.getElement('markdown-file-input');
+    if (markdownInput && markdownInput.dataset.bound !== 'true') {
+      markdownInput.dataset.bound = 'true';
+      markdownInput.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) {
+          app.importMarkdownFromFile(file);
         }
       });
     }
@@ -620,7 +642,15 @@
             <span class="file-btn-desc">${app.t('fileOps.importDraftsDesc')}</span>
           </div>
         </button>
+        <button class="file-btn" id="btn-import-markdown">
+          <span class="file-btn-icon">📝</span>
+          <div class="file-btn-content">
+            <span class="file-btn-label">${app.t('fileOps.importMarkdown')}</span>
+            <span class="file-btn-desc">${app.t('fileOps.importMarkdownDesc')}</span>
+          </div>
+        </button>
         <input type="file" id="drafts-file-input" accept="application/json" style="display:none" />
+        <input type="file" id="markdown-file-input" accept="text/markdown,.md" style="display:none" />
       </div>
     `;
 
@@ -687,6 +717,17 @@
         const file = e.target.files && e.target.files[0];
         if (file) {
           app.importDraftsFromFile(file);
+        }
+      });
+    }
+
+    const markdownInput = app.getElement('markdown-file-input');
+    if (markdownInput && markdownInput.dataset.bound !== 'true') {
+      markdownInput.dataset.bound = 'true';
+      markdownInput.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) {
+          app.importMarkdownFromFile(file);
         }
       });
     }
