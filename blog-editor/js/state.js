@@ -375,6 +375,13 @@ class EditorState {
     localStorage.removeItem('linkey-blog-editor-draft');
     this.emit('change');
   }
+
+  /**
+   * Generate unique ID for drafts
+   */
+  generateDraftId() {
+    return `draft-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`;
+  }
   
   /**
    * Export to JSON
@@ -385,6 +392,124 @@ class EditorState {
       title: this.title,
       blocks: this.blocks
     };
+  }
+
+  /**
+   * Export current draft to JSON
+   */
+  exportCurrentDraft() {
+    const now = Date.now();
+    return {
+      version: '1.0',
+      id: this.currentDraftId || this.generateDraftId(),
+      name: this.title || 'Untitled Draft',
+      title: this.title || '',
+      blocks: this.blocks,
+      timestamp: this.currentDraftTimestamp || now,
+      updatedAt: now
+    };
+  }
+
+  /**
+   * Export all drafts to JSON
+   */
+  exportDrafts() {
+    const draftsList = this.getDraftsList();
+    const drafts = draftsList.map(entry => {
+      const raw = localStorage.getItem(`linkey-draft-${entry.id}`);
+      if (raw) {
+        try {
+          return JSON.parse(raw);
+        } catch (e) {
+          return null;
+        }
+      }
+      return {
+        id: entry.id,
+        name: entry.name,
+        title: entry.name || '',
+        blocks: [],
+        timestamp: entry.timestamp || Date.now(),
+        updatedAt: entry.updatedAt || entry.timestamp || Date.now()
+      };
+    }).filter(Boolean);
+
+    return {
+      version: '1.0',
+      exportedAt: Date.now(),
+      currentDraftId: this.currentDraftId,
+      drafts
+    };
+  }
+
+  /**
+   * Import drafts from JSON
+   */
+  importDrafts(payload, options = {}) {
+    const overwrite = options.overwrite === true;
+    let drafts = [];
+
+    if (payload && Array.isArray(payload.drafts)) {
+      drafts = payload.drafts;
+    } else if (payload && payload.version === '1.0' && Array.isArray(payload.blocks)) {
+      drafts = [{
+        id: payload.id || this.generateDraftId(),
+        name: payload.title || 'Imported Draft',
+        title: payload.title || '',
+        blocks: payload.blocks || [],
+        timestamp: Date.now(),
+        updatedAt: Date.now()
+      }];
+    } else {
+      return { imported: 0, skipped: 0, updated: 0 };
+    }
+
+    const draftsList = this.getDraftsList();
+    let imported = 0;
+    let skipped = 0;
+    let updated = 0;
+
+    drafts.forEach(draft => {
+      if (!draft || !Array.isArray(draft.blocks)) {
+        skipped += 1;
+        return;
+      }
+
+      let id = draft.id || this.generateDraftId();
+      const existingIndex = draftsList.findIndex(d => d.id === id);
+
+      if (existingIndex !== -1 && !overwrite) {
+        id = this.generateDraftId();
+      }
+
+      const name = draft.name || draft.title || 'Untitled Draft';
+      const timestamp = draft.timestamp || Date.now();
+      const updatedAt = draft.updatedAt || timestamp;
+      const finalName = (existingIndex !== -1 && !overwrite) ? `${name} (imported)` : name;
+
+      const data = {
+        id,
+        name: finalName,
+        title: draft.title || finalName,
+        blocks: draft.blocks || [],
+        timestamp,
+        updatedAt
+      };
+
+      localStorage.setItem(`linkey-draft-${id}`, JSON.stringify(data));
+
+      const listIndex = draftsList.findIndex(d => d.id === id);
+      if (listIndex !== -1) {
+        draftsList[listIndex] = { id, name: finalName, timestamp, updatedAt };
+        updated += 1;
+      } else {
+        draftsList.unshift({ id, name: finalName, timestamp, updatedAt });
+        imported += 1;
+      }
+    });
+
+    localStorage.setItem('linkey-drafts-list', JSON.stringify(draftsList));
+    return { imported, skipped, updated };
   }
   
   /**

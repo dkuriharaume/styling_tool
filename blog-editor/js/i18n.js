@@ -20,12 +20,19 @@
         recent: 'Recent Files',
         current: 'Current',
         document: 'Document',
+        drafts: 'Drafts Backup',
         newDraft: 'New Draft',
         newDraftDesc: 'Create a new draft with title',
         openDraft: 'Open Draft',
         openDraftDesc: 'Browse and open saved drafts',
         saveAs: 'Save As',
-        saveAsDesc: 'Save a copy with new name'
+        saveAsDesc: 'Save a copy with new name',
+        exportDrafts: 'Export Drafts',
+        exportDraftsDesc: 'Download all drafts as a JSON file',
+        exportCurrentDraft: 'Export Current Draft',
+        exportCurrentDraftDesc: 'Download the current draft as JSON',
+        importDrafts: 'Import Drafts',
+        importDraftsDesc: 'Restore drafts from a JSON backup'
       },
       palette: {
         headers: 'Headers',
@@ -70,12 +77,19 @@
         recent: '最近使用したファイル',
         current: '現在',
         document: 'ドキュメント',
+        drafts: 'ドラフトのバックアップ',
         newDraft: '新規ドラフト',
         newDraftDesc: 'タイトル付きの新規ドラフトを作成',
         openDraft: 'ドラフトを開く',
         openDraftDesc: '保存済みのドラフトを参照して開く',
         saveAs: '名前を付けて保存',
-        saveAsDesc: '新しい名前でコピーを保存'
+        saveAsDesc: '新しい名前でコピーを保存',
+        exportDrafts: 'ドラフトを書き出し',
+        exportDraftsDesc: '全ドラフトをJSONで保存',
+        exportCurrentDraft: '現在のドラフトを書き出し',
+        exportCurrentDraftDesc: '現在のドラフトをJSONで保存',
+        importDrafts: 'ドラフトを読み込み',
+        importDraftsDesc: 'JSONバックアップから復元'
       },
       palette: {
         headers: '見出し',

@@ -218,6 +218,78 @@ class BlogEditorApp {
   resetExportButton(button, parts, className) {
     return uiModule.resetExportButton ? uiModule.resetExportButton(this, button, parts, className) : undefined;
   }
+
+  /**
+   * Export all drafts to a JSON file
+   */
+  exportDraftsToFile() {
+    const data = this.state.exportDrafts();
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const date = new Date().toISOString().slice(0, 10);
+    a.href = url;
+    a.download = `linkey-drafts-${date}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    this.showStatus('Drafts exported', 'success');
+  }
+
+  /**
+   * Export current draft to a JSON file
+   */
+  exportCurrentDraftToFile() {
+    const data = this.state.exportCurrentDraft();
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const date = new Date().toISOString().slice(0, 10);
+    const rawName = (data.name || 'draft').trim();
+    const safeTitle = rawName.replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-+|-+$/g, '').toLowerCase();
+    const fallback = data.id ? `draft-${data.id}` : 'draft';
+    const fileBase = safeTitle || fallback;
+    a.href = url;
+    a.download = `${fileBase}-${date}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    this.showStatus('Draft exported', 'success');
+  }
+
+  /**
+   * Open file picker for draft import
+   */
+  openDraftsImportDialog() {
+    const input = this.getElement('drafts-file-input');
+    if (input) {
+      input.value = '';
+      input.click();
+    }
+  }
+
+  /**
+   * Import drafts from selected file
+   */
+  async importDraftsFromFile(file) {
+    if (!file) return;
+    try {
+      const text = await file.text();
+      const payload = JSON.parse(text);
+      const result = this.state.importDrafts(payload);
+      if (result.imported || result.updated) {
+        this.showStatus(`Imported ${result.imported + result.updated} drafts`, 'success');
+      } else {
+        this.showStatus('No drafts imported', 'error');
+      }
+      this.render();
+    } catch (e) {
+      console.error('Draft import failed:', e);
+      this.showStatus('Draft import failed', 'error');
+    }
+  }
   
   /**
    * Show toast notification

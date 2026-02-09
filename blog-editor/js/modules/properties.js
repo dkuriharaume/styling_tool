@@ -481,6 +481,32 @@
             </div>
           </button>
         </div>
+
+        <div class="file-section">
+          <h4>${app.t('fileOps.drafts')}</h4>
+          <button class="file-btn" id="btn-export-current-draft">
+            <span class="file-btn-icon">⬇️</span>
+            <div class="file-btn-content">
+              <span class="file-btn-label">${app.t('fileOps.exportCurrentDraft')}</span>
+              <span class="file-btn-desc">${app.t('fileOps.exportCurrentDraftDesc')}</span>
+            </div>
+          </button>
+          <button class="file-btn" id="btn-export-drafts">
+            <span class="file-btn-icon">⬇️</span>
+            <div class="file-btn-content">
+              <span class="file-btn-label">${app.t('fileOps.exportDrafts')}</span>
+              <span class="file-btn-desc">${app.t('fileOps.exportDraftsDesc')}</span>
+            </div>
+          </button>
+          <button class="file-btn" id="btn-import-drafts">
+            <span class="file-btn-icon">⬆️</span>
+            <div class="file-btn-content">
+              <span class="file-btn-label">${app.t('fileOps.importDrafts')}</span>
+              <span class="file-btn-desc">${app.t('fileOps.importDraftsDesc')}</span>
+            </div>
+          </button>
+          <input type="file" id="drafts-file-input" accept="application/json" style="display:none" />
+        </div>
       </div>
     `;
 
@@ -496,6 +522,38 @@
 
     // Re-attach event listeners
     app.setupHeader();
+
+    const exportBtn = app.getPanelElement('#btn-export-drafts');
+    if (exportBtn) {
+      exportBtn.addEventListener('click', () => {
+        app.exportDraftsToFile();
+      });
+    }
+
+    const exportCurrentBtn = app.getPanelElement('#btn-export-current-draft');
+    if (exportCurrentBtn) {
+      exportCurrentBtn.addEventListener('click', () => {
+        app.exportCurrentDraftToFile();
+      });
+    }
+
+    const importBtn = app.getPanelElement('#btn-import-drafts');
+    if (importBtn) {
+      importBtn.addEventListener('click', () => {
+        app.openDraftsImportDialog();
+      });
+    }
+
+    const fileInput = app.getElement('drafts-file-input');
+    if (fileInput && fileInput.dataset.bound !== 'true') {
+      fileInput.dataset.bound = 'true';
+      fileInput.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) {
+          app.importDraftsFromFile(file);
+        }
+      });
+    }
   };
 
   const showDraftsBrowser = (app) => {
