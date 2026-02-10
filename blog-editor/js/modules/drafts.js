@@ -93,6 +93,8 @@
       try {
         const data = await app.fetchServerDraft(draftId);
         if (data && app.state.applyDraftData(data)) {
+          // Cache server draft locally (client-only recents/last opened)
+          app.state.save(data.name || data.title || app.state.title || 'Untitled Draft', false);
           app.closeDraftsModal();
           app.showStatus('Draft loaded', 'success');
           return true;
@@ -113,6 +115,15 @@
   };
 
   const loadLastEditedDraft = async (app) => {
+    const lastOpenedId = localStorage.getItem('linkey-current-draft-id');
+    if (lastOpenedId) {
+      if (app.state.load(lastOpenedId)) {
+        return;
+      }
+      const loaded = await loadDraft(app, lastOpenedId);
+      if (loaded) return;
+    }
+
     if (app.isServerEnabled()) {
       try {
         const drafts = await app.fetchServerDrafts();

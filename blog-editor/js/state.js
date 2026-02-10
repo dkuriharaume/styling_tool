@@ -294,10 +294,11 @@ class EditorState {
         if (data) {
           const parsed = JSON.parse(data);
           this.title = parsed.title || '';
-          this.blocks = parsed.blocks || [];
+          this.blocks = this.ensureBlockIds(parsed.blocks || []);
           this.currentDraftId = parsed.id;
           this.currentDraftTimestamp = parsed.timestamp;
           localStorage.setItem('linkey-current-draft-id', parsed.id);
+          this.markDraftOpened(parsed.id, parsed.name || parsed.title);
           this.saveHistory(); // Initialize history
           this.emit('change'); // Trigger render
           return true;
@@ -327,6 +328,28 @@ class EditorState {
       return [];
     }
   }
+
+  /**
+   * Mark a draft as recently opened
+   */
+  markDraftOpened(draftId, name = null) {
+    if (!draftId) return;
+    const draftsList = this.getDraftsList();
+    const now = Date.now();
+    const index = draftsList.findIndex(d => d.id === draftId);
+    const entryName = name || (index !== -1 ? draftsList[index].name : 'Untitled Draft');
+
+    if (index !== -1) {
+      const [entry] = draftsList.splice(index, 1);
+      entry.name = entryName;
+      entry.lastOpenedAt = now;
+      draftsList.unshift(entry);
+    } else {
+      draftsList.unshift({ id: draftId, name: entryName, timestamp: now, updatedAt: now, lastOpenedAt: now });
+    }
+
+    localStorage.setItem('linkey-drafts-list', JSON.stringify(draftsList));
+  }
   
   /**
    * Delete a draft
@@ -339,6 +362,7 @@ class EditorState {
     const draftsList = this.getDraftsList();
     const filtered = draftsList.filter(d => d.id !== draftId);
     localStorage.setItem('linkey-drafts-list', JSON.stringify(filtered));
+          this.markDraftOpened(parsed.id, parsed.name || parsed.title);
     
     // If deleting current draft, clear it
     if (this.currentDraftId === draftId) {
@@ -552,6 +576,7 @@ class EditorState {
     this.currentDraftTimestamp = data.timestamp || Date.now();
     if (this.currentDraftId) {
       localStorage.setItem('linkey-current-draft-id', this.currentDraftId);
+      this.markDraftOpened(this.currentDraftId, data.name || data.title);
     }
     this.saveHistory();
     this.emit('change');

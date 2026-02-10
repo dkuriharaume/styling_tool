@@ -477,6 +477,12 @@ class BlogEditorApp {
         await this.syncCurrentDraftToServer();
       }
 
+      if (this.isInDraftsBrowser) {
+        this.showDraftsBrowser();
+      } else {
+        this.showFileOperations();
+      }
+
       this.render();
       this.showStatus('Markdown imported', 'success');
     } catch (e) {

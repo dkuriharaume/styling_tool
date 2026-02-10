@@ -465,12 +465,19 @@
     const panel = app.getPropertiesPanel();
 
     // Get recent drafts
-    let drafts = app.state.getDraftsList();
+    const localDrafts = app.state.getDraftsList();
+    let drafts = localDrafts;
     if (app.isServerEnabled()) {
       try {
         const serverDrafts = await app.fetchServerDrafts();
         if (serverDrafts.length > 0) {
-          drafts = serverDrafts;
+          drafts = serverDrafts.map(draft => {
+            const localMatch = localDrafts.find(local => local.id === draft.id);
+            return {
+              ...draft,
+              lastOpenedAt: localMatch?.lastOpenedAt
+            };
+          });
         }
       } catch (e) {
         console.warn('Failed to load server drafts, using local list.', e);
@@ -478,8 +485,8 @@
     }
     const recentDrafts = drafts
       .sort((a, b) => {
-        const timeA = a.updatedAt || a.timestamp || 0;
-        const timeB = b.updatedAt || b.timestamp || 0;
+        const timeA = a.lastOpenedAt || a.updatedAt || a.timestamp || 0;
+        const timeB = b.lastOpenedAt || b.updatedAt || b.timestamp || 0;
         return timeB - timeA;
       })
       .slice(0, 3);
