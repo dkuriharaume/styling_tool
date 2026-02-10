@@ -474,8 +474,19 @@
   };
 
   const renderCardProperties = (app, block, container) => {
-    const cards = Array.isArray(block.cards) ? block.cards : [];
-    const subtype = block.subtype || '2-col';
+    const cards = Array.isArray(block.cards) ? block.cards : (Array.isArray(block.data?.cards) ? block.data.cards : []);
+    const subtype = block.subtype || block.data?.subtype || '2-col';
+    const updateCardBlock = (nextCards, nextSubtype = subtype) => {
+      app.state.updateBlock(block.id, {
+        subtype: nextSubtype,
+        cards: nextCards,
+        data: {
+          ...(block.data || {}),
+          subtype: nextSubtype,
+          cards: nextCards
+        }
+      });
+    };
 
     const cardsHtml = cards.map((card, index) => {
       return `
@@ -523,7 +534,7 @@
 
     app.getPropertiesControl('prop-card-columns').addEventListener('change', (e) => {
       const nextSubtype = e.target.value;
-      app.state.updateBlock(block.id, { subtype: nextSubtype });
+      updateCardBlock(cards, nextSubtype);
     });
 
     const cardItems = app.getPanelElements('.property-card-item');
@@ -536,50 +547,56 @@
 
       if (titleInput) {
         titleInput.addEventListener('input', () => {
-          const updated = block.cards.map((card, cardIndex) =>
+          const updated = cards.map((card, cardIndex) =>
             cardIndex === index ? { ...card, title: titleInput.value } : card
           );
-          app.state.updateBlock(block.id, { cards: updated });
+          updateCardBlock(updated);
         });
       }
 
       if (contentInput) {
         contentInput.addEventListener('input', () => {
-          const updated = block.cards.map((card, cardIndex) =>
+          const updated = cards.map((card, cardIndex) =>
             cardIndex === index ? { ...card, content: contentInput.value } : card
           );
-          app.state.updateBlock(block.id, { cards: updated });
+          updateCardBlock(updated);
         });
       }
 
       if (imageInput) {
         imageInput.addEventListener('input', () => {
-          const updated = block.cards.map((card, cardIndex) =>
+          const updated = cards.map((card, cardIndex) =>
             cardIndex === index ? { ...card, image: imageInput.value } : card
           );
-          app.state.updateBlock(block.id, { cards: updated });
+          updateCardBlock(updated);
         });
       }
 
       if (removeBtn) {
-        removeBtn.addEventListener('click', () => {
-          if (block.cards.length <= 1) return;
-          const updated = block.cards.filter((_, cardIndex) => cardIndex !== index);
-          app.state.updateBlock(block.id, { cards: updated });
+        removeBtn.addEventListener('click', async () => {
+          if (cards.length <= 1) {
+            const confirmed = await app.showConfirm('Delete Block', 'Remove the last card by deleting this block?');
+            if (confirmed) {
+              app.state.deleteBlock(block.id);
+            }
+            return;
+          }
+          const updated = cards.filter((_, cardIndex) => cardIndex !== index);
+          updateCardBlock(updated);
         });
       }
     });
 
     app.getPropertiesControl('prop-add-card').addEventListener('click', () => {
-      const count = block.cards.length + 1;
+      const count = cards.length + 1;
       const placeholder = 'https://www.linkey-lock.com/wp-content/uploads/2025/05/2634fefd9b745aa48f169e9a26c89cf8-1.png';
-      const updated = block.cards.concat({
+      const updated = cards.concat({
         title: `Card ${count}`,
         content: 'Card content',
         image: placeholder,
         alt: ''
       });
-      app.state.updateBlock(block.id, { cards: updated });
+      updateCardBlock(updated);
     });
 
     app.getPropertiesControl('prop-delete').addEventListener('click', async () => {
@@ -600,7 +617,9 @@
     if (app.isServerEnabled()) {
       try {
         const serverDrafts = await app.fetchServerDrafts();
-        if (serverDrafts.length > 0) {
+        if (app.state.useLocalStorage === false) {
+          drafts = serverDrafts;
+        } else if (serverDrafts.length > 0) {
           drafts = serverDrafts.map(draft => {
             const localMatch = localDrafts.find(local => local.id === draft.id);
             return {
@@ -611,6 +630,9 @@
         }
       } catch (e) {
         console.warn('Failed to load server drafts, using local list.', e);
+        if (app.state.useLocalStorage === false) {
+          drafts = [];
+        }
       }
     }
     const recentDrafts = drafts
@@ -654,64 +676,76 @@
       <div class="file-operations">
         ${recentFilesHtml}
         
-        <div class="file-section">
-          <h4>${app.t('fileOps.document')}</h4>
-          <button class="file-btn" id="btn-new">
-            <span class="file-btn-icon">📄</span>
-            <div class="file-btn-content">
-              <span class="file-btn-label">${app.t('fileOps.newDraft')}</span>
-              <span class="file-btn-desc">${app.t('fileOps.newDraftDesc')}</span>
+        <details class="props-collapsible" open>
+          <summary>${app.t('fileOps.document')}</summary>
+          <div class="props-content">
+            <div class="props-content-inner">
+              <div class="file-section">
+                <button class="file-btn" id="btn-new">
+                  <span class="file-btn-icon">📄</span>
+                  <div class="file-btn-content">
+                    <span class="file-btn-label">${app.t('fileOps.newDraft')}</span>
+                    <span class="file-btn-desc">${app.t('fileOps.newDraftDesc')}</span>
+                  </div>
+                </button>
+                <button class="file-btn" id="btn-open">
+                  <span class="file-btn-icon">📂</span>
+                  <div class="file-btn-content">
+                    <span class="file-btn-label">${app.t('fileOps.openDraft')}</span>
+                    <span class="file-btn-desc">${app.t('fileOps.openDraftDesc')}</span>
+                  </div>
+                </button>
+                <button class="file-btn" id="btn-save-as">
+                  <span class="file-btn-icon">💾</span>
+                  <div class="file-btn-content">
+                    <span class="file-btn-label">${app.t('fileOps.saveAs')}</span>
+                    <span class="file-btn-desc">${app.t('fileOps.saveAsDesc')}</span>
+                  </div>
+                </button>
+              </div>
             </div>
-          </button>
-          <button class="file-btn" id="btn-open">
-            <span class="file-btn-icon">📂</span>
-            <div class="file-btn-content">
-              <span class="file-btn-label">${app.t('fileOps.openDraft')}</span>
-              <span class="file-btn-desc">${app.t('fileOps.openDraftDesc')}</span>
-            </div>
-          </button>
-          <button class="file-btn" id="btn-save-as">
-            <span class="file-btn-icon">💾</span>
-            <div class="file-btn-content">
-              <span class="file-btn-label">${app.t('fileOps.saveAs')}</span>
-              <span class="file-btn-desc">${app.t('fileOps.saveAsDesc')}</span>
-            </div>
-          </button>
-        </div>
-      </div>
+          </div>
+        </details>
 
-      <div class="drafts-backup">
-        <h4>${app.t('fileOps.drafts')}</h4>
-        <button class="file-btn" id="btn-export-current-draft">
-          <span class="file-btn-icon">⬇️</span>
-          <div class="file-btn-content">
-            <span class="file-btn-label">${app.t('fileOps.exportCurrentDraft')}</span>
-            <span class="file-btn-desc">${app.t('fileOps.exportCurrentDraftDesc')}</span>
+        <details class="props-collapsible" open>
+          <summary>${app.t('fileOps.drafts')}</summary>
+          <div class="props-content">
+            <div class="props-content-inner">
+              <div class="drafts-backup">
+                <button class="file-btn" id="btn-export-current-draft">
+                  <span class="file-btn-icon">⬇️</span>
+                  <div class="file-btn-content">
+                    <span class="file-btn-label">${app.t('fileOps.exportCurrentDraft')}</span>
+                    <span class="file-btn-desc">${app.t('fileOps.exportCurrentDraftDesc')}</span>
+                  </div>
+                </button>
+                <button class="file-btn" id="btn-export-drafts">
+                  <span class="file-btn-icon">⬇️</span>
+                  <div class="file-btn-content">
+                    <span class="file-btn-label">${app.t('fileOps.exportDrafts')}</span>
+                    <span class="file-btn-desc">${app.t('fileOps.exportDraftsDesc')}</span>
+                  </div>
+                </button>
+                <button class="file-btn" id="btn-import-drafts">
+                  <span class="file-btn-icon">⬆️</span>
+                  <div class="file-btn-content">
+                    <span class="file-btn-label">${app.t('fileOps.importDrafts')}</span>
+                    <span class="file-btn-desc">${app.t('fileOps.importDraftsDesc')}</span>
+                  </div>
+                </button>
+                <button class="file-btn" id="btn-import-markdown">
+                  <span class="file-btn-icon">📝</span>
+                  <div class="file-btn-content">
+                    <span class="file-btn-label">${app.t('fileOps.importMarkdown')}</span>
+                    <span class="file-btn-desc">${app.t('fileOps.importMarkdownDesc')}</span>
+                  </div>
+                </button>
+                <input type="file" id="drafts-file-input" accept="application/json" style="display:none" />
+                <input type="file" id="markdown-file-input" accept="text/markdown,.md" style="display:none" />
+              </div>
+            </div>
           </div>
-        </button>
-        <button class="file-btn" id="btn-export-drafts">
-          <span class="file-btn-icon">⬇️</span>
-          <div class="file-btn-content">
-            <span class="file-btn-label">${app.t('fileOps.exportDrafts')}</span>
-            <span class="file-btn-desc">${app.t('fileOps.exportDraftsDesc')}</span>
-          </div>
-        </button>
-        <button class="file-btn" id="btn-import-drafts">
-          <span class="file-btn-icon">⬆️</span>
-          <div class="file-btn-content">
-            <span class="file-btn-label">${app.t('fileOps.importDrafts')}</span>
-            <span class="file-btn-desc">${app.t('fileOps.importDraftsDesc')}</span>
-          </div>
-        </button>
-        <button class="file-btn" id="btn-import-markdown">
-          <span class="file-btn-icon">📝</span>
-          <div class="file-btn-content">
-            <span class="file-btn-label">${app.t('fileOps.importMarkdown')}</span>
-            <span class="file-btn-desc">${app.t('fileOps.importMarkdownDesc')}</span>
-          </div>
-        </button>
-        <input type="file" id="drafts-file-input" accept="application/json" style="display:none" />
-        <input type="file" id="markdown-file-input" accept="text/markdown,.md" style="display:none" />
+        </details>
       </div>
     `;
 
@@ -760,13 +794,26 @@
     let drafts = app.state.getDraftsList();
     if (app.isServerEnabled()) {
       try {
-        const serverDrafts = await app.fetchServerDrafts();
-        if (serverDrafts.length > 0) {
-          drafts = serverDrafts;
-        }
+        drafts = await app.fetchServerDrafts();
       } catch (e) {
         console.warn('Failed to load server drafts, using local list.', e);
+        if (app.state.useLocalStorage === false) {
+          drafts = [];
+        }
       }
+    }
+
+    const currentId = app.state.currentDraftId;
+    if (currentId && !drafts.some(draft => draft && draft.id === currentId)) {
+      const currentDraft = app.state.exportCurrentDraft ? app.state.exportCurrentDraft() : null;
+      const fallbackName = app.state.title || 'Untitled Draft';
+      drafts.unshift({
+        id: currentId,
+        name: currentDraft?.name || currentDraft?.title || fallbackName,
+        title: currentDraft?.title || fallbackName,
+        timestamp: currentDraft?.timestamp || Date.now(),
+        updatedAt: currentDraft?.updatedAt || Date.now()
+      });
     }
 
     const backupControls = `
@@ -924,7 +971,11 @@
           }
           app.state.deleteDraft(draftId);
           app.showStatus('Draft deleted', 'success');
-          app.showDraftsBrowser(); // Refresh list
+          const item = btn.closest('.draft-item');
+          if (item) {
+            item.remove();
+          }
+          await app.showDraftsBrowser(); // Refresh list
         }
       });
     });

@@ -94,6 +94,14 @@ class BlogEditorApp {
     const placeholderImage = 'https://www.linkey-lock.com/wp-content/uploads/2025/05/2634fefd9b745aa48f169e9a26c89cf8-1.png';
 
     const normalizeText = (value) => this.normalizeAiInlineText(value);
+    const pickText = (...values) => {
+      for (const value of values) {
+        if (value === null || value === undefined) continue;
+        if (typeof value === 'string' && value.trim() === '') continue;
+        return value;
+      }
+      return '';
+    };
 
     const blocks = draft.blocks.map((block) => {
       if (!block || typeof block !== 'object') {
@@ -106,7 +114,7 @@ class BlogEditorApp {
       if (type === 'header') {
         const level = [1, 2, 3, 4].includes(block.level) ? block.level : (data.level || 2);
         let preset = ['default', 'red', 'blue'].includes(block.preset) ? block.preset : (data.preset || 'default');
-        let content = normalizeText(block.content ?? data.text ?? data.content ?? '');
+        let content = normalizeText(pickText(block.content, block.text, data.text, data.content, data.title));
         if (/\{red\}/i.test(content)) {
           preset = 'red';
         } else if (/\{blue\}/i.test(content)) {
@@ -140,8 +148,9 @@ class BlogEditorApp {
         const listType = listTypeMap[listTypeRaw] || 'ul';
         let items = Array.isArray(block.items) ? block.items : (Array.isArray(data.items) ? data.items : []);
 
-        if (!items.length && typeof (block.content ?? data.text ?? data.content) === 'string') {
-          const lines = String(block.content ?? data.text ?? data.content)
+        const rawListText = pickText(block.content, block.text, data.text, data.content);
+        if (!items.length && typeof rawListText === 'string') {
+          const lines = String(rawListText)
             .split('\n')
             .map(line => line.trim())
             .filter(Boolean);
@@ -212,7 +221,7 @@ class BlogEditorApp {
         };
       }
 
-      const rawContent = normalizeText(block.content ?? data.text ?? data.content ?? block.text ?? '');
+      const rawContent = normalizeText(pickText(block.content, block.text, data.text, data.content));
       const lines = rawContent.split('\n').map(line => line.trim()).filter(Boolean);
       const bulletLines = lines.filter(line => /^[-*•]\s+/.test(line));
       const orderedLines = lines.filter(line => /^\d+[\.)]\s+/.test(line));
@@ -374,6 +383,10 @@ class BlogEditorApp {
   }
   
   init() {
+    this.state.useLocalStorage = !this.isServerEnabled();
+    if (this.state.useLocalStorage === false) {
+      this.state.newDraft();
+    }
     // Setup event listeners
     this.setupPalette();
     this.setupCanvas();
@@ -418,6 +431,7 @@ class BlogEditorApp {
    * Setup AI panel actions
    */
   setupAiPanel() {
+    this.clearAiDebugLog();
     const chatSendBtn = this.getElement('btn-ai-chat-send');
     const chatInput = this.getElement('ai-chat-input');
     const debugCopyBtn = this.getElement('btn-ai-debug-copy');
@@ -762,6 +776,7 @@ class BlogEditorApp {
    */
   async syncAllDraftsToServer() {
     if (!this.isServerEnabled()) return;
+    if (this.state && this.state.useLocalStorage === false) return;
     const drafts = this.state.getDraftsList();
     const baseUrl = this.getServerBaseUrl();
 
@@ -889,8 +904,21 @@ class BlogEditorApp {
   /**
    * Export all drafts to a JSON file
    */
-  exportDraftsToFile() {
-    const data = this.state.exportDrafts();
+  async exportDraftsToFile() {
+    let data = this.state.exportDrafts();
+    if (this.isServerEnabled() && this.state.useLocalStorage === false) {
+      try {
+        const drafts = await this.fetchServerDrafts();
+        data = {
+          version: '1.0',
+          exportedAt: Date.now(),
+          currentDraftId: this.state.currentDraftId,
+          drafts
+        };
+      } catch (e) {
+        console.warn('Failed to export drafts from server', e);
+      }
+    }
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -913,12 +941,13 @@ class BlogEditorApp {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     const date = new Date().toISOString().slice(0, 10);
+    const idSuffix = data.id ? `-${String(data.id).replace(/[^a-zA-Z0-9]+/g, '').slice(-8)}` : '';
     const rawName = (data.name || 'draft').trim();
     const safeTitle = rawName.replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-+|-+$/g, '').toLowerCase();
     const fallback = data.id ? `draft-${data.id}` : 'draft';
     const fileBase = safeTitle || fallback;
     a.href = url;
-    a.download = `${fileBase}-${date}.json`;
+    a.download = `${fileBase}${idSuffix}-${date}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -956,14 +985,120 @@ class BlogEditorApp {
     try {
       const text = await file.text();
       const payload = JSON.parse(text);
-      const existingCount = this.state.getDraftsList().length;
+      const isCollectionImport = payload && Array.isArray(payload.drafts);
+      let existingCount = this.state.getDraftsList().length;
+      if (this.isServerEnabled() && this.state.useLocalStorage === false) {
+        try {
+          const serverDrafts = await this.fetchServerDrafts();
+          existingCount = serverDrafts.length;
+        } catch (e) {
+          console.warn('Failed to read server drafts count before import', e);
+        }
+      }
       let replaceExisting = false;
-      if (existingCount > 0) {
+      if (isCollectionImport && existingCount > 0) {
         replaceExisting = await this.showConfirm(
           'Replace existing drafts?',
-          'Importing can duplicate drafts. Replace will delete existing local and server drafts before importing.'
+          'Importing multiple drafts can duplicate existing ones. Replace will delete existing local and server drafts before importing.'
         );
       }
+      if (this.isServerEnabled() && this.state.useLocalStorage === false) {
+        let drafts = [];
+        if (payload && Array.isArray(payload.drafts)) {
+          drafts = payload.drafts;
+        } else if (payload && payload.version === '1.0' && Array.isArray(payload.blocks)) {
+          drafts = [{
+            id: payload.id || this.state.generateDraftId(),
+            name: payload.title || 'Imported Draft',
+            title: payload.title || '',
+            blocks: payload.blocks || [],
+            timestamp: Date.now(),
+            updatedAt: Date.now()
+          }];
+        }
+
+        if (replaceExisting) {
+          try {
+            const serverDrafts = await this.fetchServerDrafts();
+            for (const draft of serverDrafts) {
+              if (draft && draft.id) {
+                await this.deleteServerDraft(draft.id);
+              }
+            }
+          } catch (e) {
+            console.warn('Failed to clear server drafts before import', e);
+          }
+        }
+
+        const existingIds = new Set();
+        try {
+          const serverDrafts = await this.fetchServerDrafts();
+          serverDrafts.forEach(draft => draft?.id && existingIds.add(draft.id));
+        } catch (e) {
+          console.warn('Failed to read server drafts before import', e);
+        }
+
+        let imported = 0;
+        let updated = 0;
+        let skipped = 0;
+
+        for (const draft of drafts) {
+          if (!draft || !Array.isArray(draft.blocks)) {
+            skipped += 1;
+            continue;
+          }
+
+          let id = draft.id || this.state.generateDraftId();
+          const exists = existingIds.has(id);
+          if (exists && !replaceExisting) {
+            id = this.state.generateDraftId();
+          }
+
+          const name = draft.name || draft.title || 'Untitled Draft';
+          const timestamp = draft.timestamp || Date.now();
+          const updatedAt = draft.updatedAt || timestamp;
+          const finalName = (exists && !replaceExisting) ? `${name} (imported)` : name;
+
+          const payloadDraft = {
+            id,
+            name: finalName,
+            title: draft.title || finalName,
+            blocks: draft.blocks || [],
+            timestamp,
+            updatedAt
+          };
+
+          try {
+            await fetch(`${this.getServerBaseUrl()}/drafts/${payloadDraft.id}`, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payloadDraft)
+            });
+            if (exists) {
+              updated += 1;
+            } else {
+              imported += 1;
+            }
+            existingIds.add(payloadDraft.id);
+          } catch (e) {
+            console.warn('Failed to import draft to server', payloadDraft.id, e);
+            skipped += 1;
+          }
+        }
+
+        if (imported || updated) {
+          this.showStatus(`Imported ${imported + updated} drafts`, 'success');
+        } else {
+          this.showStatus('No drafts imported', 'error');
+        }
+
+        if (this.isInDraftsBrowser) {
+          await this.showDraftsBrowser();
+        }
+        this.render();
+        return;
+      }
+
       const result = this.state.importDrafts(payload, { overwrite: replaceExisting, replace: replaceExisting });
       if (this.isServerEnabled()) {
         if (replaceExisting) {
@@ -984,6 +1119,9 @@ class BlogEditorApp {
         this.showStatus(`Imported ${result.imported + result.updated} drafts`, 'success');
       } else {
         this.showStatus('No drafts imported', 'error');
+      }
+      if (this.isInDraftsBrowser) {
+        await this.showDraftsBrowser();
       }
       this.render();
     } catch (e) {
@@ -1247,17 +1385,36 @@ class BlogEditorApp {
         const currentBlocks = Array.isArray(current.blocks) ? current.blocks : [];
         const normalizedBlocks = Array.isArray(normalized.blocks) ? normalized.blocks : [];
         const updatedBlock = normalizedBlocks.find(block => block && block.id === targetId);
-        if (!updatedBlock) {
-          this.appendAiDebugLog(`applyAiEdits: selected block not found in AI draft (${targetId})`);
-          this.showStatus(this.t('ai.noEdits'), 'info');
-          return false;
-        }
         const currentIds = new Set(currentBlocks.map(block => block && block.id).filter(Boolean));
         const extraBlocks = normalizedBlocks.filter(block => block && block.id && !currentIds.has(block.id));
         const insertPosition = normalized.selectionInsert || normalized._selectionInsert || normalized.insertPosition || null;
         let mergedBlocks = currentBlocks.map(block => (block && block.id === targetId ? updatedBlock : block));
 
-        if (selection.scope === 'subtree') {
+        if (!updatedBlock) {
+          const currentHasTarget = currentBlocks.some(block => block && block.id === targetId);
+          if (!currentHasTarget) {
+            this.appendAiDebugLog(`applyAiEdits: selected block not found in current draft (${targetId})`);
+            this.showStatus(this.t('ai.noEdits'), 'info');
+            return false;
+          }
+          if (selection.scope === 'subtree') {
+            const selectedBlock = currentBlocks.find(block => block && block.id === targetId);
+            const headerLevel = selectedBlock?.level || selection.level || 2;
+            const currentRange = this.getHeaderSubtreeRange(currentBlocks, currentBlocks.findIndex(block => block && block.id === targetId), headerLevel);
+            if (currentRange) {
+              mergedBlocks = [
+                ...currentBlocks.slice(0, currentRange.start),
+                ...currentBlocks.slice(currentRange.end + 1)
+              ];
+              this.appendAiDebugLog(`applyAiEdits: deleted subtree ${targetId} (${currentRange.start}-${currentRange.end})`);
+            }
+          } else {
+            mergedBlocks = currentBlocks.filter(block => !(block && block.id === targetId));
+            this.appendAiDebugLog(`applyAiEdits: deleted block ${targetId}`);
+          }
+        }
+
+        if (updatedBlock && selection.scope === 'subtree') {
           const selectedBlock = currentBlocks.find(block => block && block.id === targetId);
           const headerLevel = selectedBlock?.level || selection.level || 2;
           const currentRange = this.getHeaderSubtreeRange(currentBlocks, currentBlocks.findIndex(block => block && block.id === targetId), headerLevel);
@@ -1280,6 +1437,17 @@ class BlogEditorApp {
               ...mergedBlocks.slice(insertAt)
             ];
             this.appendAiDebugLog(`applyAiEdits: inserted ${extraBlocks.length} block(s) ${insertPosition} ${targetId}`);
+          }
+        } else if (extraBlocks.length && updatedBlock && selection.scope === 'block') {
+          const targetIndex = mergedBlocks.findIndex(block => block && block.id === targetId);
+          if (targetIndex !== -1) {
+            const insertAt = targetIndex + 1;
+            mergedBlocks = [
+              ...mergedBlocks.slice(0, insertAt),
+              ...extraBlocks,
+              ...mergedBlocks.slice(insertAt)
+            ];
+            this.appendAiDebugLog(`applyAiEdits: inserted ${extraBlocks.length} block(s) after ${targetId} (default)`);
           }
         }
 
@@ -2066,6 +2234,15 @@ class BlogEditorApp {
   renderListProperties(block, container) {
     return propertiesModule.renderListProperties
       ? propertiesModule.renderListProperties(this, block, container)
+      : undefined;
+  }
+
+  /**
+   * Render card properties
+   */
+  renderCardProperties(block, container) {
+    return propertiesModule.renderCardProperties
+      ? propertiesModule.renderCardProperties(this, block, container)
       : undefined;
   }
   

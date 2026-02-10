@@ -10,6 +10,7 @@ class EditorState {
     this.history = [];
     this.historyIndex = -1;
     this.maxHistory = 50;
+    this.useLocalStorage = true;
     
     // Event listeners
     this.listeners = {
@@ -21,6 +22,10 @@ class EditorState {
     
     // Initialize with saved state if available
     this.load();
+  }
+
+  canUseLocalStorage() {
+    return this.useLocalStorage !== false;
   }
   
   /**
@@ -201,29 +206,31 @@ class EditorState {
       timestamp: this.currentDraftTimestamp || timestamp,
       updatedAt: timestamp
     };
-    
-    // Save the draft
-    localStorage.setItem(`linkey-draft-${id}`, JSON.stringify(data));
-    
-    // Update drafts list
-    const draftsList = this.getDraftsList();
-    const existingIndex = draftsList.findIndex(d => d.id === id);
-    
-    if (existingIndex !== -1) {
-      // Update existing entry
-      draftsList[existingIndex].name = name;
-      draftsList[existingIndex].updatedAt = timestamp;
-    } else {
-      // Add new entry
-      draftsList.unshift({ id, name, timestamp, updatedAt: timestamp });
+
+    if (this.canUseLocalStorage()) {
+      // Save the draft
+      localStorage.setItem(`linkey-draft-${id}`, JSON.stringify(data));
+
+      // Update drafts list
+      const draftsList = this.getDraftsList();
+      const existingIndex = draftsList.findIndex(d => d.id === id);
+
+      if (existingIndex !== -1) {
+        // Update existing entry
+        draftsList[existingIndex].name = name;
+        draftsList[existingIndex].updatedAt = timestamp;
+      } else {
+        // Add new entry
+        draftsList.unshift({ id, name, timestamp, updatedAt: timestamp });
+      }
+
+      localStorage.setItem('linkey-drafts-list', JSON.stringify(draftsList));
+      localStorage.setItem('linkey-current-draft-id', id);
     }
-    
-    localStorage.setItem('linkey-drafts-list', JSON.stringify(draftsList));
-    
-    // Set as current draft
+
+    // Set as current draft (in-memory)
     this.currentDraftId = id;
     this.currentDraftTimestamp = data.timestamp;
-    localStorage.setItem('linkey-current-draft-id', id);
     
     return id;
   }
@@ -258,16 +265,18 @@ class EditorState {
           timestamp: this.currentDraftTimestamp || Date.now(),
           updatedAt: Date.now()
         };
-        
-        localStorage.setItem(`linkey-draft-${this.currentDraftId}`, JSON.stringify(data));
-        
-        // Update in list
-        const draftsList = this.getDraftsList();
-        const index = draftsList.findIndex(d => d.id === this.currentDraftId);
-        if (index !== -1) {
-          draftsList[index].name = data.name;
-          draftsList[index].updatedAt = data.updatedAt;
-          localStorage.setItem('linkey-drafts-list', JSON.stringify(draftsList));
+
+        if (this.canUseLocalStorage()) {
+          localStorage.setItem(`linkey-draft-${this.currentDraftId}`, JSON.stringify(data));
+
+          // Update in list
+          const draftsList = this.getDraftsList();
+          const index = draftsList.findIndex(d => d.id === this.currentDraftId);
+          if (index !== -1) {
+            draftsList[index].name = data.name;
+            draftsList[index].updatedAt = data.updatedAt;
+            localStorage.setItem('linkey-drafts-list', JSON.stringify(draftsList));
+          }
         }
         
         // Emit save event
@@ -285,6 +294,9 @@ class EditorState {
    * Load from localStorage
    */
   load(draftId = null) {
+    if (!this.canUseLocalStorage()) {
+      return false;
+    }
     try {
       // If no draftId specified, load the last opened draft
       const id = draftId || localStorage.getItem('linkey-current-draft-id');
@@ -321,6 +333,7 @@ class EditorState {
    * Get list of all drafts
    */
   getDraftsList() {
+    if (!this.canUseLocalStorage()) return [];
     try {
       const list = localStorage.getItem('linkey-drafts-list');
       return list ? JSON.parse(list) : [];
@@ -333,6 +346,7 @@ class EditorState {
    * Mark a draft as recently opened
    */
   markDraftOpened(draftId, name = null) {
+    if (!this.canUseLocalStorage()) return;
     if (!draftId) return;
     const draftsList = this.getDraftsList();
     const now = Date.now();
@@ -355,20 +369,19 @@ class EditorState {
    * Delete a draft
    */
   deleteDraft(draftId) {
-    // Remove from storage
-    localStorage.removeItem(`linkey-draft-${draftId}`);
-    
-    // Remove from list
-    const draftsList = this.getDraftsList();
-    const filtered = draftsList.filter(d => d.id !== draftId);
-    localStorage.setItem('linkey-drafts-list', JSON.stringify(filtered));
-          this.markDraftOpened(parsed.id, parsed.name || parsed.title);
+    if (this.canUseLocalStorage()) {
+      // Remove from storage
+      localStorage.removeItem(`linkey-draft-${draftId}`);
+
+      // Remove from list
+      const draftsList = this.getDraftsList();
+      const filtered = draftsList.filter(d => d.id !== draftId);
+      localStorage.setItem('linkey-drafts-list', JSON.stringify(filtered));
+    }
     
     // If deleting current draft, clear it
     if (this.currentDraftId === draftId) {
-      this.currentDraftId = null;
-      this.currentDraftTimestamp = null;
-      localStorage.removeItem('linkey-current-draft-id');
+      this.newDraft();
     }
   }
   
@@ -383,7 +396,9 @@ class EditorState {
     this.historyIndex = -1;
     this.currentDraftId = null;
     this.currentDraftTimestamp = null;
-    localStorage.removeItem('linkey-current-draft-id');
+    if (this.canUseLocalStorage()) {
+      localStorage.removeItem('linkey-current-draft-id');
+    }
     this.emit('change');
   }
   
@@ -396,7 +411,9 @@ class EditorState {
     this.selectedBlockId = null;
     this.history = [];
     this.historyIndex = -1;
-    localStorage.removeItem('linkey-blog-editor-draft');
+    if (this.canUseLocalStorage()) {
+      localStorage.removeItem('linkey-blog-editor-draft');
+    }
     this.emit('change');
   }
 
@@ -455,6 +472,14 @@ class EditorState {
    * Export all drafts to JSON
    */
   exportDrafts() {
+    if (!this.canUseLocalStorage()) {
+      return {
+        version: '1.0',
+        exportedAt: Date.now(),
+        currentDraftId: this.currentDraftId,
+        drafts: []
+      };
+    }
     const draftsList = this.getDraftsList();
     const drafts = draftsList.map(entry => {
       const raw = localStorage.getItem(`linkey-draft-${entry.id}`);
@@ -587,7 +612,7 @@ class EditorState {
     this.blocks = this.ensureBlockIds(Array.isArray(data.blocks) ? data.blocks : []);
     this.currentDraftId = data.id || null;
     this.currentDraftTimestamp = data.timestamp || Date.now();
-    if (this.currentDraftId) {
+    if (this.currentDraftId && this.canUseLocalStorage()) {
       localStorage.setItem('linkey-current-draft-id', this.currentDraftId);
       this.markDraftOpened(this.currentDraftId, data.name || data.title);
     }

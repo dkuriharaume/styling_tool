@@ -93,15 +93,15 @@
       try {
         const data = await app.fetchServerDraft(draftId);
         if (data && app.state.applyDraftData(data)) {
-          // Cache server draft locally (client-only recents/last opened)
-          app.state.save(data.name || data.title || app.state.title || 'Untitled Draft', false);
           app.closeDraftsModal();
           app.showStatus('Draft loaded', 'success');
           return true;
         }
       } catch (e) {
-        console.warn('Server load failed, falling back to local.', e);
+        console.warn('Server load failed.', e);
       }
+      app.showStatus('Failed to load draft', 'error');
+      return false;
     }
 
     if (app.state.load(draftId)) {
@@ -115,15 +115,6 @@
   };
 
   const loadLastEditedDraft = async (app) => {
-    const lastOpenedId = localStorage.getItem('linkey-current-draft-id');
-    if (lastOpenedId) {
-      if (app.state.load(lastOpenedId)) {
-        return;
-      }
-      const loaded = await loadDraft(app, lastOpenedId);
-      if (loaded) return;
-    }
-
     if (app.isServerEnabled()) {
       try {
         const drafts = await app.fetchServerDrafts();
@@ -141,7 +132,12 @@
           }
         }
       } catch (e) {
-        console.warn('Server drafts unavailable, using local drafts.', e);
+        console.warn('Server drafts unavailable.', e);
+        app.showStatus('Failed to load drafts from server', 'error');
+      }
+      if (app.state.useLocalStorage === false) {
+        app.showStatus(`✓ ${app.t('status.pageLoaded')}`, 'success', 2000);
+        return;
       }
     }
 

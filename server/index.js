@@ -239,6 +239,83 @@ app.post('/ai/suggest', async (req, res) => {
       return res.status(500).json({ error: 'Invalid AI response' });
     }
 
+    const normalizeDraftTextFields = (draft) => {
+      if (!draft || !Array.isArray(draft.blocks)) return draft;
+      const pickText = (...values) => {
+        for (const value of values) {
+          if (value === null || value === undefined) continue;
+          if (typeof value === 'string' && value.trim() === '') continue;
+          return value;
+        }
+        return '';
+      };
+
+      const blocks = draft.blocks.map(block => {
+        if (!block || typeof block !== 'object') return block;
+        const data = block.data && typeof block.data === 'object' ? block.data : {};
+        if (block.type === 'header') {
+          const content = pickText(block.content, block.text, data.text, data.content, data.title);
+          return { ...block, content };
+        }
+        if (block.type === 'paragraph') {
+          const content = pickText(block.content, block.text, data.text, data.content);
+          return { ...block, content };
+        }
+        if (block.type === 'list' && Array.isArray(block.items)) {
+          return {
+            ...block,
+            items: block.items.map(item => {
+              if (!item || typeof item !== 'object') return { content: String(item ?? '') };
+              const content = pickText(item.content, item.text, item.value, item.title, item.label, item.name);
+              let term = pickText(item.term, item.key, item.title, item.label);
+              let definition = pickText(item.definition, item.value, item.content, item.text);
+              if (block.listType === 'dl') {
+                if ((!term || !definition) && typeof content === 'string' && content.includes('：')) {
+                  const [left, ...rest] = content.split('：');
+                  if (!term) term = left?.trim() || '';
+                  if (!definition) definition = rest.join('：').trim() || '';
+                } else if ((!term || !definition) && typeof content === 'string' && content.includes(':')) {
+                  const [left, ...rest] = content.split(':');
+                  if (!term) term = left?.trim() || '';
+                  if (!definition) definition = rest.join(':').trim() || '';
+                }
+                if (!term && content) term = String(content);
+                if (!definition && content && term && content !== term) definition = String(content);
+                return { term, definition };
+              }
+              if (block.listType === 'ol-title') {
+                return { title: term, content: definition || content };
+              }
+              return { content };
+            })
+          };
+        }
+        return block;
+      });
+
+      return { ...draft, blocks };
+    };
+
+    parsed.draft = normalizeDraftTextFields(parsed.draft);
+
+    if (selection && parsed.draft && Array.isArray(parsed.draft.blocks) && Array.isArray(draft.blocks)) {
+      const hasSelectionInsert = typeof parsed.draft.selectionInsert === 'string' || typeof parsed.draft.insertPosition === 'string' || typeof parsed.draft._selectionInsert === 'string';
+      if (!hasSelectionInsert && selection.scope !== 'subtree') {
+        const originalIds = new Set(draft.blocks.map(block => block && block.id).filter(Boolean));
+        const newBlocks = parsed.draft.blocks.filter(block => block && block.id && !originalIds.has(block.id));
+        if (newBlocks.length) {
+          const promptText = String(prompt || '').toLowerCase();
+          let inferred = 'after';
+          if (/\b(before|above|prior|previous|upward)\b/.test(promptText)) {
+            inferred = 'before';
+          } else if (/\b(after|below|under|beneath|downward)\b/.test(promptText)) {
+            inferred = 'after';
+          }
+          parsed.draft.selectionInsert = inferred;
+        }
+      }
+    }
+
     res.json({
       suggestions: sanitizeSuggestions(Array.isArray(parsed.suggestions) ? parsed.suggestions : [], draftSummary),
       draft: parsed.draft

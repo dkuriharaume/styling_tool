@@ -19,6 +19,7 @@
       fileOps: {
         recent: 'Recent Files',
         current: 'Current',
+        commands: 'Commands',
         document: 'Document',
         drafts: 'Drafts Backup',
         newDraft: 'New Draft',
@@ -128,6 +129,7 @@
       fileOps: {
         recent: '最近使用したファイル',
         current: '現在',
+        commands: 'コマンド',
         document: 'ドキュメント',
         drafts: 'ドラフトのバックアップ',
         newDraft: '新規ドラフト',
