@@ -26,6 +26,11 @@ const escapeHtmlText = DOM_UTILS.escapeHtml || ((text) => {
   div.textContent = text;
   return div.innerHTML;
 });
+const storage = DOM_UTILS.storage || {
+  getItem: () => null,
+  setItem: () => {},
+  removeItem: () => {}
+};
 
 const DIALOGS = window.BLOG_EDITOR_DIALOGS || {};
 const showConfirmDialog = DIALOGS.showConfirm || ((title, message) => Promise.resolve(window.confirm(`${title}\n\n${message}`)));
@@ -65,7 +70,7 @@ class BlogEditorApp {
     this.statusTimer = null;
     this.isInDraftsBrowser = false; // Track if user is browsing drafts
     this.isInAiChatView = false;
-    this.currentLang = localStorage.getItem(STORAGE_KEYS.language) || 'en';
+    this.currentLang = storage.getItem(STORAGE_KEYS.language) || 'en';
     this.aiChatHistory = [];
 
     // Pre-calculate margin collapse lookup table for all combinations
@@ -383,10 +388,8 @@ class BlogEditorApp {
   }
   
   init() {
-    this.state.useLocalStorage = !this.isServerEnabled();
-    if (this.state.useLocalStorage === false) {
-      this.state.newDraft();
-    }
+    this.state.useLocalStorage = false;
+    this.state.newDraft();
     // Setup event listeners
     this.setupPalette();
     this.setupCanvas();
@@ -496,7 +499,7 @@ class BlogEditorApp {
   }
 
   getAiDebugLog() {
-    return localStorage.getItem('linkey-ai-debug-log') || '';
+    return storage.getItem('linkey-ai-debug-log') || '';
   }
 
   serializeDraftForLog(draft) {
@@ -512,13 +515,13 @@ class BlogEditorApp {
     const line = `[${timestamp}] ${entry}`;
     const existing = this.getAiDebugLog();
     const updated = existing ? `${existing}\n${line}` : line;
-    localStorage.setItem('linkey-ai-debug-log', updated);
+    storage.setItem('linkey-ai-debug-log', updated);
     const debugLog = this.getElement('ai-debug-log');
     if (debugLog) debugLog.value = updated;
   }
 
   clearAiDebugLog() {
-    localStorage.removeItem('linkey-ai-debug-log');
+    storage.removeItem('linkey-ai-debug-log');
     const debugLog = this.getElement('ai-debug-log');
     if (debugLog) debugLog.value = '';
   }
@@ -706,7 +709,7 @@ class BlogEditorApp {
    * Resolve server base URL
    */
   getServerBaseUrl() {
-    const stored = localStorage.getItem(STORAGE_KEYS.serverUrl);
+    const stored = storage.getItem(STORAGE_KEYS.serverUrl);
     if (stored) return stored;
     if (window.location && (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost')) {
       return 'http://127.0.0.1:3001';
@@ -781,7 +784,7 @@ class BlogEditorApp {
     const baseUrl = this.getServerBaseUrl();
 
     for (const entry of drafts) {
-      const raw = localStorage.getItem(`linkey-draft-${entry.id}`);
+      const raw = storage.getItem(`linkey-draft-${entry.id}`);
       if (!raw) continue;
       try {
         const payload = JSON.parse(raw);

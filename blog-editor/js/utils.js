@@ -19,12 +19,24 @@
     return div.innerHTML;
   };
 
+  const memoryStore = new Map();
+  const storage = {
+    getItem: (key) => (memoryStore.has(key) ? memoryStore.get(key) : null),
+    setItem: (key, value) => {
+      memoryStore.set(key, String(value));
+    },
+    removeItem: (key) => {
+      memoryStore.delete(key);
+    }
+  };
+
   window.BLOG_EDITOR_UTILS = {
     getById,
     qs,
     qsa,
     isInside,
     isEditableElement,
-    escapeHtml
+    escapeHtml,
+    storage
   };
 })();

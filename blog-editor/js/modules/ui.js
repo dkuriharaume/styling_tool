@@ -5,6 +5,11 @@
 (() => {
   const modules = window.BLOG_EDITOR_MODULES || {};
   const constants = window.BLOG_EDITOR_CONSTANTS || {};
+  const storage = (window.BLOG_EDITOR_UTILS && window.BLOG_EDITOR_UTILS.storage) || {
+    getItem: () => null,
+    setItem: () => {},
+    removeItem: () => {}
+  };
 
   const setupScrollPersistence = (app) => {
     const editorCanvas = app.getEditorCanvas();
@@ -28,13 +33,13 @@
   const saveScrollPosition = (app) => {
     const editorCanvas = app.getEditorCanvas();
     if (editorCanvas) {
-      localStorage.setItem(constants.STORAGE_KEYS?.scrollPosition || 'blog-editor-scroll-position', editorCanvas.scrollTop);
+      storage.setItem(constants.STORAGE_KEYS?.scrollPosition || 'blog-editor-scroll-position', editorCanvas.scrollTop);
     }
   };
 
   const restoreScrollPosition = (app) => {
     const editorCanvas = app.getEditorCanvas();
-    const savedPosition = localStorage.getItem(constants.STORAGE_KEYS?.scrollPosition || 'blog-editor-scroll-position');
+    const savedPosition = storage.getItem(constants.STORAGE_KEYS?.scrollPosition || 'blog-editor-scroll-position');
 
     if (editorCanvas && savedPosition !== null) {
       // Use requestAnimationFrame to ensure DOM is ready
@@ -248,7 +253,7 @@
     const viewportButtons = app.getElementsBySelector('.viewport-btn');
 
     // Load saved viewport preference
-    const savedViewport = localStorage.getItem(constants.STORAGE_KEYS?.viewport || 'linkey-editor-viewport');
+    const savedViewport = storage.getItem(constants.STORAGE_KEYS?.viewport || 'linkey-editor-viewport');
     if (savedViewport) {
       app.currentViewport = savedViewport;
       app.updateActiveButtons(viewportButtons, btn => btn.dataset.viewport === savedViewport);
@@ -262,7 +267,7 @@
         app.currentViewport = btn.dataset.viewport;
 
         // Save viewport preference
-        localStorage.setItem(constants.STORAGE_KEYS?.viewport || 'linkey-editor-viewport', app.currentViewport);
+        storage.setItem(constants.STORAGE_KEYS?.viewport || 'linkey-editor-viewport', app.currentViewport);
 
         app.applyViewport();
       });
@@ -283,7 +288,7 @@
         app.currentLang = btn.dataset.lang;
 
         // Save language preference
-        localStorage.setItem(constants.STORAGE_KEYS?.language || 'linkey-lang', app.currentLang);
+        storage.setItem(constants.STORAGE_KEYS?.language || 'linkey-lang', app.currentLang);
 
         // Apply language to UI
         app.applyLanguage();

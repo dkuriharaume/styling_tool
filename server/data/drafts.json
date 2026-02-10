@@ -1,1507 +1,704 @@
 {
   "drafts": [
     {
-      "id": "draft-1770730543549",
-      "name": "(AI 作文) 六法全書の解説",
-      "title": "(AI 作文) 六法全書の解説",
+      "id": "draft-1770695591220",
+      "name": "民泊記事のてこ入れ",
+      "title": "民泊記事のてこ入れ",
       "blocks": [
         {
-          "id": "block-1",
+          "id": "block-1770705565900-9j08bnbj6",
           "type": "header",
           "level": 1,
           "preset": "default",
-          "content": "六法全書とは"
+          "content": "【全体像】民泊トラブルは「予防・点検・対応」の3層で考える"
         },
         {
-          "id": "block-1-newintro",
+          "id": "block-1770705577510-yzk8tupdq",
           "type": "paragraph",
           "variant": "normal",
-          "content": "六法全書というのはのう、日本の大切な法律がたくさん詰まった書物じゃよ。法律を学ぶ人だけでなく、みんなにも役立つ知識の宝物なんじゃ。時代が進んで、最近じゃ電子版も普及して、どこでも気軽に読めるようになったのう。"
+          "content": "<div>民泊のトラブルは、突発的に起きているように見えても、実際には「想定されていなかった動き」や「確認されなかったズレ」が積み重なって発生するケースがほとんどです。</div><div>完全にゼロにすることは難しい一方で、起こりやすいパターンを整理し、あらかじめ仕組みを整えておくことで、発生頻度や影響を抑えることは十分に可能です。</div>"
         },
         {
-          "id": "block-1a",
-          "type": "header",
-          "level": 2,
-          "preset": "blue",
-          "content": "六法全書の歴史・成り立ち"
-        },
-        {
-          "id": "block-1b",
+          "id": "block-1770705608680-atfe4pi3a",
           "type": "paragraph",
           "variant": "normal",
-          "content": "六法全書というのは、明治のころに日本の近代法を整えるために生まれたんじゃ。時代に合わせて内容もどんどん広がってのう、今じゃ学びにも仕事にも欠かせぬ存在じゃ。出版されるたびに中身が見直されて、世の中の変化や法律の改正にもちゃんと合わせてきた歴史があるんじゃぞ。"
+          "content": "本記事では、民泊トラブルを"
         },
         {
-          "id": "block-2",
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "六法全書は、日本で大事な法律をしっかり集めた法典のひとつじゃ。法律を学ぶ若いもんも、現場で働く者にも、みんなの基本資料になるんじゃ。市民の皆も、自分の権利や義務を知るのに役立つ大事な本なんじゃぞ。"
-        },
-        {
-          "id": "block-3",
-          "type": "header",
-          "level": 2,
-          "preset": "blue",
-          "content": "収録されている六法"
-        },
-        {
-          "id": "block-4a",
-          "type": "list",
-          "listType": "dl",
-          "items": [
-            {
-              "term": "憲法",
-              "definition": "これはのう、日本という国の基本となる決まりで、みんなの権利や国家のしくみを定めた、いちばん大事な法律じゃよ。"
-            },
-            {
-              "term": "民法",
-              "definition": "家族や財産のこと、つまりわしらの生活にぐっと関わってくる決まりなんじゃ。相続や契約など、日々の暮らしに欠かせんのう。"
-            },
-            {
-              "term": "商法",
-              "definition": "お店をやっとる人や会社のための法律じゃ。商売や取引の決まりごとは、これがないと話にならんのじゃよ。"
-            },
-            {
-              "term": "民事訴訟法",
-              "definition": "人同士のもめごとをどうやって裁判で解決するか、その手順を決めておる法律なんじゃ。"
-            },
-            {
-              "term": "刑法",
-              "definition": "悪いことをしたらどうなるか、世の中の秩序を守る法律じゃ。犯罪や罰について決めておるんじゃよ。"
-            },
-            {
-              "term": "刑事訴訟法",
-              "definition": "罪に問われた時の捜査や裁判、刑の執行についての決まりじゃな。犯罪の裁きには欠かせん法律じゃ。"
-            }
-          ]
-        },
-        {
-          "id": "block-5",
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "この六つの法律だけじゃなくて、他にもいろんな大事な決まりごとや特別な法律も収められておるのじゃ。専門の分野ごとの法律もきちんと載せて、幅広く世の中のルールを網羅しておるぞい。"
-        },
-        {
-          "id": "block-3b",
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "行政法や労働法など、今の世の中で大事になってきた法律も一緒に載せておるんじゃ。"
-            },
-            {
-              "content": "最近の六法全書は、判例や重要な改正も注釈でしっかり教えてくれるものが多いんじゃぞ。"
-            }
-          ]
-        },
-        {
-          "id": "block-3b-card",
-          "type": "card",
-          "subtype": "2-col",
-          "cards": [
-            {
-              "title": "特別法や補足法令の存在",
-              "content": "六法全書は時代の流れに合わせて、さまざまな法律も追加されとるからの。今は労働法や環境法なんかも大切なんじゃぞ。",
-              "image": "",
-              "alt": ""
-            },
-            {
-              "title": "判例・注釈の利便性",
-              "content": "判例や注釈が書いてあると、実際にどんなふうに使われとるのか、しっかり分かるのう。受験勉強にも、本職にも役立つんじゃ。",
-              "image": "",
-              "alt": ""
-            }
-          ]
-        },
-        {
-          "id": "block-6",
-          "type": "header",
-          "level": 2,
-          "preset": "default",
-          "content": "六法全書の用途と特徴"
-        },
-        {
-          "id": "block-7",
-          "type": "card",
-          "subtype": "2-col",
-          "cards": [
-            {
-              "title": "法学や資格試験の学習",
-              "content": "若いもんが法学や資格試験を受ける時には、六法全書は欠かせん道しるべじゃ。最新の内容もどんどん反映されとるから、安心して使えるぞい。",
-              "image": "",
-              "alt": ""
-            },
-            {
-              "title": "実務での活用",
-              "content": "現場で法律を使うプロも、ビジネスで法律を頼りにする者も、六法全書は必需品じゃ。注釈や施行日の情報が重宝されるのう。",
-              "image": "",
-              "alt": ""
-            }
-          ]
-        },
-        {
-          "id": "block-7b",
-          "type": "card",
-          "subtype": "3-col",
-          "cards": [
-            {
-              "title": "ポケット六法",
-              "content": "小さくて持ち運びも楽じゃ。外でも勉強できるし、内容もぎゅっとまとまっとるぞい。",
-              "image": "",
-              "alt": ""
-            },
-            {
-              "title": "判例付き六法",
-              "content": "大事な判例や改正の道筋なんかが解説されていて、もっと深く知りたいときにぴったりじゃ。",
-              "image": "",
-              "alt": ""
-            },
-            {
-              "title": "電子六法",
-              "content": "スマホやタブレットで気軽に読めるんじゃ。検索やリンクもついて便利じゃぞ。",
-              "image": "",
-              "alt": ""
-            }
-          ]
-        },
-        {
-          "id": "block-6b",
-          "type": "header",
-          "level": 3,
-          "preset": "blue",
-          "content": "活用の具体例"
-        },
-        {
-          "id": "block-6c",
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "改正がないか、時々調べて最新の内容をつかんでおくんじゃ。"
-            },
-            {
-              "content": "模擬試験や実際の問題を解くときの頼もしい参考になるんじゃぞ。"
-            },
-            {
-              "content": "契約書や法律文書を作るとき、「これで大丈夫かのう」と根拠を調べるのに大いに役立つぞい。"
-            }
-          ]
-        },
-        {
-          "id": "block-6d",
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "六法全書を使えば、条文だけじゃなく、その背景や改正の経緯、判例まで学ぶことができるんじゃ。社会人もビジネスの場面でも、正しい知識が判断を助けてくれるんじゃぞ。"
-        },
-        {
-          "id": "block-8",
-          "type": "header",
-          "level": 2,
-          "preset": "default",
-          "content": "六法全書の入手と選び方"
-        },
-        {
-          "id": "block-8b",
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "有名な出版社（有斐閣・三省堂・弘文堂など）の特徴を見比べて決めるのがええぞ。"
-            },
-            {
-              "content": "自分の目的や勉強のやり方に合うものを選ぶとええんじゃ。"
-            },
-            {
-              "content": "法改正への対応や、判例や注釈のわかりやすさも、大事なポイントじゃよ。"
-            }
-          ]
-        },
-        {
-          "id": "block-8c",
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "最近は電子書籍にもなっておるから、スマホやパソコンでもすぐ使えるぞい。自分の生活や勉強のペースに合わせて、使いやすいものを選んでおくれ。"
-        },
-        {
-          "id": "block-9",
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "六法全書は本屋さんでもネットでも手に入る時代じゃ。内容や大きさなど、自分にぴったりのものを選ぶんじゃぞ。特に、法律の改正にすぐ対応してくれるかや、判例がしっかり載っておるかが大事なポイントじゃ。"
-        },
-        {
-          "id": "block-10",
-          "type": "paragraph",
-          "variant": "small-gray",
-          "content": "六法全書は法律が変わるたびに新しくなるんじゃ。だから、必ず最新版を使うようにな、古いのは使っちゃいかんぞ。"
-        },
-        {
-          "id": "block-summary",
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "六法全書は法律を学ぶならまず持っておきたい一冊じゃ。どんな道に進んでも必ず役に立つから、目的や腕前に合うものを見つけてうまく使うんじゃぞい。"
-        }
-      ],
-      "timestamp": 1770730543549,
-      "updatedAt": 1770731271742
-    },
-    {
-      "id": "draft-1770729673989",
-      "name": "(AI 作文 )おいしいステーキの焼き方",
-      "title": "(AI 作文 )おいしいステーキの焼き方",
-      "blocks": [
-        {
-          "id": "block-1",
-          "type": "header",
-          "level": 1,
-          "preset": "default",
-          "content": "うまいステーキの焼き方"
-        },
-        {
-          "id": "block-2",
-          "type": "header",
-          "level": 2,
-          "preset": "blue",
-          "content": "1. 材料と準備やで"
-        },
-        {
-          "id": "block-3",
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "うまいステーキ焼くには、素材の選び方と下ごしらえメッチャ大事やねん。特にええ肉選んだら、風味も食感もガツンとアップするで。下ごしらえもサボったらあかん！焼く前にしっかり常温に戻すんが成功のコツや。ここでは、必要な材料と準備のポイントまとめるわ。"
-        },
-        {
-          "id": "block-4",
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "牛ステーキ肉（部位は好きなん選び）"
-            },
-            {
-              "content": "塩・こしょう"
-            },
-            {
-              "content": "油かバター"
-            },
-            {
-              "content": "にんにく（入れたかったらでええよ）"
-            }
-          ]
-        },
-        {
-          "id": "block-4a",
-          "type": "paragraph",
-          "variant": "small-gray",
-          "content": "※牛肉は分厚いと焼きムラ出やすいから、初めてやったら2cmぐらいが扱いやすいで。"
-        },
-        {
-          "id": "block-5",
-          "type": "header",
-          "level": 2,
-          "preset": "default",
-          "content": "2. 焼き方の手順や"
-        },
-        {
-          "id": "block-6",
+          "id": "block-1770705618663-t7sn5cphq",
           "type": "list",
           "listType": "ol",
           "items": [
             {
-              "content": "肉を常温に戻す（冷蔵庫から出して20～30分ぐらい置いといて）"
+              "content": "事前に防ぐための準備（予防）"
             },
             {
-              "content": "表面に塩・こしょうふる（両面しっかりな）"
+              "content": "日常業務の中で兆候を拾う点検（点検）"
             },
             {
-              "content": "フライパン、強火で十分熱してから油入れる"
-            },
-            {
-              "content": "肉を焼く（片面1～2分ずつ、お肉の厚さで調整やで）"
-            },
-            {
-              "content": "焼き終わったら、アルミホイルで包んでちょい待つ（2～3分ぐらい）"
+              "content": "起きたときに慌てず対応する手順（対応）"
             }
           ]
         },
         {
-          "id": "block-6a",
-          "type": "paragraph",
-          "variant": "small-gray",
-          "content": "※ちょい休ませたら肉汁落ち着いて、めっちゃジューシーになるで。"
-        },
-        {
-          "id": "block-7",
-          "type": "header",
-          "level": 2,
-          "preset": "default",
-          "content": "3. うまく焼くポイントな"
-        },
-        {
-          "id": "block-8",
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "焼く前に肉を室温に戻したら、火の通りが均等や"
-            },
-            {
-              "content": "塩は焼く直前にふったら、ジューシーさ守れるで"
-            },
-            {
-              "content": "焼き時間は自分の好みで調整したらええ"
-            },
-            {
-              "content": "肉触りすぎん方が、表面キレイに焼けるわ"
-            }
-          ]
-        },
-        {
-          "id": "block-9",
-          "type": "card",
-          "subtype": "2-col",
-          "cards": [
-            {
-              "title": "おすすめ部位",
-              "content": "サーロイン、リブロース、ヒレとかがやっぱり人気やな。それぞれ脂のノリや柔らかさがちゃうし、食べ比べも楽しいで。",
-              "image": "",
-              "alt": ""
-            },
-            {
-              "title": "焼き加減",
-              "content": "レア、ミディアム、ウェルダンとか、自分の好きに調整できるで。初めてならミディアムが失敗しにくいわ。",
-              "image": "",
-              "alt": ""
-            }
-          ]
-        },
-        {
-          "id": "block-9a",
-          "type": "list",
-          "listType": "dl",
-          "items": [
-            {
-              "term": "レア",
-              "definition": "表面に焼き色ついて、中が赤くてやわらかい。肉のジューシーさもダイレクトに味わえるで。"
-            },
-            {
-              "term": "ミディアム",
-              "definition": "中心がピンクで、火の通りもええ感じ。バランスが取れてて初心者にもおすすめや。"
-            },
-            {
-              "term": "ウェルダン",
-              "definition": "しっかり火通して中心まで茶色。ちょっと歯ごたえあるけど、肉の旨みもしっかり感じ取れるわ。"
-            }
-          ]
-        },
-        {
-          "id": "block-10",
-          "type": "header",
-          "level": 2,
-          "preset": "default",
-          "content": "まとめやで"
-        },
-        {
-          "id": "block-11",
+          "id": "block-1770705689110-y5wstoyqk",
           "type": "paragraph",
           "variant": "normal",
-          "content": "うまいステーキ焼くには、素材選びから焼き方までポイント押さえるんがめっちゃ大事や。焼き加減や休ませ方にもこだわって、ぜひ家でステーキ作り楽しんでや～。"
+          "content": "<br>"
+        },
+        {
+          "id": "block-1770705651190-yw2u5jq90",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "<div><span style=\"font-size: 16px; letter-spacing: 0.07em; background-color: initial;\">という3つの層に分けて整理します。</span></div>"
+        },
+        {
+          "id": "block-1770705664097-t8vcw4nn4",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "<div>この3層を意識して運営を設計すると、「何が原因で起きたのか」「どこで防げたのか」「次に同じことを起こさないために何を直すべきか」が見えやすくなります。</div><div>以降の章では、よくあるトラブル例を起点に、具体的な予防策・点検ポイント・対応フローを順に確認していきます。</div>"
         }
       ],
-      "timestamp": 1770729673989,
-      "updatedAt": 1770730118582
+      "timestamp": 1770695591220,
+      "updatedAt": 1770705865923
     },
     {
-      "id": "draft-1770725066194",
-      "name": "(AI 作文) おいしいコーヒーの淹れ方",
-      "title": "(AI 作文) おいしいコーヒーの淹れ方",
+      "id": "draft-1770690015308",
+      "name": "040_LINKEY（リンキー）運用で困ったときの考え方｜原因の切り分けと安定運用のポイント",
+      "title": "040_LINKEY（リンキー）運用で困ったときの考え方｜原因の切り分けと安定運用のポイント",
       "blocks": [
         {
-          "id": "block-1",
-          "type": "header",
-          "data": {
-            "text": "はじめに：おいしいコーヒーの魅力",
-            "level": 2,
-            "preset": "default"
-          },
-          "level": 2,
-          "preset": "default",
-          "content": "はじめに：おいしいコーヒーの魅力"
-        },
-        {
-          "id": "block-2",
           "type": "paragraph",
-          "data": {
-            "text": "毎日の生活に欠かせないコーヒー。おいしいコーヒーを淹れることで、一日の始まりが豊かになり、心に安らぎを与えてくれます。初心者の方でも気軽に挑戦できる方法を、基本から丁寧にご紹介しますので、ぜひ参考にしてください。",
-            "variant": "normal"
-          },
           "variant": "normal",
-          "content": "毎日の生活に欠かせないコーヒー。おいしいコーヒーを淹れることで、一日の始まりが豊かになり、心に安らぎを与えてくれます。初心者の方でも気軽に挑戦できる方法を、基本から丁寧にご紹介しますので、ぜひ参考にしてください。"
-        },
-        {
-          "id": "block-3",
-          "type": "header",
-          "data": {
-            "text": "1. コーヒー豆の選び方",
-            "level": 3,
-            "preset": "default"
-          },
-          "level": 3,
-          "preset": "default",
-          "content": "1. コーヒー豆の選び方"
-        },
-        {
-          "id": "block-4",
-          "type": "paragraph",
-          "data": {
-            "text": "コーヒーの味は豆の品質で大きく変わります。新鮮な豆を選ぶためには、焙煎日ができるだけ近いものを選びましょう。コーヒー豆の産地ごとに特徴があり、たとえば南米の豆は甘みがあり、中米の豆は酸味が特徴的です。また、焙煎度合いによっても風味が変わるため、浅煎りならフルーティーな酸味、深煎りなら苦味やコクが強くなります。自分の好みに合った豆を探すことが楽しみの一つです。",
-            "variant": "normal"
-          },
-          "variant": "normal",
-          "content": "コーヒーの味は豆の品質で大きく変わります。新鮮な豆を選ぶためには、焙煎日ができるだけ近いものを選びましょう。コーヒー豆の産地ごとに特徴があり、たとえば南米の豆は甘みがあり、中米の豆は酸味が特徴的です。また、焙煎度合いによっても風味が変わるため、浅煎りならフルーティーな酸味、深煎りなら苦味やコクが強くなります。自分の好みに合った豆を探すことが楽しみの一つです。"
-        },
-        {
-          "id": "block-5",
-          "type": "header",
-          "data": {
-            "text": "2. 豆の挽き方と水の準備",
-            "level": 3,
-            "preset": "default"
-          },
-          "level": 3,
-          "preset": "default",
-          "content": "2. 豆の挽き方と水の準備"
-        },
-        {
-          "id": "block-6",
-          "type": "list",
-          "data": {
-            "listType": "ul",
-            "items": [
-              "使用する器具に合わせた挽き方を選ぶ（例：ペーパードリップは中挽き）。挽き方が粗すぎたり細かすぎたりすると抽出に影響が出るため注意が必要です。",
-              "水は浄水を使い、軟水がベスト。水質がコーヒーの味に影響するため、水道水をそのまま使わず浄水を利用しましょう。",
-              "お湯の温度は約90～96℃を目安にすると良い。沸騰直後のお湯は少し冷まして適温に調整することで、苦味が抑えられ美味しく抽出できます。"
-            ]
-          },
-          "listType": "ul",
-          "items": [
-            {
-              "content": "使用する器具に合わせた挽き方を選ぶ（例：ペーパードリップは中挽き）。挽き方が粗すぎたり細かすぎたりすると抽出に影響が出るため注意が必要です。"
-            },
-            {
-              "content": "水は浄水を使い、軟水がベスト。水質がコーヒーの味に影響するため、水道水をそのまま使わず浄水を利用しましょう。"
-            },
-            {
-              "content": "お湯の温度は約90～96℃を目安にすると良い。沸騰直後のお湯は少し冷まして適温に調整することで、苦味が抑えられ美味しく抽出できます。"
-            }
-          ]
-        },
-        {
-          "id": "block-7",
-          "type": "header",
-          "data": {
-            "text": "3. おいしいコーヒーの淹れ方の基本手順",
-            "level": 3,
-            "preset": "default"
-          },
-          "level": 3,
-          "preset": "default",
-          "content": "3. おいしいコーヒーの淹れ方の基本手順"
-        },
-        {
-          "id": "block-8",
-          "type": "list",
-          "data": {
-            "listType": "ol",
-            "items": [
-              "フィルターにコーヒー粉を入れる。均一になるように軽く平らにします。",
-              "少量のお湯で蒸らし、粉全体を湿らせる。この工程でコーヒーのガス抜きをし、風味を引き出します。",
-              "残りのお湯をゆっくり注ぐ。中心から外側へ螺旋を描くように注ぐと均一に抽出できます。",
-              "抽出後すぐにコーヒーをサーバーに移す。この作業で余分な苦味がつきにくくなります。"
-            ]
-          },
-          "listType": "ol",
-          "items": [
-            {
-              "content": "フィルターにコーヒー粉を入れる。均一になるように軽く平らにします。"
-            },
-            {
-              "content": "少量のお湯で蒸らし、粉全体を湿らせる。この工程でコーヒーのガス抜きをし、風味を引き出します。"
-            },
-            {
-              "content": "残りのお湯をゆっくり注ぐ。中心から外側へ螺旋を描くように注ぐと均一に抽出できます。"
-            },
-            {
-              "content": "抽出後すぐにコーヒーをサーバーに移す。この作業で余分な苦味がつきにくくなります。"
-            }
-          ]
-        },
-        {
-          "id": "block-unique1",
-          "type": "card",
-          "subtype": "2-col",
-          "cards": [
-            {
-              "title": "お湯の注ぎ方のポイント",
-              "content": "お湯はゆっくりと、小刻みに数回に分けて注ぐことで、コーヒー粉がしっかり膨らみ、豊かな香りと味が引き出せます。",
-              "image": "",
-              "alt": ""
-            },
-            {
-              "title": "抽出後の注意点",
-              "content": "コーヒーは抽出後すぐにサーバー等にうつして下さい。抽出中に豆が長く湯の中にあると余分な苦味や雑味が出やすいです。",
-              "image": "",
-              "alt": ""
-            }
-          ]
-        },
-        {
-          "id": "block-10",
-          "type": "header",
-          "data": {
-            "text": "4. まとめとコツ",
-            "level": 3,
-            "preset": "default"
-          },
-          "level": 3,
-          "preset": "default",
-          "content": "4. まとめとコツ"
-        },
-        {
-          "id": "block-11",
-          "type": "paragraph",
-          "data": {
-            "text": "おいしいコーヒーを淹れるには、豆選び、水準備、淹れ方のすべてに気を配ることが大切です。特に新鮮な豆の使用、適温の水、丁寧な蒸らしは味わいを大きく左右します。自分好みの味を見つけるために、さまざまな豆や抽出方法を試してみるのも楽しいプロセスです。毎日のコーヒータイムがもっと特別な時間になることでしょう。",
-            "variant": "normal"
-          },
-          "variant": "normal",
-          "content": "おいしいコーヒーを淹れるには、豆選び、水準備、淹れ方のすべてに気を配ることが大切です。特に新鮮な豆の使用、適温の水、丁寧な蒸らしは味わいを大きく左右します。自分好みの味を見つけるために、さまざまな豆や抽出方法を試してみるのも楽しいプロセスです。毎日のコーヒータイムがもっと特別な時間になることでしょう。"
-        },
-        {
-          "id": "block-12",
-          "type": "paragraph",
-          "data": {
-            "text": "※器具によって適した挽き方や抽出時間は異なるため、慣れるまでいろいろ試してみるのも楽しみの一つです。",
-            "variant": "small-gray"
-          },
-          "variant": "small-gray",
-          "content": "※器具によって適した挽き方や抽出時間は異なるため、慣れるまでいろいろ試してみるのも楽しみの一つです。"
-        }
-      ],
-      "timestamp": 1770728891732,
-      "updatedAt": 1770729085746
-    },
-    {
-      "id": "draft-1770676490529",
-      "name": "Google Document のインポート方法",
-      "title": "Google Document のインポート方法",
-      "blocks": [
-        {
-          "type": "header",
-          "level": 1,
-          "preset": "default",
-          "content": "Google Document のインポート方法",
-          "id": "block-1770676490528-h36yvh9cr"
-        },
-        {
-          "type": "header",
-          "level": 4,
-          "preset": "default",
-          "content": "1. MD ファイルとしてエクスポート",
-          "id": "block-1770676490528-gglr8uvx7"
+          "content": "スマートロックは便利な一方で、運用が広がるにつれて「想定外の困りごと」に直面することがあります。",
+          "id": "block-1770690015308-j2mb5vfen"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "Google Document メニューの",
-          "id": "block-1770676490528-wo93co1tw"
+          "content": "ただし、その多くは製品の不具合や故障そのものではなく、運用設計や前提理解のズレが重なって起きるケースです。",
+          "id": "block-1770690015308-pm1znpo9y"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "ファイル > ダウンロード > マークダウン (.md)",
-          "id": "block-1770676490528-yq1wjpton"
+          "content": "この記事では、具体的な対処手順を並べるのではなく、<strong class=\"strong\">困ったときにどう考え、どう切り分ければよいか</strong>という視点から、LINKEY運用を整理します。",
+          "id": "block-1770690015308-whf0b9zos"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "で MD という形式のテキストファイルがローカルに DL される。",
-          "id": "block-1770676490528-fep9y6rjl"
-        },
-        {
-          "type": "header",
-          "level": 4,
-          "preset": "default",
-          "content": "2. MD ファイルをアップロード",
-          "id": "block-1770676490528-uly62ssn2"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "LINKEY Blog Editor のグローバルメニュー (何も選択されていない状態の右側のパネル)",
-          "id": "block-1770676490528-83kgziunt"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "から MD ファイルをインポート。 すると、フォーマットされたドラフトが表示 (保存) される。",
-          "id": "block-1770676490528-hgmhgeu2x"
-        }
-      ],
-      "timestamp": 1770676490529,
-      "updatedAt": 1770682922849
-    },
-    {
-      "id": "draft-1770686664438",
-      "name": "038_LINKEY（リンキー）の鍵管理ガイド｜暗証番号とICカード（NFC）の最適な使い分け",
-      "title": "038_LINKEY（リンキー）の鍵管理ガイド｜暗証番号とICカード（NFC）の最適な使い分け",
-      "blocks": [
-        {
-          "type": "header",
-          "level": 1,
-          "preset": "default",
-          "content": "LINKEY（リンキー）の鍵管理ガイド｜暗証番号とICカード（NFC）の最適な使い分け",
-          "id": "block-1770686664437-kseqeo8qh"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "スマートロック「LINKEY」では、暗証番号やICカード（NFC）を使って鍵の管理を行います。<div>&nbsp;ただし、実際に運用を始めてみると、</div>",
-          "id": "block-1770686664437-kmervz0jv"
-        },
-        {
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "暗証番号とICカードはどう使い分けるべきか"
-            },
-            {
-              "content": "誰に、どの鍵を割り当てるのがよいのか"
-            },
-            {
-              "content": "登録や削除は、どこで管理すればよいのか"
-            }
-          ],
-          "id": "block-1770686664437-jv4g0zq7q"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "といった点で迷うことも少なくありません。",
-          "id": "block-1770686664437-310bytnb5"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "この記事では、LINKEYの鍵管理について、暗証番号とICカード（NFC）それぞれの特徴を整理しながら、<strong class=\"strong\">現場で無理なく運用するための考え方</strong>をまとめます。&nbsp;<div>具体的な操作手順ではなく、「どう管理するとトラブルを防げるか」を理解するためのガイドとしてご覧ください。</div>",
-          "id": "block-1770686664437-9jdo6ycbv"
+          "content": "「今まさに困っている」場面でも、見出しを追うだけで、次に取るべき行動のヒントが得られる構成です。",
+          "id": "block-1770690015308-7je9pkljs"
         },
         {
           "type": "header",
           "level": 2,
           "preset": "default",
           "content": "この記事でわかること",
-          "id": "block-1770686664437-ce0it9quy"
+          "id": "block-1770690015308-259q3j42n"
         },
         {
           "type": "list",
           "listType": "ul",
           "items": [
             {
-              "content": "暗証番号とICカード（NFC）の役割"
+              "content": "トラブルの背景にある、よくある原因の考え方"
             },
             {
-              "content": "対象に合わせた最適な鍵の割り当て方と、向いている利用シーン"
+              "content": "迷ったときに、どこから確認すべきかという切り分けの順番"
             },
             {
-              "content": "鍵管理のトラブルや属人化を防ぐ運用ルールの考え方"
+              "content": "現地操作・鍵管理・Web管理ツールの役割を整理し、安定運用につなげる視点"
             }
           ],
-          "id": "block-1770686664437-ozshrkioe"
+          "id": "block-1770690015308-makr65z2i"
         },
         {
           "type": "header",
           "level": 1,
           "preset": "default",
-          "content": "解錠手段は2種類：ゲスト向けの「暗証番号」と、固定スタッフ向けの「NFC（ICカード）」",
-          "id": "block-1770686664437-o9brxulu1"
+          "content": "トラブルの予兆｜運用フェーズの変化が「困りごと」の起点になる",
+          "id": "block-1770690015308-sjedghql6"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "LINKEYの鍵管理は、大きく次の2種類に分けて考えると分かりやすくなります。",
-          "id": "block-1770686664437-3wd8thzpm"
+          "content": "LINKEYに限らず、スマートロックの運用で困りごとが起きやすいのは、次のようなタイミングです。",
+          "id": "block-1770690015308-xrtcxir5b"
         },
         {
           "type": "list",
           "listType": "ul",
           "items": [
             {
-              "content": "暗証番号：一時的な利用者向け"
+              "content": "利用者やスタッフが増えたとき"
             },
             {
-              "content": "NFC（ICカード）：定期的に出入りする利用者向け"
+              "content": "無人運営や多拠点運営に切り替えたとき"
+            },
+            {
+              "content": "現地にすぐ行けない運用になったとき"
             }
           ],
-          "id": "block-1770686664437-qwa60b2ah"
+          "id": "block-1770690015308-b0szyprab"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "どちらも解錠手段として利用できますが、<strong class=\"strong\">想定されている利用シーンや管理の考え方が異なります</strong>。",
-          "id": "block-1770686664437-wnjqz7zd9"
-        },
-        {
-          "type": "header",
-          "level": 2,
-          "preset": "default",
-          "content": "1. 暗証番号：民泊や宿泊者など「一時利用」に最適",
-          "id": "block-1770686664437-vqqmjg7er"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "暗証番号は、タッチパネルに番号を入力して解錠する方式です。&nbsp;<div>鍵の受け渡しが不要なため、民泊や宿泊施設など、<strong class=\"strong\">一時的な利用者が多い運用</strong>と相性が良い仕組みです。</div>",
-          "id": "block-1770686664437-xqy8hnnh8"
-        },
-        {
-          "type": "header",
-          "level": 3,
-          "preset": "default",
-          "content": "暗証番号が向いている利用シーン",
-          "id": "block-1770686664437-tifc4imp9"
-        },
-        {
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "民泊や宿泊施設のゲスト対応"
-            },
-            {
-              "content": "利用期間があらかじめ決まっているケース"
-            },
-            {
-              "content": "対面での鍵受け渡しが難しい運用"
-            }
-          ],
-          "id": "block-1770686664437-lrnz8zpyo"
-        },
-        {
-          "type": "header",
-          "level": 3,
-          "preset": "default",
-          "content": "暗証番号運用で意識したいポイント",
-          "id": "block-1770686664437-3h0hrubhp"
-        },
-        {
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "利用終了後は、不要になった暗証番号を削除する"
-            },
-            {
-              "content": "同じ暗証番号を複数人で共有する場合は、管理ルールを決めておく"
-            },
-            {
-              "content": "Web管理ツールのスケジュール設定を活用し、利用期間を限定する"
-            }
-          ],
-          "id": "block-1770686664437-55qjmpu0g"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "暗証番号は便利な反面、管理が曖昧になると「誰が使っている番号なのか分からない」状態になりやすいため、運用ルールを決めておくことが重要です。",
-          "id": "block-1770686664437-wbkhlfioy"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "Web管理ツールでは、曜日や時間帯を指定して暗証番号を有効化することも可能で、削除忘れなどの人的ミスを減らすことができます。",
-          "id": "block-1770686664437-r5a5x66rg"
-        },
-        {
-          "type": "header",
-          "level": 2,
-          "preset": "default",
-          "content": "2. NFC（ICカード）：清掃員や従業員など「定期利用」に最適",
-          "id": "block-1770686664437-sxdyojkte"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "NFCは、ICカードや一部のデバイスをかざして解錠する方式です。&nbsp;<div>物理的なカードと利用者を紐づけて管理できるため、<strong class=\"strong\">誰が利用できるのかを把握しやすい</strong>という特徴があります。</div>",
-          "id": "block-1770686664437-d7ge4izxf"
-        },
-        {
-          "type": "header",
-          "level": 3,
-          "preset": "default",
-          "content": "NFCが向いている利用シーン",
-          "id": "block-1770686664437-5n17ienw7"
-        },
-        {
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "清掃スタッフや業者など、定期的に出入りする利用者"
-            },
-            {
-              "content": "従業員や関係者が継続的に利用する施設"
-            },
-            {
-              "content": "鍵の権限を明確に管理したいケース"
-            }
-          ],
-          "id": "block-1770686664437-z38j73kz6"
-        },
-        {
-          "type": "header",
-          "level": 3,
-          "preset": "default",
-          "content": "NFC運用で意識したいポイント",
-          "id": "block-1770686664437-0vpfakk9f"
-        },
-        {
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "契約終了・退職時には、速やかにカードを無効化する"
-            },
-            {
-              "content": "どのカードを誰に割り当てているかを把握しておく"
-            },
-            {
-              "content": "紛失時の対応フローを事前に決めておく"
-            }
-          ],
-          "id": "block-1770686664437-v368jg83t"
+          "content": "これらは「異常」ではなく、<strong class=\"strong\">運用フェーズが一段進んだことによるサイン</strong>ともいえます。",
+          "id": "block-1770690015308-z8e7rxbun"
         },
         {
           "type": "header",
           "level": 1,
           "preset": "default",
-          "content": "鍵の登録・変更方法：「本体での現地操作」と「Web管理ツールでの遠隔操作」",
-          "id": "block-1770686664437-sqoxt6dbz"
+          "content": "よくあるトラブルの「3大原因」｜役割分担の曖昧さ・鍵管理の属人化・代替手段の欠如",
+          "id": "block-1770690015308-wunpmk62a"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "LINKEYでは、鍵の登録や削除・変更を",
-          "id": "block-1770686664437-mahatk004"
+          "content": "困りごとの内容はさまざまで、すべてのケースを網羅するものではありませんが、多くは次の3つに集約されやすいです。",
+          "id": "block-1770690015308-1eqm2gqja"
+        },
+        {
+          "type": "header",
+          "level": 3,
+          "preset": "default",
+          "content": "操作と管理の役割分担が曖昧",
+          "id": "block-1770690015308-sm356y61c"
         },
         {
           "type": "list",
           "listType": "ul",
           "items": [
             {
-              "content": "LINKEY本体で行う現地操作"
+              "content": "現地で行う操作"
             },
             {
-              "content": "Web管理ツールから行う遠隔操作"
+              "content": "Web管理ツールで行う操作"
             }
           ],
-          "id": "block-1770686664437-gq3c4g19b"
+          "id": "block-1770690015308-2d2cza53b"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "のいずれかで行います。",
-          "id": "block-1770686664437-d25pch995"
+          "content": "この境界が整理されていないと、「管理画面でできると思っていた」「現地対応が必要だと知らなかった」といった認識のズレが起きやすくなります。",
+          "id": "block-1770690015308-8fwa6zdh7"
+        },
+        {
+          "type": "header",
+          "level": 3,
+          "preset": "default",
+          "content": "鍵管理ルールが属人化している",
+          "id": "block-1770690015308-ykqitc49j"
+        },
+        {
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "誰がどの鍵を使っているのか分からない"
+            },
+            {
+              "content": "削除や更新のタイミングが決まっていない"
+            }
+          ],
+          "id": "block-1770690015308-7eck8f41k"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "現地対応が可能かどうか、遠隔で対応したいかどうかによって、どちらを使うかを判断する形になります。<div><br></div>",
-          "id": "block-1770686664437-9og1i4yhw"
+          "content": "といった状態では、トラブルが起きたときに状況を把握するのが難しくなります。",
+          "id": "block-1770690015308-f4d05cnui"
+        },
+        {
+          "type": "header",
+          "level": 3,
+          "preset": "default",
+          "content": "代替手段が決まっていない",
+          "id": "block-1770690015308-06vgw6hc9"
+        },
+        {
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "遠隔操作が使えない場合どうするか"
+            },
+            {
+              "content": "現地対応が必要になった場合の動き方"
+            }
+          ],
+          "id": "block-1770690015308-efiumu3gc"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "これらが決まっていないと、焦りや混乱につながりやすくなります。",
+          "id": "block-1770690015308-sc09ola5r"
         },
         {
           "type": "paragraph",
           "variant": "small-gray",
-          "content": "※ 実際の登録・削除の操作手順については、<a class=\"txtlink\" target=\"_blank\" rel=\"noopener\" href=\"https://support.linkey-lock.com/hc/ja\">公式サポートサイト</a>をご確認ください。<div><br></div>",
-          "id": "block-1770686664437-kchrvkghl"
-        },
-        {
-          "type": "paragraph",
-          "variant": "small",
-          "content": "Web管理ツールでできる鍵管理や、現地操作との役割分担については、以下の記事で整理しています。",
-          "id": "block-1770686664437-ljmfoxlr1"
-        },
-        {
-          "type": "paragraph",
-          "variant": "small",
-          "content": "039_LINKEY（リンキー）Web管理ツールの活用ガイド｜遠隔操作・一括鍵管理・API連携の考え方",
-          "id": "block-1770686664437-4g0ji9dfi"
+          "content": "※ 製品構成によっては、最終的なバックアップとして<strong class=\"strong\">物理キー（シリンダーキー）の保管場所や管理ルール</strong>をあらかじめ決めておくことも重要です。",
+          "id": "block-1770690015308-gk3hci0gv"
         },
         {
           "type": "header",
           "level": 1,
           "preset": "default",
-          "content": "トラブルを防ぐ運用ルール：登録上限数と定期的な整理が重要",
-          "id": "block-1770686664437-3ser5zs1w"
+          "content": "トラブルを未然に防ぐ運用設計の考え方｜現地操作を基本とし、Web管理ツールは「補助」と捉える",
+          "id": "block-1770690015308-fxv2cr5t2"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "LINKEYの鍵管理で多いトラブルの多くは、機能そのものではなく、<strong class=\"strong\">運用ルールの曖昧さ</strong>から生じます。",
-          "id": "block-1770686664437-ba6v9565h"
+          "content": "LINKEY運用で大切なのは、トラブルを完全になくすことではなく、<strong class=\"strong\">起きても慌てず対応できる状態をつくること</strong>です。",
+          "id": "block-1770690015308-q2brjdm92"
         },
         {
           "type": "header",
-          "level": 2,
+          "level": 3,
           "preset": "default",
-          "content": "登録上限数への注意",
-          "id": "block-1770686664437-44a7vatqs"
+          "content": "現地操作でできることを把握しておく",
+          "id": "block-1770690015308-ze7gh9ai3"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "LINKEYでは、暗証番号やICカードの登録数に上限があります。&nbsp;<div>無制限に登録できるわけではないため、<strong class=\"strong\">使わなくなった鍵を定期的に整理することが重要</strong>です。</div>",
-          "id": "block-1770686664437-e0l8niyoc"
+          "content": "解錠・施錠や一部の設定など、現地でしかできない操作があることを前提にしておくことで、過度な期待や誤解を防げます。",
+          "id": "block-1770690015308-0y6c3x6ns"
         },
         {
           "type": "header",
-          "level": 2,
+          "level": 3,
           "preset": "default",
-          "content": "電池切れを前提にした運用設計",
-          "id": "block-1770686664437-gyv9qfp8k"
+          "content": "鍵ごとに「使う人・期間」を決める",
+          "id": "block-1770690015308-j9zkc2sji"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "電子錠である以上、電池切れのリスクはゼロではありません。",
-          "id": "block-1770686664437-o72idwqsl"
+          "content": "暗証番号やICカードは便利ですが、ルールが曖昧だと管理が難しくなります。",
+          "id": "block-1770690015308-qpkjpy1pq"
+        },
+        {
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "誰が使う鍵か"
+            },
+            {
+              "content": "いつまで有効か"
+            }
+          ],
+          "id": "block-1770690015308-vbmai7tbt"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "LINKEYでは、管理画面から電池残量を確認できるほか、本体側でも残量低下を知らせる通知があります。",
-          "id": "block-1770686664437-gy0ctmcwa"
+          "content": "を決めておくだけでも、トラブル時の切り分けが楽になります。",
+          "id": "block-1770690015308-bpmowcfep"
+        },
+        {
+          "type": "header",
+          "level": 3,
+          "preset": "default",
+          "content": "Web管理ツールは「補助」として使う",
+          "id": "block-1770690015308-92jcullsl"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "そのため、定期的なチェックとあわせて、<strong class=\"strong\">非常時用の物理鍵（シリンダーキー）の保管ルールを決めておく</strong>ことが重要です。<div><br></div>",
-          "id": "block-1770686664437-9wuxko5ui"
+          "content": "Web管理ツールは運用を支える強力な手段ですが、すべてを解決する万能ツールではありません。",
+          "id": "block-1770690015308-93ntziz5j"
+        },
+        {
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "現地操作"
+            },
+            {
+              "content": "鍵管理"
+            },
+            {
+              "content": "Web管理ツール"
+            }
+          ],
+          "id": "block-1770690015308-9ehj0z10h"
         },
         {
           "type": "paragraph",
-          "variant": "small-gray",
-          "content": "※ 登録上限数や仕様の詳細・電池交換の具体手順は、<a class=\"txtlink\" target=\"_blank\" rel=\"noopener\" href=\"https://support.linkey-lock.com/hc/ja\">公式サポートサイト</a>をご確認ください。",
-          "id": "block-1770686664437-42hhcx77h"
+          "variant": "normal",
+          "content": "それぞれの役割を分けて考えることが、安定した運用につながります。",
+          "id": "block-1770690015308-0e4z2ig4g"
         },
         {
           "type": "header",
           "level": 1,
           "preset": "default",
-          "content": "より詳しい操作方法を確認したい場合",
-          "id": "block-1770686664437-b798om2bn"
+          "content": "【原因切り分け】迷ったときの3ステップ",
+          "id": "block-1770690015308-2f4dbey2t"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "この記事では、LINKEYの鍵管理について、暗証番号とICカードの使い分けや、運用時の考え方を中心に整理しました。",
-          "id": "block-1770686664437-9lekcdvt2"
+          "content": "実際に困りごとが起きたときは、次の順番で整理すると落ち着いて対応しやすくなります。",
+          "id": "block-1770690015308-bzmqgbtbo"
+        },
+        {
+          "id": "block-1770691379574-0n1x0liwn",
+          "type": "list",
+          "listType": "ol-title",
+          "items": [
+            {
+              "title": "現地操作の問題か",
+              "content": "解錠方法や現地操作の前提に誤解はないか"
+            },
+            {
+              "title": "鍵管理の問題か",
+              "content": "鍵の有効期限や割り当てに問題はないか"
+            },
+            {
+              "title": "管理・通信環境の問題か",
+              "content": "通信環境や管理画面の前提条件に影響していないか"
+            }
+          ]
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "具体的な暗証番号登録・削除の操作手順や、管理画面の詳細な設定方法については、<a class=\"txtlink\" target=\"_blank\" rel=\"noopener\" href=\"https://support.linkey-lock.com/hc/ja\">公式サポートサイト</a>にまとめられています。&nbsp;<div>実際の設定時には、あわせてご確認ください。</div><div><br></div>",
-          "id": "block-1770686664437-wgq0ykndk"
+          "content": "<div><br></div>この順で切り分けるだけでも、「何から確認すればいいか分からない」状態を避けられます。",
+          "id": "block-1770690015308-528oo9jfi"
+        },
+        {
+          "type": "header",
+          "level": 1,
+          "preset": "default",
+          "content": "具体的な操作や設定を確認したい場合",
+          "id": "block-1770690015308-hybuhwxeo"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "実際の製品仕様や管理画面の構成によっても、運用イメージは変わります。",
-          "id": "block-1770686664437-29hzb4zqm"
+          "content": "この記事では、LINKEY運用で迷ったときの考え方を中心に整理しました。",
+          "id": "block-1770690015308-3scr25kn9"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "導入を検討する際は、製品紹介ページもあわせてご確認ください。",
-          "id": "block-1770686664437-yyjdaxy2d"
+          "content": "具体的な操作方法や設定については、目的に応じて以下の記事をご覧ください。<div><br></div>",
+          "id": "block-1770690015308-3r87k8sbj"
+        },
+        {
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "解錠・施錠の基本を確認したい場合"
+            }
+          ],
+          "id": "block-1770690015308-vz1141xcl"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "▶ <strong class=\"strong\"><a class=\"txtlink\" href=\"https://www.linkey-lock.com/column/column-1390\" target=\"_blank\" rel=\"noopener\">LINKEY（リンキー）の解錠・施錠方法まとめ｜現地操作とWeb遠隔操作の使い分けガイド</a></strong>",
+          "id": "block-1770690015308-ty0m5q24a"
+        },
+        {
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "鍵管理の考え方を整理したい場合"
+            }
+          ],
+          "id": "block-1770690015308-3333zsce0"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "▶ <strong class=\"strong\"><a class=\"txtlink\" href=\"https://www.linkey-lock.com/column/column-1392\" target=\"_blank\" rel=\"noopener\">LINKEY（リンキー）の鍵管理ガイド｜暗証番号とICカード（NFC）の最適な使い分け</a></strong>",
+          "id": "block-1770690015308-9smruk8ma"
+        },
+        {
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "管理画面や遠隔運用を確認したい場合"
+            }
+          ],
+          "id": "block-1770690015308-4s20pg4jf"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "▶ <strong class=\"strong\"><a class=\"txtlink\" href=\"https://www.linkey-lock.com/column/column-1393\" target=\"_blank\" rel=\"noopener\">LINKEY（リンキー）Web管理ツールの活用ガイド｜遠隔操作・一括鍵管理・API連携の考え方</a></strong>",
+          "id": "block-1770690015308-jfwo8hk6u"
+        },
+        {
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "緊急時の具体的な対処を知りたい場合"
+            }
+          ],
+          "id": "block-1770690015308-on6bgos0m"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "<strong class=\"strong\">▶<a class=\"txtlink\" href=\"https://www.linkey-lock.com/column/column-1279\" target=\"_blank\" rel=\"noopener\">【緊急時も安心】民泊スマートロックが開かないときの対処法とトラブルを防ぐ運用設計</a></strong>",
+          "id": "block-1770690015308-zk7tymd1q"
+        },
+        {
+          "type": "header",
+          "level": 1,
+          "preset": "default",
+          "content": "まとめ｜困ったときこそ、全体像に立ち戻る",
+          "id": "block-1770690015308-ys3myn6bl"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "LINKEY運用で困ったときは、一つの操作や設定だけに目を向けるのではなく、",
+          "id": "block-1770690015308-kdnvn6nl8"
+        },
+        {
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "操作"
+            },
+            {
+              "content": "鍵管理"
+            },
+            {
+              "content": "管理ツール"
+            }
+          ],
+          "id": "block-1770690015308-1hzro0mo0"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "という<strong class=\"strong\">全体像</strong>に立ち戻ることが大切です。",
+          "id": "block-1770690015308-k9z4fz2o3"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "この記事が、判断に迷ったときの「地図」として、状況を整理する助けになれば幸いです。<div><br></div>",
+          "id": "block-1770690015308-svazy8fpq"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "運用を検討するうえでは、実際の製品仕様や対応範囲を把握しておくことも重要です。",
+          "id": "block-1770690015308-94e4f857p"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "LINKEYの機能や構成については、製品紹介ページで紹介しています。",
+          "id": "block-1770690015308-31sirghiv"
         },
         {
           "type": "paragraph",
           "variant": "normal",
           "content": "<a class=\"txtlink\" target=\"_blank\" rel=\"noopener\" href=\"https://www.linkey-lock.com/linkey-plus/\">LINKEY Plus の製品紹介を見る</a>",
-          "id": "block-1770686664437-x26tqrz2s"
+          "id": "block-1770690015308-amxb8moge"
         },
         {
           "type": "paragraph",
           "variant": "normal",
           "content": "<a class=\"txtlink\" target=\"_blank\" rel=\"noopener\" href=\"https://www.linkey-lock.com/products_linkey-pro/\">LINKEY Pro の製品紹介を見る</a>",
-          "id": "block-1770686664437-9p8uk9pqf"
+          "id": "block-1770690015308-yiqmap0ga"
         }
       ],
-      "timestamp": 1770686664438,
-      "updatedAt": 1770728981896
+      "timestamp": 1770690015308,
+      "updatedAt": 1770704167491
     },
     {
-      "id": "draft-1770688697133",
-      "name": "039_LINKEY（リンキー）Web管理ツールの活用ガイド｜遠隔操作・一括鍵管理・API連携の考え方",
-      "title": "039_LINKEY（リンキー）Web管理ツールの活用ガイド｜遠隔操作・一括鍵管理・API連携の考え方",
+      "id": "draft-1770600814058",
+      "name": "このツールの使い方",
+      "title": "このツールの使い方",
       "blocks": [
         {
+          "id": "block-1770600816477-bo86lknm2",
           "type": "header",
           "level": 1,
           "preset": "default",
-          "content": "LINKEY（リンキー）Web管理ツールの活用ガイド｜遠隔操作・一括鍵管理・API連携の考え方",
-          "id": "block-1770688697132-34r3189lo"
+          "content": "このツールの使い方"
         },
         {
+          "id": "block-1770600864428-yy9vp8xwu",
           "type": "paragraph",
-          "variant": "normal",
-          "content": "LINKEYは、鍵そのものを操作するだけでなく、Web上の管理画面（Web管理ツール）を使って、複数の鍵や利用状況をまとめて管理できるスマートロックです。",
-          "id": "block-1770688697132-2e7r27g1k"
+          "variant": "small",
+          "content": "2026.02.09 ver by 栗原"
         },
         {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "ただ、Web管理ツールについては、",
-          "id": "block-1770688697132-2rayj9ics"
+          "id": "block-1770600842260-i92iij0t9",
+          "type": "header",
+          "level": 4,
+          "preset": "default",
+          "content": "ステップを簡単にまとめると"
         },
         {
+          "id": "block-1770600884695-jygutetpd",
           "type": "list",
-          "listType": "ul",
+          "listType": "ol",
           "items": [
             {
-              "content": "本体操作と何が違うのか"
+              "content": "新規ドラフトを作成 (右のパネルから)"
             },
             {
-              "content": "どこまで遠隔で対応できるのか"
+              "content": "左のパレットからドラッグ & ドロップで要素をドキュメントに配置"
             },
             {
-              "content": "システム連携とはどう関係するのか"
+              "content": "要素をクリックしてテキストを編集"
+            },
+            {
+              "content": "右上のボタンでHTML をクリップボードにコピー"
+            },
+            {
+              "content": "Wordpress の記事編集画面にコードをペースト"
             }
-          ],
-          "id": "block-1770688697132-en5a0sndm"
+          ]
         },
         {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "といった点が、少し分かりにくく感じるかもしれません。",
-          "id": "block-1770688697132-1zcsr4pc8"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "この記事では、LINKEYのWeb管理ツール（管理画面）について、見出しを追うだけで役割とメリットを把握できるよう、運用設計の視点から整理します。 「現地操作」「管理画面」「システム連携」をどう使い分けるかを理解するためのガイドとしてご覧ください。",
-          "id": "block-1770688697132-wso539yta"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "※ このWeb管理ツールは、LINKEY Plusでは「Finelife」、LINKEY Proでは「Keymesh」という名称で提供されています。",
-          "id": "block-1770688697132-lmdgf6mzm"
-        },
-        {
+          "id": "block-1770601015529-fq7uh8v21",
           "type": "header",
           "level": 2,
-          "preset": "default",
-          "content": "この記事でわかること",
-          "id": "block-1770688697132-b8eay063v"
+          "preset": "blue",
+          "content": "現状できないこと (未実装機能の ToDo)"
         },
         {
+          "id": "block-1770601058680-0t8nd2aye",
           "type": "list",
           "listType": "ul",
           "items": [
             {
-              "content": "Web管理ツールでできる操作と、現地操作との役割分担"
+              "content": "すでにある文書ファイル (Google Document など) のインポート & 自動スタイリング"
             },
             {
-              "content": "遠隔操作・状態確認・ログ確認をどう運用に活かすか"
-            },
-            {
-              "content": "Web管理ツール単独での運用から、API連携・自動化へ進む運用設計の考え方"
+              "content": "複雑なコンポーネント (目次、関連記事、要約、顧客の声ボックスなど) の実装"
             }
-          ],
-          "id": "block-1770688697132-rv0xihzku"
+          ]
         },
         {
-          "type": "header",
-          "level": 1,
-          "preset": "default",
-          "content": "LINKEYのWeb管理ツール（管理画面）の役割｜離れた場所からの「遠隔操作」と「一元管理」のためのツール",
-          "id": "block-1770688697132-32w4kb8df"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "LINKEYの管理画面は、LINKEY本体と連携し、離れた場所から状態を把握・管理するためのWebツールです。",
-          "id": "block-1770688697132-yq3dihk7w"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "本体操作が「現地での解錠・施錠」を担うのに対し、Web管理ツールは<strong class=\"strong\">複数の鍵や拠点を俯瞰して管理する役割</strong>を担います。",
-          "id": "block-1770688697132-gb9034od9"
-        },
-        {
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "現地に行かずに状況を確認したい"
-            },
-            {
-              "content": "拠点数が増えても管理方法を変えたくない"
-            },
-            {
-              "content": "手作業による管理負荷を減らしたい"
-            }
-          ],
-          "id": "block-1770688697132-p2fdut8bz"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "こうした課題に対して、Web管理ツールが活きてきます。",
-          "id": "block-1770688697132-j3nsoro0u"
-        },
-        {
+          "id": "block-1770601689270-tcihm23bo",
           "type": "header",
           "level": 2,
-          "preset": "default",
-          "content": "【遠隔操作】現地へ行かずに解錠・施錠：無人運営やトラブル対応を支える",
-          "id": "block-1770688697132-ikeu2eai6"
+          "preset": "blue",
+          "content": "詳しい使い方"
         },
         {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "Web管理ツールを使うことで、現地に行かずにLINKEYの解錠・施錠を行うことができます。",
-          "id": "block-1770688697132-2a564bij7"
-        },
-        {
+          "id": "block-1770601722537-93z3fi45d",
           "type": "header",
           "level": 3,
           "preset": "default",
-          "content": "遠隔操作が役立つ場面",
-          "id": "block-1770688697132-bqpwqt0o2"
+          "content": "ナビゲーション"
         },
         {
+          "id": "block-1770601752072-tt7no0suv",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "ツール画面は 4 つに分割されている。"
+        },
+        {
+          "id": "block-1770601777305-jrn897sga",
           "type": "list",
           "listType": "ul",
           "items": [
             {
-              "content": "ゲストや利用者から「開かない」と連絡があったとき"
+              "content": "ヘッダー (ページ上部)"
             },
             {
-              "content": "無人運営の施設で、現地対応を最小限にしたい場合"
+              "content": "パレット (ページ左)"
             },
             {
-              "content": "複数拠点を一括で管理している場合"
+              "content": "プロパティ (ページ右)"
+            },
+            {
+              "content": "エディター (ページ中央)"
             }
-          ],
-          "id": "block-1770688697132-jhg5dcmck"
+          ]
         },
         {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "※ Web管理ツールからの遠隔操作には、Wi-Fi環境と専用のゲートウェイ（中継機）が必要です。",
-          "id": "block-1770688697132-alpfxxn71"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "なお、<strong class=\"strong\">すべての設定や操作が遠隔で完結するわけではありません</strong>。 たとえば、自動ロック／手動ロックの切り替えや、自動ロック時間、通知音量などは、現地での設定が必要になります。",
-          "id": "block-1770688697132-2m4zn2i66"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "現地で行う解錠・施錠には、暗証番号やICカード、物理キーなど複数の方法があります。",
-          "id": "block-1770688697132-s5hgmu7ge"
-        },
-        {
-          "type": "paragraph",
-          "variant": "small",
-          "content": "LINKEYの解錠・施錠方法を全体像として整理した記事は、以下をご覧ください。",
-          "id": "block-1770688697132-le5sl7jce"
-        },
-        {
-          "type": "paragraph",
-          "variant": "small",
-          "content": "LINKEY（リンキー）の解錠・施錠方法まとめ｜現地操作とWeb遠隔操作の使い分けガイド",
-          "id": "block-1770688697132-8puitolyh"
-        },
-        {
+          "id": "block-1770601885624-0x7lsmp99",
           "type": "header",
-          "level": 2,
-          "preset": "default",
-          "content": "【鍵管理】暗証番号・ICカードの発行と削除：期間指定で「消し忘れ」を防ぐ",
-          "id": "block-1770688697132-gmcpk7sr2"
+          "level": 4,
+          "preset": "blue",
+          "content": "ヘッダー"
         },
         {
+          "id": "block-1770601900424-vx4f73im4",
           "type": "paragraph",
           "variant": "normal",
-          "content": "Web管理ツールでは、暗証番号やICカード（NFC）といった鍵情報をまとめて管理できます。",
-          "id": "block-1770688697132-cun9rgkxh"
+          "content": "中央にあるのが<strong class=\"strong strong--info\">ビューの選択ツール</strong>。様々なデバイスでどのように表示されるかをプレビューできる。<div>右に<strong class=\"strong strong--info\">言語トグル</strong>と <strong class=\"strong strong--info\">HTML エクスポート</strong>ボタン。前者では UI の言語変更、後者は HTML コードをクリップボードにコピーできる。</div>"
         },
         {
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "暗証番号の発行・変更・削除"
-            },
-            {
-              "content": "利用期間を指定した暗証番号の設定"
-            },
-            {
-              "content": "ICカードの登録・無効化"
-            }
-          ],
-          "id": "block-1770688697132-ptasg4t1p"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "利用期間をあらかじめ設定することで、削除忘れなどの運用ミスを減らしやすくなります。",
-          "id": "block-1770688697132-8r5evyitb"
-        },
-        {
+          "id": "block-1770602041958-j0bblpsix",
           "type": "header",
-          "level": 3,
-          "preset": "default",
-          "content": "鍵管理を属人化させないための考え方",
-          "id": "block-1770688697132-8l5hnla57"
+          "level": 4,
+          "preset": "blue",
+          "content": "パレット"
         },
         {
+          "id": "block-1770602055641-4aebzw3mm",
           "type": "paragraph",
           "variant": "normal",
-          "content": "LINKEYでは、人に直接「役割」や「権限」を付与する仕組みではなく、<strong class=\"strong\">鍵（暗証番号・ICカード）ごとに利用範囲を管理する</strong>設計になっています。",
-          "id": "block-1770688697132-7iu2qrk09"
+          "content": "様々な装飾要素 (見出し、パラグラフ、箇条書き) の<strong class=\"strong strong--info\">コンポーネント</strong>をドラッグ &amp; ドロップで文書内に配置できる。追加要素も続々実装予定。"
         },
         {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "この仕組みを活かすことで、",
-          "id": "block-1770688697132-to8ib6smf"
-        },
-        {
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "管理者向けの鍵"
-            },
-            {
-              "content": "日常運用向けの鍵"
-            }
-          ],
-          "id": "block-1770688697132-2tyhjiooh"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "といった形で、結果的に<strong class=\"strong\">役割分担に近い運用</strong>を行うことができます。",
-          "id": "block-1770688697132-cdcnexi71"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "暗証番号とICカード（NFC）は、それぞれ向いている利用シーンや管理の考え方が異なります。",
-          "id": "block-1770688697132-7uohesj2z"
-        },
-        {
-          "type": "paragraph",
-          "variant": "small",
-          "content": "鍵の種類ごとの使い分けや、運用ルールの考え方については、以下の記事で詳しく整理しています。",
-          "id": "block-1770688697132-fyrqqtnvk"
-        },
-        {
-          "type": "paragraph",
-          "variant": "small",
-          "content": "LINKEY（リンキー）の鍵管理ガイド｜暗証番号とICカード（NFC）の最適な使い分け",
-          "id": "block-1770688697132-t753ytgyo"
-        },
-        {
+          "id": "block-1770602156176-yg6h2ufja",
           "type": "header",
-          "level": 2,
-          "preset": "default",
-          "content": "【モニタリング】電池残量と解錠・施錠ログの確認：異常の早期発見と振り返りに",
-          "id": "block-1770688697132-a51x9wrgd"
+          "level": 4,
+          "preset": "blue",
+          "content": "プロパティ"
         },
         {
+          "id": "block-1770602171616-u9v6hm43e",
           "type": "paragraph",
           "variant": "normal",
-          "content": "Web管理ツールでは、操作だけでなく、運用状況を把握するための情報も集約されています。",
-          "id": "block-1770688697132-nxuo15yuz"
+          "content": "エディターで何が選択されているか (コンテキスト) によって、表示される関連ツールやコマンドが変わる。<div>何も選択されていない状態では、ファイル系のコマンドが表示される。</div><div><br></div>"
         },
         {
+          "id": "block-1770602286291-fh75z5os0",
           "type": "list",
           "listType": "ul",
           "items": [
             {
-              "content": "LINKEY本体の接続状態"
+              "content": "新規ドラフトの作成 : 新しい文書ファイルを作成する"
             },
             {
-              "content": "電池残量の確認"
+              "content": "ドラフトを開く : 作成済みの文書ファイルの閲覧や選択。削除もここから。"
             },
             {
-              "content": "解錠・施錠履歴（ログ）の確認・ダウンロード"
+              "content": "名前をつけて保存 : 現在のファイルをコピーして別名で保存。バックアップ等に。"
             }
-          ],
-          "id": "block-1770688697132-xl9eqxofj"
+          ]
         },
         {
-          "type": "paragraph",
-          "variant": "small-gray",
-          "content": "※ 電池残量はWeb管理ツールで把握できるほか、本体操作時にメロディーが鳴ったり、タッチパネルに低残量表示が出たりする通知でも確認できます。",
-          "id": "block-1770688697132-s16efwhsn"
-        },
-        {
+          "id": "block-1770602430259-ycxxcmkdw",
           "type": "paragraph",
           "variant": "normal",
-          "content": "これにより、",
-          "id": "block-1770688697132-sx643o1zo"
-        },
-        {
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "電池交換のタイミングを事前に把握できる"
-            },
-            {
-              "content": "トラブル発生時に状況を振り返れる"
-            }
-          ],
-          "id": "block-1770688697132-4khlo609d"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "といった、管理者視点での安心感につながります。",
-          "id": "block-1770688697132-j7dqkjwu3"
-        },
-        {
-          "type": "header",
-          "level": 2,
-          "preset": "default",
-          "content": "【システム連携】API連携による鍵発行の自動化：手動管理からのステップアップ",
-          "id": "block-1770688697132-3fsjmrw31"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "Web管理ツールは、人が操作するためのツールであると同時に、<strong class=\"strong\">外部システムと連携するための基点</strong>でもあります。",
-          "id": "block-1770688697132-u3uhv3ac6"
-        },
-        {
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "予約システムと連携し、チェックイン・アウトに合わせて鍵を発行"
-            },
-            {
-              "content": "PMSや顧客管理システムと連携し、手動作業を削減"
-            },
-            {
-              "content": "拠点数や利用者数が増え、Web管理ツールの操作だけでは限界を感じた場合"
-            }
-          ],
-          "id": "block-1770688697132-rcngwd6xs"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "こうしたケースでは、Web管理ツールでの運用を土台に、<strong class=\"strong\">API連携を前提とした運用設計</strong>へ進むことが考えられます。",
-          "id": "block-1770688697132-u928xhg1l"
-        },
-        {
-          "type": "paragraph",
-          "variant": "small",
-          "content": "API連携の考え方や活用例については、別記事「宿泊・民泊運営でスマートロックAPI連携はどう使われているか｜LINKEYのWeb管理ツールを介した「運用が止まらない」連携設計」で詳しく解説しています。",
-          "id": "block-1770688697132-0kjh0k3hn"
-        },
-        {
-          "type": "header",
-          "level": 1,
-          "preset": "default",
-          "content": "運用設計のポイント｜現地操作・管理画面・自動連携の「役割分担」が成功の鍵",
-          "id": "block-1770688697132-969zzjix5"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "LINKEYの運用では、「Web管理ツールですべてを解決しよう」としないことが重要です。",
-          "id": "block-1770688697132-4dfpmhf7l"
-        },
-        {
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "現地で行うべき操作"
-            },
-            {
-              "content": "Web管理ツールで集約する運用"
-            },
-            {
-              "content": "システム連携で自動化する処理"
-            }
-          ],
-          "id": "block-1770688697132-85hfvf6bn"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "これらを役割分担することで、無理なく、将来の拡張にも耐えられる運用になります。",
-          "id": "block-1770688697132-naal9sd0j"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "Web管理ツールを含めたLINKEYの運用イメージは、製品構成や対応機能を見ながら確認すると、より具体的になります。",
-          "id": "block-1770688697132-v4gm4dg1n"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "実際の仕様については、製品紹介ページをご覧ください。",
-          "id": "block-1770688697132-4ld9ajpsc"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "<a class=\"txtlink\" target=\"_blank\" rel=\"noopener\" href=\"https://www.linkey-lock.com/linkey-plus/\">LINKEY Plus の製品紹介を見る</a>",
-          "id": "block-1770688697132-jsyvpli6g"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "<a class=\"txtlink\" target=\"_blank\" rel=\"noopener\" href=\"https://www.linkey-lock.com/products_linkey-pro/\">LINKEY Pro の製品紹介を見る</a>",
-          "id": "block-1770688697132-xzz904rgm"
-        },
-        {
-          "type": "header",
-          "level": 1,
-          "preset": "default",
-          "content": "より詳しい操作方法を確認したい場合",
-          "id": "block-1770688697132-5ic921yqc"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "この記事では、LINKEYのWeb管理ツールについて、役割や考え方を中心に整理しました。",
-          "id": "block-1770688697132-paqjgcyiq"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "実際の画面操作や設定手順については、<a class=\"txtlink\" target=\"_blank\" rel=\"noopener\" href=\"https://support.linkey-lock.com/hc/ja\">公式サポートサイト</a>にまとめられています。 日々の運用時には、あわせてご確認ください。",
-          "id": "block-1770688697132-ji1cm0k60"
+          "content": "<br><div>その他、\"ドラフトをバックアップ\" 系のコマンド群は現状無視で OK。<br></div>"
         }
       ],
-      "timestamp": 1770688697133,
-      "updatedAt": 1770688991480
+      "timestamp": 1770689792179,
+      "updatedAt": 1770699256682
     },
     {
       "id": "draft-1770692236694",
@@ -2010,704 +1207,1507 @@
       "updatedAt": 1770699221684
     },
     {
-      "id": "draft-1770600814058",
-      "name": "このツールの使い方",
-      "title": "このツールの使い方",
+      "id": "draft-1770688697133",
+      "name": "039_LINKEY（リンキー）Web管理ツールの活用ガイド｜遠隔操作・一括鍵管理・API連携の考え方",
+      "title": "039_LINKEY（リンキー）Web管理ツールの活用ガイド｜遠隔操作・一括鍵管理・API連携の考え方",
       "blocks": [
         {
-          "id": "block-1770600816477-bo86lknm2",
           "type": "header",
           "level": 1,
           "preset": "default",
-          "content": "このツールの使い方"
+          "content": "LINKEY（リンキー）Web管理ツールの活用ガイド｜遠隔操作・一括鍵管理・API連携の考え方",
+          "id": "block-1770688697132-34r3189lo"
         },
         {
-          "id": "block-1770600864428-yy9vp8xwu",
           "type": "paragraph",
-          "variant": "small",
-          "content": "2026.02.09 ver by 栗原"
+          "variant": "normal",
+          "content": "LINKEYは、鍵そのものを操作するだけでなく、Web上の管理画面（Web管理ツール）を使って、複数の鍵や利用状況をまとめて管理できるスマートロックです。",
+          "id": "block-1770688697132-2e7r27g1k"
         },
         {
-          "id": "block-1770600842260-i92iij0t9",
-          "type": "header",
-          "level": 4,
-          "preset": "default",
-          "content": "ステップを簡単にまとめると"
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "ただ、Web管理ツールについては、",
+          "id": "block-1770688697132-2rayj9ics"
         },
         {
-          "id": "block-1770600884695-jygutetpd",
-          "type": "list",
-          "listType": "ol",
-          "items": [
-            {
-              "content": "新規ドラフトを作成 (右のパネルから)"
-            },
-            {
-              "content": "左のパレットからドラッグ & ドロップで要素をドキュメントに配置"
-            },
-            {
-              "content": "要素をクリックしてテキストを編集"
-            },
-            {
-              "content": "右上のボタンでHTML をクリップボードにコピー"
-            },
-            {
-              "content": "Wordpress の記事編集画面にコードをペースト"
-            }
-          ]
-        },
-        {
-          "id": "block-1770601015529-fq7uh8v21",
-          "type": "header",
-          "level": 2,
-          "preset": "blue",
-          "content": "現状できないこと (未実装機能の ToDo)"
-        },
-        {
-          "id": "block-1770601058680-0t8nd2aye",
           "type": "list",
           "listType": "ul",
           "items": [
             {
-              "content": "すでにある文書ファイル (Google Document など) のインポート & 自動スタイリング"
+              "content": "本体操作と何が違うのか"
             },
             {
-              "content": "複雑なコンポーネント (目次、関連記事、要約、顧客の声ボックスなど) の実装"
+              "content": "どこまで遠隔で対応できるのか"
+            },
+            {
+              "content": "システム連携とはどう関係するのか"
             }
-          ]
-        },
-        {
-          "id": "block-1770601689270-tcihm23bo",
-          "type": "header",
-          "level": 2,
-          "preset": "blue",
-          "content": "詳しい使い方"
-        },
-        {
-          "id": "block-1770601722537-93z3fi45d",
-          "type": "header",
-          "level": 3,
-          "preset": "default",
-          "content": "ナビゲーション"
-        },
-        {
-          "id": "block-1770601752072-tt7no0suv",
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "ツール画面は 4 つに分割されている。"
-        },
-        {
-          "id": "block-1770601777305-jrn897sga",
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "ヘッダー (ページ上部)"
-            },
-            {
-              "content": "パレット (ページ左)"
-            },
-            {
-              "content": "プロパティ (ページ右)"
-            },
-            {
-              "content": "エディター (ページ中央)"
-            }
-          ]
-        },
-        {
-          "id": "block-1770601885624-0x7lsmp99",
-          "type": "header",
-          "level": 4,
-          "preset": "blue",
-          "content": "ヘッダー"
-        },
-        {
-          "id": "block-1770601900424-vx4f73im4",
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "中央にあるのが<strong class=\"strong strong--info\">ビューの選択ツール</strong>。様々なデバイスでどのように表示されるかをプレビューできる。<div>右に<strong class=\"strong strong--info\">言語トグル</strong>と <strong class=\"strong strong--info\">HTML エクスポート</strong>ボタン。前者では UI の言語変更、後者は HTML コードをクリップボードにコピーできる。</div>"
-        },
-        {
-          "id": "block-1770602041958-j0bblpsix",
-          "type": "header",
-          "level": 4,
-          "preset": "blue",
-          "content": "パレット"
-        },
-        {
-          "id": "block-1770602055641-4aebzw3mm",
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "様々な装飾要素 (見出し、パラグラフ、箇条書き) の<strong class=\"strong strong--info\">コンポーネント</strong>をドラッグ &amp; ドロップで文書内に配置できる。追加要素も続々実装予定。"
-        },
-        {
-          "id": "block-1770602156176-yg6h2ufja",
-          "type": "header",
-          "level": 4,
-          "preset": "blue",
-          "content": "プロパティ"
-        },
-        {
-          "id": "block-1770602171616-u9v6hm43e",
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "エディターで何が選択されているか (コンテキスト) によって、表示される関連ツールやコマンドが変わる。<div>何も選択されていない状態では、ファイル系のコマンドが表示される。</div><div><br></div>"
-        },
-        {
-          "id": "block-1770602286291-fh75z5os0",
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "新規ドラフトの作成 : 新しい文書ファイルを作成する"
-            },
-            {
-              "content": "ドラフトを開く : 作成済みの文書ファイルの閲覧や選択。削除もここから。"
-            },
-            {
-              "content": "名前をつけて保存 : 現在のファイルをコピーして別名で保存。バックアップ等に。"
-            }
-          ]
-        },
-        {
-          "id": "block-1770602430259-ycxxcmkdw",
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "<br><div>その他、\"ドラフトをバックアップ\" 系のコマンド群は現状無視で OK。<br></div>"
-        }
-      ],
-      "timestamp": 1770689792179,
-      "updatedAt": 1770699256682
-    },
-    {
-      "id": "draft-1770690015308",
-      "name": "040_LINKEY（リンキー）運用で困ったときの考え方｜原因の切り分けと安定運用のポイント",
-      "title": "040_LINKEY（リンキー）運用で困ったときの考え方｜原因の切り分けと安定運用のポイント",
-      "blocks": [
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "スマートロックは便利な一方で、運用が広がるにつれて「想定外の困りごと」に直面することがあります。",
-          "id": "block-1770690015308-j2mb5vfen"
+          ],
+          "id": "block-1770688697132-en5a0sndm"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "ただし、その多くは製品の不具合や故障そのものではなく、運用設計や前提理解のズレが重なって起きるケースです。",
-          "id": "block-1770690015308-pm1znpo9y"
+          "content": "といった点が、少し分かりにくく感じるかもしれません。",
+          "id": "block-1770688697132-1zcsr4pc8"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "この記事では、具体的な対処手順を並べるのではなく、<strong class=\"strong\">困ったときにどう考え、どう切り分ければよいか</strong>という視点から、LINKEY運用を整理します。",
-          "id": "block-1770690015308-whf0b9zos"
+          "content": "この記事では、LINKEYのWeb管理ツール（管理画面）について、見出しを追うだけで役割とメリットを把握できるよう、運用設計の視点から整理します。 「現地操作」「管理画面」「システム連携」をどう使い分けるかを理解するためのガイドとしてご覧ください。",
+          "id": "block-1770688697132-wso539yta"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "「今まさに困っている」場面でも、見出しを追うだけで、次に取るべき行動のヒントが得られる構成です。",
-          "id": "block-1770690015308-7je9pkljs"
+          "content": "※ このWeb管理ツールは、LINKEY Plusでは「Finelife」、LINKEY Proでは「Keymesh」という名称で提供されています。",
+          "id": "block-1770688697132-lmdgf6mzm"
         },
         {
           "type": "header",
           "level": 2,
           "preset": "default",
           "content": "この記事でわかること",
-          "id": "block-1770690015308-259q3j42n"
+          "id": "block-1770688697132-b8eay063v"
         },
         {
           "type": "list",
           "listType": "ul",
           "items": [
             {
-              "content": "トラブルの背景にある、よくある原因の考え方"
+              "content": "Web管理ツールでできる操作と、現地操作との役割分担"
             },
             {
-              "content": "迷ったときに、どこから確認すべきかという切り分けの順番"
+              "content": "遠隔操作・状態確認・ログ確認をどう運用に活かすか"
             },
             {
-              "content": "現地操作・鍵管理・Web管理ツールの役割を整理し、安定運用につなげる視点"
+              "content": "Web管理ツール単独での運用から、API連携・自動化へ進む運用設計の考え方"
             }
           ],
-          "id": "block-1770690015308-makr65z2i"
+          "id": "block-1770688697132-rv0xihzku"
         },
         {
           "type": "header",
           "level": 1,
           "preset": "default",
-          "content": "トラブルの予兆｜運用フェーズの変化が「困りごと」の起点になる",
-          "id": "block-1770690015308-sjedghql6"
+          "content": "LINKEYのWeb管理ツール（管理画面）の役割｜離れた場所からの「遠隔操作」と「一元管理」のためのツール",
+          "id": "block-1770688697132-32w4kb8df"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "LINKEYに限らず、スマートロックの運用で困りごとが起きやすいのは、次のようなタイミングです。",
-          "id": "block-1770690015308-xrtcxir5b"
+          "content": "LINKEYの管理画面は、LINKEY本体と連携し、離れた場所から状態を把握・管理するためのWebツールです。",
+          "id": "block-1770688697132-yq3dihk7w"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "本体操作が「現地での解錠・施錠」を担うのに対し、Web管理ツールは<strong class=\"strong\">複数の鍵や拠点を俯瞰して管理する役割</strong>を担います。",
+          "id": "block-1770688697132-gb9034od9"
         },
         {
           "type": "list",
           "listType": "ul",
           "items": [
             {
-              "content": "利用者やスタッフが増えたとき"
+              "content": "現地に行かずに状況を確認したい"
             },
             {
-              "content": "無人運営や多拠点運営に切り替えたとき"
+              "content": "拠点数が増えても管理方法を変えたくない"
             },
             {
-              "content": "現地にすぐ行けない運用になったとき"
+              "content": "手作業による管理負荷を減らしたい"
             }
           ],
-          "id": "block-1770690015308-b0szyprab"
+          "id": "block-1770688697132-p2fdut8bz"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "これらは「異常」ではなく、<strong class=\"strong\">運用フェーズが一段進んだことによるサイン</strong>ともいえます。",
-          "id": "block-1770690015308-z8e7rxbun"
+          "content": "こうした課題に対して、Web管理ツールが活きてきます。",
+          "id": "block-1770688697132-j3nsoro0u"
         },
         {
           "type": "header",
-          "level": 1,
+          "level": 2,
           "preset": "default",
-          "content": "よくあるトラブルの「3大原因」｜役割分担の曖昧さ・鍵管理の属人化・代替手段の欠如",
-          "id": "block-1770690015308-wunpmk62a"
+          "content": "【遠隔操作】現地へ行かずに解錠・施錠：無人運営やトラブル対応を支える",
+          "id": "block-1770688697132-ikeu2eai6"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "困りごとの内容はさまざまで、すべてのケースを網羅するものではありませんが、多くは次の3つに集約されやすいです。",
-          "id": "block-1770690015308-1eqm2gqja"
-        },
-        {
-          "type": "header",
-          "level": 3,
-          "preset": "default",
-          "content": "操作と管理の役割分担が曖昧",
-          "id": "block-1770690015308-sm356y61c"
-        },
-        {
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "現地で行う操作"
-            },
-            {
-              "content": "Web管理ツールで行う操作"
-            }
-          ],
-          "id": "block-1770690015308-2d2cza53b"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "この境界が整理されていないと、「管理画面でできると思っていた」「現地対応が必要だと知らなかった」といった認識のズレが起きやすくなります。",
-          "id": "block-1770690015308-8fwa6zdh7"
+          "content": "Web管理ツールを使うことで、現地に行かずにLINKEYの解錠・施錠を行うことができます。",
+          "id": "block-1770688697132-2a564bij7"
         },
         {
           "type": "header",
           "level": 3,
           "preset": "default",
-          "content": "鍵管理ルールが属人化している",
-          "id": "block-1770690015308-ykqitc49j"
+          "content": "遠隔操作が役立つ場面",
+          "id": "block-1770688697132-bqpwqt0o2"
         },
         {
           "type": "list",
           "listType": "ul",
           "items": [
             {
-              "content": "誰がどの鍵を使っているのか分からない"
+              "content": "ゲストや利用者から「開かない」と連絡があったとき"
             },
             {
-              "content": "削除や更新のタイミングが決まっていない"
+              "content": "無人運営の施設で、現地対応を最小限にしたい場合"
+            },
+            {
+              "content": "複数拠点を一括で管理している場合"
             }
           ],
-          "id": "block-1770690015308-7eck8f41k"
+          "id": "block-1770688697132-jhg5dcmck"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "といった状態では、トラブルが起きたときに状況を把握するのが難しくなります。",
-          "id": "block-1770690015308-f4d05cnui"
+          "content": "※ Web管理ツールからの遠隔操作には、Wi-Fi環境と専用のゲートウェイ（中継機）が必要です。",
+          "id": "block-1770688697132-alpfxxn71"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "なお、<strong class=\"strong\">すべての設定や操作が遠隔で完結するわけではありません</strong>。 たとえば、自動ロック／手動ロックの切り替えや、自動ロック時間、通知音量などは、現地での設定が必要になります。",
+          "id": "block-1770688697132-2m4zn2i66"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "現地で行う解錠・施錠には、暗証番号やICカード、物理キーなど複数の方法があります。",
+          "id": "block-1770688697132-s5hgmu7ge"
+        },
+        {
+          "type": "paragraph",
+          "variant": "small",
+          "content": "LINKEYの解錠・施錠方法を全体像として整理した記事は、以下をご覧ください。",
+          "id": "block-1770688697132-le5sl7jce"
+        },
+        {
+          "type": "paragraph",
+          "variant": "small",
+          "content": "LINKEY（リンキー）の解錠・施錠方法まとめ｜現地操作とWeb遠隔操作の使い分けガイド",
+          "id": "block-1770688697132-8puitolyh"
+        },
+        {
+          "type": "header",
+          "level": 2,
+          "preset": "default",
+          "content": "【鍵管理】暗証番号・ICカードの発行と削除：期間指定で「消し忘れ」を防ぐ",
+          "id": "block-1770688697132-gmcpk7sr2"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "Web管理ツールでは、暗証番号やICカード（NFC）といった鍵情報をまとめて管理できます。",
+          "id": "block-1770688697132-cun9rgkxh"
+        },
+        {
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "暗証番号の発行・変更・削除"
+            },
+            {
+              "content": "利用期間を指定した暗証番号の設定"
+            },
+            {
+              "content": "ICカードの登録・無効化"
+            }
+          ],
+          "id": "block-1770688697132-ptasg4t1p"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "利用期間をあらかじめ設定することで、削除忘れなどの運用ミスを減らしやすくなります。",
+          "id": "block-1770688697132-8r5evyitb"
         },
         {
           "type": "header",
           "level": 3,
           "preset": "default",
-          "content": "代替手段が決まっていない",
-          "id": "block-1770690015308-06vgw6hc9"
+          "content": "鍵管理を属人化させないための考え方",
+          "id": "block-1770688697132-8l5hnla57"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "LINKEYでは、人に直接「役割」や「権限」を付与する仕組みではなく、<strong class=\"strong\">鍵（暗証番号・ICカード）ごとに利用範囲を管理する</strong>設計になっています。",
+          "id": "block-1770688697132-7iu2qrk09"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "この仕組みを活かすことで、",
+          "id": "block-1770688697132-to8ib6smf"
         },
         {
           "type": "list",
           "listType": "ul",
           "items": [
             {
-              "content": "遠隔操作が使えない場合どうするか"
+              "content": "管理者向けの鍵"
             },
             {
-              "content": "現地対応が必要になった場合の動き方"
+              "content": "日常運用向けの鍵"
             }
           ],
-          "id": "block-1770690015308-efiumu3gc"
+          "id": "block-1770688697132-2tyhjiooh"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "これらが決まっていないと、焦りや混乱につながりやすくなります。",
-          "id": "block-1770690015308-sc09ola5r"
+          "content": "といった形で、結果的に<strong class=\"strong\">役割分担に近い運用</strong>を行うことができます。",
+          "id": "block-1770688697132-cdcnexi71"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "暗証番号とICカード（NFC）は、それぞれ向いている利用シーンや管理の考え方が異なります。",
+          "id": "block-1770688697132-7uohesj2z"
+        },
+        {
+          "type": "paragraph",
+          "variant": "small",
+          "content": "鍵の種類ごとの使い分けや、運用ルールの考え方については、以下の記事で詳しく整理しています。",
+          "id": "block-1770688697132-fyrqqtnvk"
+        },
+        {
+          "type": "paragraph",
+          "variant": "small",
+          "content": "LINKEY（リンキー）の鍵管理ガイド｜暗証番号とICカード（NFC）の最適な使い分け",
+          "id": "block-1770688697132-t753ytgyo"
+        },
+        {
+          "type": "header",
+          "level": 2,
+          "preset": "default",
+          "content": "【モニタリング】電池残量と解錠・施錠ログの確認：異常の早期発見と振り返りに",
+          "id": "block-1770688697132-a51x9wrgd"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "Web管理ツールでは、操作だけでなく、運用状況を把握するための情報も集約されています。",
+          "id": "block-1770688697132-nxuo15yuz"
+        },
+        {
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "LINKEY本体の接続状態"
+            },
+            {
+              "content": "電池残量の確認"
+            },
+            {
+              "content": "解錠・施錠履歴（ログ）の確認・ダウンロード"
+            }
+          ],
+          "id": "block-1770688697132-xl9eqxofj"
         },
         {
           "type": "paragraph",
           "variant": "small-gray",
-          "content": "※ 製品構成によっては、最終的なバックアップとして<strong class=\"strong\">物理キー（シリンダーキー）の保管場所や管理ルール</strong>をあらかじめ決めておくことも重要です。",
-          "id": "block-1770690015308-gk3hci0gv"
+          "content": "※ 電池残量はWeb管理ツールで把握できるほか、本体操作時にメロディーが鳴ったり、タッチパネルに低残量表示が出たりする通知でも確認できます。",
+          "id": "block-1770688697132-s16efwhsn"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "これにより、",
+          "id": "block-1770688697132-sx643o1zo"
+        },
+        {
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "電池交換のタイミングを事前に把握できる"
+            },
+            {
+              "content": "トラブル発生時に状況を振り返れる"
+            }
+          ],
+          "id": "block-1770688697132-4khlo609d"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "といった、管理者視点での安心感につながります。",
+          "id": "block-1770688697132-j7dqkjwu3"
+        },
+        {
+          "type": "header",
+          "level": 2,
+          "preset": "default",
+          "content": "【システム連携】API連携による鍵発行の自動化：手動管理からのステップアップ",
+          "id": "block-1770688697132-3fsjmrw31"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "Web管理ツールは、人が操作するためのツールであると同時に、<strong class=\"strong\">外部システムと連携するための基点</strong>でもあります。",
+          "id": "block-1770688697132-u3uhv3ac6"
+        },
+        {
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "予約システムと連携し、チェックイン・アウトに合わせて鍵を発行"
+            },
+            {
+              "content": "PMSや顧客管理システムと連携し、手動作業を削減"
+            },
+            {
+              "content": "拠点数や利用者数が増え、Web管理ツールの操作だけでは限界を感じた場合"
+            }
+          ],
+          "id": "block-1770688697132-rcngwd6xs"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "こうしたケースでは、Web管理ツールでの運用を土台に、<strong class=\"strong\">API連携を前提とした運用設計</strong>へ進むことが考えられます。",
+          "id": "block-1770688697132-u928xhg1l"
+        },
+        {
+          "type": "paragraph",
+          "variant": "small",
+          "content": "API連携の考え方や活用例については、別記事「宿泊・民泊運営でスマートロックAPI連携はどう使われているか｜LINKEYのWeb管理ツールを介した「運用が止まらない」連携設計」で詳しく解説しています。",
+          "id": "block-1770688697132-0kjh0k3hn"
         },
         {
           "type": "header",
           "level": 1,
           "preset": "default",
-          "content": "トラブルを未然に防ぐ運用設計の考え方｜現地操作を基本とし、Web管理ツールは「補助」と捉える",
-          "id": "block-1770690015308-fxv2cr5t2"
+          "content": "運用設計のポイント｜現地操作・管理画面・自動連携の「役割分担」が成功の鍵",
+          "id": "block-1770688697132-969zzjix5"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "LINKEY運用で大切なのは、トラブルを完全になくすことではなく、<strong class=\"strong\">起きても慌てず対応できる状態をつくること</strong>です。",
-          "id": "block-1770690015308-q2brjdm92"
-        },
-        {
-          "type": "header",
-          "level": 3,
-          "preset": "default",
-          "content": "現地操作でできることを把握しておく",
-          "id": "block-1770690015308-ze7gh9ai3"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "解錠・施錠や一部の設定など、現地でしかできない操作があることを前提にしておくことで、過度な期待や誤解を防げます。",
-          "id": "block-1770690015308-0y6c3x6ns"
-        },
-        {
-          "type": "header",
-          "level": 3,
-          "preset": "default",
-          "content": "鍵ごとに「使う人・期間」を決める",
-          "id": "block-1770690015308-j9zkc2sji"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "暗証番号やICカードは便利ですが、ルールが曖昧だと管理が難しくなります。",
-          "id": "block-1770690015308-qpkjpy1pq"
+          "content": "LINKEYの運用では、「Web管理ツールですべてを解決しよう」としないことが重要です。",
+          "id": "block-1770688697132-4dfpmhf7l"
         },
         {
           "type": "list",
           "listType": "ul",
           "items": [
             {
-              "content": "誰が使う鍵か"
+              "content": "現地で行うべき操作"
             },
             {
-              "content": "いつまで有効か"
-            }
-          ],
-          "id": "block-1770690015308-vbmai7tbt"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "を決めておくだけでも、トラブル時の切り分けが楽になります。",
-          "id": "block-1770690015308-bpmowcfep"
-        },
-        {
-          "type": "header",
-          "level": 3,
-          "preset": "default",
-          "content": "Web管理ツールは「補助」として使う",
-          "id": "block-1770690015308-92jcullsl"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "Web管理ツールは運用を支える強力な手段ですが、すべてを解決する万能ツールではありません。",
-          "id": "block-1770690015308-93ntziz5j"
-        },
-        {
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "現地操作"
+              "content": "Web管理ツールで集約する運用"
             },
             {
-              "content": "鍵管理"
-            },
-            {
-              "content": "Web管理ツール"
+              "content": "システム連携で自動化する処理"
             }
           ],
-          "id": "block-1770690015308-9ehj0z10h"
+          "id": "block-1770688697132-85hfvf6bn"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "それぞれの役割を分けて考えることが、安定した運用につながります。",
-          "id": "block-1770690015308-0e4z2ig4g"
-        },
-        {
-          "type": "header",
-          "level": 1,
-          "preset": "default",
-          "content": "【原因切り分け】迷ったときの3ステップ",
-          "id": "block-1770690015308-2f4dbey2t"
+          "content": "これらを役割分担することで、無理なく、将来の拡張にも耐えられる運用になります。",
+          "id": "block-1770688697132-naal9sd0j"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "実際に困りごとが起きたときは、次の順番で整理すると落ち着いて対応しやすくなります。",
-          "id": "block-1770690015308-bzmqgbtbo"
-        },
-        {
-          "id": "block-1770691379574-0n1x0liwn",
-          "type": "list",
-          "listType": "ol-title",
-          "items": [
-            {
-              "title": "現地操作の問題か",
-              "content": "解錠方法や現地操作の前提に誤解はないか"
-            },
-            {
-              "title": "鍵管理の問題か",
-              "content": "鍵の有効期限や割り当てに問題はないか"
-            },
-            {
-              "title": "管理・通信環境の問題か",
-              "content": "通信環境や管理画面の前提条件に影響していないか"
-            }
-          ]
+          "content": "Web管理ツールを含めたLINKEYの運用イメージは、製品構成や対応機能を見ながら確認すると、より具体的になります。",
+          "id": "block-1770688697132-v4gm4dg1n"
         },
         {
           "type": "paragraph",
           "variant": "normal",
-          "content": "<div><br></div>この順で切り分けるだけでも、「何から確認すればいいか分からない」状態を避けられます。",
-          "id": "block-1770690015308-528oo9jfi"
-        },
-        {
-          "type": "header",
-          "level": 1,
-          "preset": "default",
-          "content": "具体的な操作や設定を確認したい場合",
-          "id": "block-1770690015308-hybuhwxeo"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "この記事では、LINKEY運用で迷ったときの考え方を中心に整理しました。",
-          "id": "block-1770690015308-3scr25kn9"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "具体的な操作方法や設定については、目的に応じて以下の記事をご覧ください。<div><br></div>",
-          "id": "block-1770690015308-3r87k8sbj"
-        },
-        {
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "解錠・施錠の基本を確認したい場合"
-            }
-          ],
-          "id": "block-1770690015308-vz1141xcl"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "▶ <strong class=\"strong\"><a class=\"txtlink\" href=\"https://www.linkey-lock.com/column/column-1390\" target=\"_blank\" rel=\"noopener\">LINKEY（リンキー）の解錠・施錠方法まとめ｜現地操作とWeb遠隔操作の使い分けガイド</a></strong>",
-          "id": "block-1770690015308-ty0m5q24a"
-        },
-        {
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "鍵管理の考え方を整理したい場合"
-            }
-          ],
-          "id": "block-1770690015308-3333zsce0"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "▶ <strong class=\"strong\"><a class=\"txtlink\" href=\"https://www.linkey-lock.com/column/column-1392\" target=\"_blank\" rel=\"noopener\">LINKEY（リンキー）の鍵管理ガイド｜暗証番号とICカード（NFC）の最適な使い分け</a></strong>",
-          "id": "block-1770690015308-9smruk8ma"
-        },
-        {
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "管理画面や遠隔運用を確認したい場合"
-            }
-          ],
-          "id": "block-1770690015308-4s20pg4jf"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "▶ <strong class=\"strong\"><a class=\"txtlink\" href=\"https://www.linkey-lock.com/column/column-1393\" target=\"_blank\" rel=\"noopener\">LINKEY（リンキー）Web管理ツールの活用ガイド｜遠隔操作・一括鍵管理・API連携の考え方</a></strong>",
-          "id": "block-1770690015308-jfwo8hk6u"
-        },
-        {
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "緊急時の具体的な対処を知りたい場合"
-            }
-          ],
-          "id": "block-1770690015308-on6bgos0m"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "<strong class=\"strong\">▶<a class=\"txtlink\" href=\"https://www.linkey-lock.com/column/column-1279\" target=\"_blank\" rel=\"noopener\">【緊急時も安心】民泊スマートロックが開かないときの対処法とトラブルを防ぐ運用設計</a></strong>",
-          "id": "block-1770690015308-zk7tymd1q"
-        },
-        {
-          "type": "header",
-          "level": 1,
-          "preset": "default",
-          "content": "まとめ｜困ったときこそ、全体像に立ち戻る",
-          "id": "block-1770690015308-ys3myn6bl"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "LINKEY運用で困ったときは、一つの操作や設定だけに目を向けるのではなく、",
-          "id": "block-1770690015308-kdnvn6nl8"
-        },
-        {
-          "type": "list",
-          "listType": "ul",
-          "items": [
-            {
-              "content": "操作"
-            },
-            {
-              "content": "鍵管理"
-            },
-            {
-              "content": "管理ツール"
-            }
-          ],
-          "id": "block-1770690015308-1hzro0mo0"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "という<strong class=\"strong\">全体像</strong>に立ち戻ることが大切です。",
-          "id": "block-1770690015308-k9z4fz2o3"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "この記事が、判断に迷ったときの「地図」として、状況を整理する助けになれば幸いです。<div><br></div>",
-          "id": "block-1770690015308-svazy8fpq"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "運用を検討するうえでは、実際の製品仕様や対応範囲を把握しておくことも重要です。",
-          "id": "block-1770690015308-94e4f857p"
-        },
-        {
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "LINKEYの機能や構成については、製品紹介ページで紹介しています。",
-          "id": "block-1770690015308-31sirghiv"
+          "content": "実際の仕様については、製品紹介ページをご覧ください。",
+          "id": "block-1770688697132-4ld9ajpsc"
         },
         {
           "type": "paragraph",
           "variant": "normal",
           "content": "<a class=\"txtlink\" target=\"_blank\" rel=\"noopener\" href=\"https://www.linkey-lock.com/linkey-plus/\">LINKEY Plus の製品紹介を見る</a>",
-          "id": "block-1770690015308-amxb8moge"
+          "id": "block-1770688697132-jsyvpli6g"
         },
         {
           "type": "paragraph",
           "variant": "normal",
           "content": "<a class=\"txtlink\" target=\"_blank\" rel=\"noopener\" href=\"https://www.linkey-lock.com/products_linkey-pro/\">LINKEY Pro の製品紹介を見る</a>",
-          "id": "block-1770690015308-yiqmap0ga"
-        }
-      ],
-      "timestamp": 1770690015308,
-      "updatedAt": 1770704167491
-    },
-    {
-      "id": "draft-1770695591220",
-      "name": "民泊記事のてこ入れ",
-      "title": "民泊記事のてこ入れ",
-      "blocks": [
+          "id": "block-1770688697132-xzz904rgm"
+        },
         {
-          "id": "block-1770705565900-9j08bnbj6",
           "type": "header",
           "level": 1,
           "preset": "default",
-          "content": "【全体像】民泊トラブルは「予防・点検・対応」の3層で考える"
+          "content": "より詳しい操作方法を確認したい場合",
+          "id": "block-1770688697132-5ic921yqc"
         },
         {
-          "id": "block-1770705577510-yzk8tupdq",
           "type": "paragraph",
           "variant": "normal",
-          "content": "<div>民泊のトラブルは、突発的に起きているように見えても、実際には「想定されていなかった動き」や「確認されなかったズレ」が積み重なって発生するケースがほとんどです。</div><div>完全にゼロにすることは難しい一方で、起こりやすいパターンを整理し、あらかじめ仕組みを整えておくことで、発生頻度や影響を抑えることは十分に可能です。</div>"
+          "content": "この記事では、LINKEYのWeb管理ツールについて、役割や考え方を中心に整理しました。",
+          "id": "block-1770688697132-paqjgcyiq"
         },
         {
-          "id": "block-1770705608680-atfe4pi3a",
           "type": "paragraph",
           "variant": "normal",
-          "content": "本記事では、民泊トラブルを"
+          "content": "実際の画面操作や設定手順については、<a class=\"txtlink\" target=\"_blank\" rel=\"noopener\" href=\"https://support.linkey-lock.com/hc/ja\">公式サポートサイト</a>にまとめられています。 日々の運用時には、あわせてご確認ください。",
+          "id": "block-1770688697132-ji1cm0k60"
+        }
+      ],
+      "timestamp": 1770688697133,
+      "updatedAt": 1770688991480
+    },
+    {
+      "id": "draft-1770686664438",
+      "name": "038_LINKEY（リンキー）の鍵管理ガイド｜暗証番号とICカード（NFC）の最適な使い分け",
+      "title": "038_LINKEY（リンキー）の鍵管理ガイド｜暗証番号とICカード（NFC）の最適な使い分け",
+      "blocks": [
+        {
+          "type": "header",
+          "level": 1,
+          "preset": "default",
+          "content": "LINKEY（リンキー）の鍵管理ガイド｜暗証番号とICカード（NFC）の最適な使い分け",
+          "id": "block-1770686664437-kseqeo8qh"
         },
         {
-          "id": "block-1770705618663-t7sn5cphq",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "スマートロック「LINKEY」では、暗証番号やICカード（NFC）を使って鍵の管理を行います。<div>&nbsp;ただし、実際に運用を始めてみると、</div>",
+          "id": "block-1770686664437-kmervz0jv"
+        },
+        {
           "type": "list",
-          "listType": "ol",
+          "listType": "ul",
           "items": [
             {
-              "content": "事前に防ぐための準備（予防）"
+              "content": "暗証番号とICカードはどう使い分けるべきか"
             },
             {
-              "content": "日常業務の中で兆候を拾う点検（点検）"
+              "content": "誰に、どの鍵を割り当てるのがよいのか"
             },
             {
-              "content": "起きたときに慌てず対応する手順（対応）"
+              "content": "登録や削除は、どこで管理すればよいのか"
+            }
+          ],
+          "id": "block-1770686664437-jv4g0zq7q"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "といった点で迷うことも少なくありません。",
+          "id": "block-1770686664437-310bytnb5"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "この記事では、LINKEYの鍵管理について、暗証番号とICカード（NFC）それぞれの特徴を整理しながら、<strong class=\"strong\">現場で無理なく運用するための考え方</strong>をまとめます。&nbsp;<div>具体的な操作手順ではなく、「どう管理するとトラブルを防げるか」を理解するためのガイドとしてご覧ください。</div>",
+          "id": "block-1770686664437-9jdo6ycbv"
+        },
+        {
+          "type": "header",
+          "level": 2,
+          "preset": "default",
+          "content": "この記事でわかること",
+          "id": "block-1770686664437-ce0it9quy"
+        },
+        {
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "暗証番号とICカード（NFC）の役割"
+            },
+            {
+              "content": "対象に合わせた最適な鍵の割り当て方と、向いている利用シーン"
+            },
+            {
+              "content": "鍵管理のトラブルや属人化を防ぐ運用ルールの考え方"
+            }
+          ],
+          "id": "block-1770686664437-ozshrkioe"
+        },
+        {
+          "type": "header",
+          "level": 1,
+          "preset": "default",
+          "content": "解錠手段は2種類：ゲスト向けの「暗証番号」と、固定スタッフ向けの「NFC（ICカード）」",
+          "id": "block-1770686664437-o9brxulu1"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "LINKEYの鍵管理は、大きく次の2種類に分けて考えると分かりやすくなります。",
+          "id": "block-1770686664437-3wd8thzpm"
+        },
+        {
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "暗証番号：一時的な利用者向け"
+            },
+            {
+              "content": "NFC（ICカード）：定期的に出入りする利用者向け"
+            }
+          ],
+          "id": "block-1770686664437-qwa60b2ah"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "どちらも解錠手段として利用できますが、<strong class=\"strong\">想定されている利用シーンや管理の考え方が異なります</strong>。",
+          "id": "block-1770686664437-wnjqz7zd9"
+        },
+        {
+          "type": "header",
+          "level": 2,
+          "preset": "default",
+          "content": "1. 暗証番号：民泊や宿泊者など「一時利用」に最適",
+          "id": "block-1770686664437-vqqmjg7er"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "暗証番号は、タッチパネルに番号を入力して解錠する方式です。&nbsp;<div>鍵の受け渡しが不要なため、民泊や宿泊施設など、<strong class=\"strong\">一時的な利用者が多い運用</strong>と相性が良い仕組みです。</div>",
+          "id": "block-1770686664437-xqy8hnnh8"
+        },
+        {
+          "type": "header",
+          "level": 3,
+          "preset": "default",
+          "content": "暗証番号が向いている利用シーン",
+          "id": "block-1770686664437-tifc4imp9"
+        },
+        {
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "民泊や宿泊施設のゲスト対応"
+            },
+            {
+              "content": "利用期間があらかじめ決まっているケース"
+            },
+            {
+              "content": "対面での鍵受け渡しが難しい運用"
+            }
+          ],
+          "id": "block-1770686664437-lrnz8zpyo"
+        },
+        {
+          "type": "header",
+          "level": 3,
+          "preset": "default",
+          "content": "暗証番号運用で意識したいポイント",
+          "id": "block-1770686664437-3h0hrubhp"
+        },
+        {
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "利用終了後は、不要になった暗証番号を削除する"
+            },
+            {
+              "content": "同じ暗証番号を複数人で共有する場合は、管理ルールを決めておく"
+            },
+            {
+              "content": "Web管理ツールのスケジュール設定を活用し、利用期間を限定する"
+            }
+          ],
+          "id": "block-1770686664437-55qjmpu0g"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "暗証番号は便利な反面、管理が曖昧になると「誰が使っている番号なのか分からない」状態になりやすいため、運用ルールを決めておくことが重要です。",
+          "id": "block-1770686664437-wbkhlfioy"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "Web管理ツールでは、曜日や時間帯を指定して暗証番号を有効化することも可能で、削除忘れなどの人的ミスを減らすことができます。",
+          "id": "block-1770686664437-r5a5x66rg"
+        },
+        {
+          "type": "header",
+          "level": 2,
+          "preset": "default",
+          "content": "2. NFC（ICカード）：清掃員や従業員など「定期利用」に最適",
+          "id": "block-1770686664437-sxdyojkte"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "NFCは、ICカードや一部のデバイスをかざして解錠する方式です。&nbsp;<div>物理的なカードと利用者を紐づけて管理できるため、<strong class=\"strong\">誰が利用できるのかを把握しやすい</strong>という特徴があります。</div>",
+          "id": "block-1770686664437-d7ge4izxf"
+        },
+        {
+          "type": "header",
+          "level": 3,
+          "preset": "default",
+          "content": "NFCが向いている利用シーン",
+          "id": "block-1770686664437-5n17ienw7"
+        },
+        {
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "清掃スタッフや業者など、定期的に出入りする利用者"
+            },
+            {
+              "content": "従業員や関係者が継続的に利用する施設"
+            },
+            {
+              "content": "鍵の権限を明確に管理したいケース"
+            }
+          ],
+          "id": "block-1770686664437-z38j73kz6"
+        },
+        {
+          "type": "header",
+          "level": 3,
+          "preset": "default",
+          "content": "NFC運用で意識したいポイント",
+          "id": "block-1770686664437-0vpfakk9f"
+        },
+        {
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "契約終了・退職時には、速やかにカードを無効化する"
+            },
+            {
+              "content": "どのカードを誰に割り当てているかを把握しておく"
+            },
+            {
+              "content": "紛失時の対応フローを事前に決めておく"
+            }
+          ],
+          "id": "block-1770686664437-v368jg83t"
+        },
+        {
+          "type": "header",
+          "level": 1,
+          "preset": "default",
+          "content": "鍵の登録・変更方法：「本体での現地操作」と「Web管理ツールでの遠隔操作」",
+          "id": "block-1770686664437-sqoxt6dbz"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "LINKEYでは、鍵の登録や削除・変更を",
+          "id": "block-1770686664437-mahatk004"
+        },
+        {
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "LINKEY本体で行う現地操作"
+            },
+            {
+              "content": "Web管理ツールから行う遠隔操作"
+            }
+          ],
+          "id": "block-1770686664437-gq3c4g19b"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "のいずれかで行います。",
+          "id": "block-1770686664437-d25pch995"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "現地対応が可能かどうか、遠隔で対応したいかどうかによって、どちらを使うかを判断する形になります。<div><br></div>",
+          "id": "block-1770686664437-9og1i4yhw"
+        },
+        {
+          "type": "paragraph",
+          "variant": "small-gray",
+          "content": "※ 実際の登録・削除の操作手順については、<a class=\"txtlink\" target=\"_blank\" rel=\"noopener\" href=\"https://support.linkey-lock.com/hc/ja\">公式サポートサイト</a>をご確認ください。<div><br></div>",
+          "id": "block-1770686664437-kchrvkghl"
+        },
+        {
+          "type": "paragraph",
+          "variant": "small",
+          "content": "Web管理ツールでできる鍵管理や、現地操作との役割分担については、以下の記事で整理しています。",
+          "id": "block-1770686664437-ljmfoxlr1"
+        },
+        {
+          "type": "paragraph",
+          "variant": "small",
+          "content": "039_LINKEY（リンキー）Web管理ツールの活用ガイド｜遠隔操作・一括鍵管理・API連携の考え方",
+          "id": "block-1770686664437-4g0ji9dfi"
+        },
+        {
+          "type": "header",
+          "level": 1,
+          "preset": "default",
+          "content": "トラブルを防ぐ運用ルール：登録上限数と定期的な整理が重要",
+          "id": "block-1770686664437-3ser5zs1w"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "LINKEYの鍵管理で多いトラブルの多くは、機能そのものではなく、<strong class=\"strong\">運用ルールの曖昧さ</strong>から生じます。",
+          "id": "block-1770686664437-ba6v9565h"
+        },
+        {
+          "type": "header",
+          "level": 2,
+          "preset": "default",
+          "content": "登録上限数への注意",
+          "id": "block-1770686664437-44a7vatqs"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "LINKEYでは、暗証番号やICカードの登録数に上限があります。&nbsp;<div>無制限に登録できるわけではないため、<strong class=\"strong\">使わなくなった鍵を定期的に整理することが重要</strong>です。</div>",
+          "id": "block-1770686664437-e0l8niyoc"
+        },
+        {
+          "type": "header",
+          "level": 2,
+          "preset": "default",
+          "content": "電池切れを前提にした運用設計",
+          "id": "block-1770686664437-gyv9qfp8k"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "電子錠である以上、電池切れのリスクはゼロではありません。",
+          "id": "block-1770686664437-o72idwqsl"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "LINKEYでは、管理画面から電池残量を確認できるほか、本体側でも残量低下を知らせる通知があります。",
+          "id": "block-1770686664437-gy0ctmcwa"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "そのため、定期的なチェックとあわせて、<strong class=\"strong\">非常時用の物理鍵（シリンダーキー）の保管ルールを決めておく</strong>ことが重要です。<div><br></div>",
+          "id": "block-1770686664437-9wuxko5ui"
+        },
+        {
+          "type": "paragraph",
+          "variant": "small-gray",
+          "content": "※ 登録上限数や仕様の詳細・電池交換の具体手順は、<a class=\"txtlink\" target=\"_blank\" rel=\"noopener\" href=\"https://support.linkey-lock.com/hc/ja\">公式サポートサイト</a>をご確認ください。",
+          "id": "block-1770686664437-42hhcx77h"
+        },
+        {
+          "type": "header",
+          "level": 1,
+          "preset": "default",
+          "content": "より詳しい操作方法を確認したい場合",
+          "id": "block-1770686664437-b798om2bn"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "この記事では、LINKEYの鍵管理について、暗証番号とICカードの使い分けや、運用時の考え方を中心に整理しました。",
+          "id": "block-1770686664437-9lekcdvt2"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "具体的な暗証番号登録・削除の操作手順や、管理画面の詳細な設定方法については、<a class=\"txtlink\" target=\"_blank\" rel=\"noopener\" href=\"https://support.linkey-lock.com/hc/ja\">公式サポートサイト</a>にまとめられています。&nbsp;<div>実際の設定時には、あわせてご確認ください。</div><div><br></div>",
+          "id": "block-1770686664437-wgq0ykndk"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "実際の製品仕様や管理画面の構成によっても、運用イメージは変わります。",
+          "id": "block-1770686664437-29hzb4zqm"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "導入を検討する際は、製品紹介ページもあわせてご確認ください。",
+          "id": "block-1770686664437-yyjdaxy2d"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "<a class=\"txtlink\" target=\"_blank\" rel=\"noopener\" href=\"https://www.linkey-lock.com/linkey-plus/\">LINKEY Plus の製品紹介を見る</a>",
+          "id": "block-1770686664437-x26tqrz2s"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "<a class=\"txtlink\" target=\"_blank\" rel=\"noopener\" href=\"https://www.linkey-lock.com/products_linkey-pro/\">LINKEY Pro の製品紹介を見る</a>",
+          "id": "block-1770686664437-9p8uk9pqf"
+        }
+      ],
+      "timestamp": 1770686664438,
+      "updatedAt": 1770728981896
+    },
+    {
+      "id": "draft-1770676490529",
+      "name": "Google Document のインポート方法",
+      "title": "Google Document のインポート方法",
+      "blocks": [
+        {
+          "type": "header",
+          "level": 1,
+          "preset": "default",
+          "content": "Google Document のインポート方法",
+          "id": "block-1770676490528-h36yvh9cr"
+        },
+        {
+          "type": "header",
+          "level": 4,
+          "preset": "default",
+          "content": "1. MD ファイルとしてエクスポート",
+          "id": "block-1770676490528-gglr8uvx7"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "Google Document メニューの",
+          "id": "block-1770676490528-wo93co1tw"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "ファイル > ダウンロード > マークダウン (.md)",
+          "id": "block-1770676490528-yq1wjpton"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "で MD という形式のテキストファイルがローカルに DL される。",
+          "id": "block-1770676490528-fep9y6rjl"
+        },
+        {
+          "type": "header",
+          "level": 4,
+          "preset": "default",
+          "content": "2. MD ファイルをアップロード",
+          "id": "block-1770676490528-uly62ssn2"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "LINKEY Blog Editor のグローバルメニュー (何も選択されていない状態の右側のパネル)",
+          "id": "block-1770676490528-83kgziunt"
+        },
+        {
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "から MD ファイルをインポート。 すると、フォーマットされたドラフトが表示 (保存) される。",
+          "id": "block-1770676490528-hgmhgeu2x"
+        }
+      ],
+      "timestamp": 1770676490529,
+      "updatedAt": 1770682922849
+    },
+    {
+      "id": "draft-1770725066194",
+      "name": "(AI 作文) おいしいコーヒーの淹れ方",
+      "title": "(AI 作文) おいしいコーヒーの淹れ方",
+      "blocks": [
+        {
+          "id": "block-1",
+          "type": "header",
+          "data": {
+            "text": "はじめに：おいしいコーヒーの魅力",
+            "level": 2,
+            "preset": "default"
+          },
+          "level": 2,
+          "preset": "default",
+          "content": "はじめに：おいしいコーヒーの魅力"
+        },
+        {
+          "id": "block-2",
+          "type": "paragraph",
+          "data": {
+            "text": "毎日の生活に欠かせないコーヒー。おいしいコーヒーを淹れることで、一日の始まりが豊かになり、心に安らぎを与えてくれます。初心者の方でも気軽に挑戦できる方法を、基本から丁寧にご紹介しますので、ぜひ参考にしてください。",
+            "variant": "normal"
+          },
+          "variant": "normal",
+          "content": "毎日の生活に欠かせないコーヒー。おいしいコーヒーを淹れることで、一日の始まりが豊かになり、心に安らぎを与えてくれます。初心者の方でも気軽に挑戦できる方法を、基本から丁寧にご紹介しますので、ぜひ参考にしてください。"
+        },
+        {
+          "id": "block-3",
+          "type": "header",
+          "data": {
+            "text": "1. コーヒー豆の選び方",
+            "level": 3,
+            "preset": "default"
+          },
+          "level": 3,
+          "preset": "default",
+          "content": "1. コーヒー豆の選び方"
+        },
+        {
+          "id": "block-4",
+          "type": "paragraph",
+          "data": {
+            "text": "コーヒーの味は豆の品質で大きく変わります。新鮮な豆を選ぶためには、焙煎日ができるだけ近いものを選びましょう。コーヒー豆の産地ごとに特徴があり、たとえば南米の豆は甘みがあり、中米の豆は酸味が特徴的です。また、焙煎度合いによっても風味が変わるため、浅煎りならフルーティーな酸味、深煎りなら苦味やコクが強くなります。自分の好みに合った豆を探すことが楽しみの一つです。",
+            "variant": "normal"
+          },
+          "variant": "normal",
+          "content": "コーヒーの味は豆の品質で大きく変わります。新鮮な豆を選ぶためには、焙煎日ができるだけ近いものを選びましょう。コーヒー豆の産地ごとに特徴があり、たとえば南米の豆は甘みがあり、中米の豆は酸味が特徴的です。また、焙煎度合いによっても風味が変わるため、浅煎りならフルーティーな酸味、深煎りなら苦味やコクが強くなります。自分の好みに合った豆を探すことが楽しみの一つです。"
+        },
+        {
+          "id": "block-5",
+          "type": "header",
+          "data": {
+            "text": "2. 豆の挽き方と水の準備",
+            "level": 3,
+            "preset": "default"
+          },
+          "level": 3,
+          "preset": "default",
+          "content": "2. 豆の挽き方と水の準備"
+        },
+        {
+          "id": "block-6",
+          "type": "list",
+          "data": {
+            "listType": "ul",
+            "items": [
+              "使用する器具に合わせた挽き方を選ぶ（例：ペーパードリップは中挽き）。挽き方が粗すぎたり細かすぎたりすると抽出に影響が出るため注意が必要です。",
+              "水は浄水を使い、軟水がベスト。水質がコーヒーの味に影響するため、水道水をそのまま使わず浄水を利用しましょう。",
+              "お湯の温度は約90～96℃を目安にすると良い。沸騰直後のお湯は少し冷まして適温に調整することで、苦味が抑えられ美味しく抽出できます。"
+            ]
+          },
+          "listType": "ul",
+          "items": [
+            {
+              "content": "使用する器具に合わせた挽き方を選ぶ（例：ペーパードリップは中挽き）。挽き方が粗すぎたり細かすぎたりすると抽出に影響が出るため注意が必要です。"
+            },
+            {
+              "content": "水は浄水を使い、軟水がベスト。水質がコーヒーの味に影響するため、水道水をそのまま使わず浄水を利用しましょう。"
+            },
+            {
+              "content": "お湯の温度は約90～96℃を目安にすると良い。沸騰直後のお湯は少し冷まして適温に調整することで、苦味が抑えられ美味しく抽出できます。"
             }
           ]
         },
         {
-          "id": "block-1770705689110-y5wstoyqk",
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "<br>"
+          "id": "block-7",
+          "type": "header",
+          "data": {
+            "text": "3. おいしいコーヒーの淹れ方の基本手順",
+            "level": 3,
+            "preset": "default"
+          },
+          "level": 3,
+          "preset": "default",
+          "content": "3. おいしいコーヒーの淹れ方の基本手順"
         },
         {
-          "id": "block-1770705651190-yw2u5jq90",
-          "type": "paragraph",
-          "variant": "normal",
-          "content": "<div><span style=\"font-size: 16px; letter-spacing: 0.07em; background-color: initial;\">という3つの層に分けて整理します。</span></div>"
+          "id": "block-8",
+          "type": "list",
+          "data": {
+            "listType": "ol",
+            "items": [
+              "フィルターにコーヒー粉を入れる。均一になるように軽く平らにします。",
+              "少量のお湯で蒸らし、粉全体を湿らせる。この工程でコーヒーのガス抜きをし、風味を引き出します。",
+              "残りのお湯をゆっくり注ぐ。中心から外側へ螺旋を描くように注ぐと均一に抽出できます。",
+              "抽出後すぐにコーヒーをサーバーに移す。この作業で余分な苦味がつきにくくなります。"
+            ]
+          },
+          "listType": "ol",
+          "items": [
+            {
+              "content": "フィルターにコーヒー粉を入れる。均一になるように軽く平らにします。"
+            },
+            {
+              "content": "少量のお湯で蒸らし、粉全体を湿らせる。この工程でコーヒーのガス抜きをし、風味を引き出します。"
+            },
+            {
+              "content": "残りのお湯をゆっくり注ぐ。中心から外側へ螺旋を描くように注ぐと均一に抽出できます。"
+            },
+            {
+              "content": "抽出後すぐにコーヒーをサーバーに移す。この作業で余分な苦味がつきにくくなります。"
+            }
+          ]
         },
         {
-          "id": "block-1770705664097-t8vcw4nn4",
+          "id": "block-unique1",
+          "type": "card",
+          "subtype": "2-col",
+          "cards": [
+            {
+              "title": "お湯の注ぎ方のポイント",
+              "content": "お湯はゆっくりと、小刻みに数回に分けて注ぐことで、コーヒー粉がしっかり膨らみ、豊かな香りと味が引き出せます。",
+              "image": "",
+              "alt": ""
+            },
+            {
+              "title": "抽出後の注意点",
+              "content": "コーヒーは抽出後すぐにサーバー等にうつして下さい。抽出中に豆が長く湯の中にあると余分な苦味や雑味が出やすいです。",
+              "image": "",
+              "alt": ""
+            }
+          ]
+        },
+        {
+          "id": "block-10",
+          "type": "header",
+          "data": {
+            "text": "4. まとめとコツ",
+            "level": 3,
+            "preset": "default"
+          },
+          "level": 3,
+          "preset": "default",
+          "content": "4. まとめとコツ"
+        },
+        {
+          "id": "block-11",
           "type": "paragraph",
+          "data": {
+            "text": "おいしいコーヒーを淹れるには、豆選び、水準備、淹れ方のすべてに気を配ることが大切です。特に新鮮な豆の使用、適温の水、丁寧な蒸らしは味わいを大きく左右します。自分好みの味を見つけるために、さまざまな豆や抽出方法を試してみるのも楽しいプロセスです。毎日のコーヒータイムがもっと特別な時間になることでしょう。",
+            "variant": "normal"
+          },
           "variant": "normal",
-          "content": "<div>この3層を意識して運営を設計すると、「何が原因で起きたのか」「どこで防げたのか」「次に同じことを起こさないために何を直すべきか」が見えやすくなります。</div><div>以降の章では、よくあるトラブル例を起点に、具体的な予防策・点検ポイント・対応フローを順に確認していきます。</div>"
+          "content": "おいしいコーヒーを淹れるには、豆選び、水準備、淹れ方のすべてに気を配ることが大切です。特に新鮮な豆の使用、適温の水、丁寧な蒸らしは味わいを大きく左右します。自分好みの味を見つけるために、さまざまな豆や抽出方法を試してみるのも楽しいプロセスです。毎日のコーヒータイムがもっと特別な時間になることでしょう。"
+        },
+        {
+          "id": "block-12",
+          "type": "paragraph",
+          "data": {
+            "text": "※器具によって適した挽き方や抽出時間は異なるため、慣れるまでいろいろ試してみるのも楽しみの一つです。",
+            "variant": "small-gray"
+          },
+          "variant": "small-gray",
+          "content": "※器具によって適した挽き方や抽出時間は異なるため、慣れるまでいろいろ試してみるのも楽しみの一つです。"
         }
       ],
-      "timestamp": 1770695591220,
-      "updatedAt": 1770705865923
+      "timestamp": 1770728891732,
+      "updatedAt": 1770729085746
+    },
+    {
+      "id": "draft-1770729673989",
+      "name": "(AI 作文 )おいしいステーキの焼き方",
+      "title": "(AI 作文 )おいしいステーキの焼き方",
+      "blocks": [
+        {
+          "id": "block-1",
+          "type": "header",
+          "level": 1,
+          "preset": "default",
+          "content": "うまいステーキの焼き方"
+        },
+        {
+          "id": "block-2",
+          "type": "header",
+          "level": 2,
+          "preset": "blue",
+          "content": "1. 材料と準備やで"
+        },
+        {
+          "id": "block-3",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "うまいステーキ焼くには、素材の選び方と下ごしらえメッチャ大事やねん。特にええ肉選んだら、風味も食感もガツンとアップするで。下ごしらえもサボったらあかん！焼く前にしっかり常温に戻すんが成功のコツや。ここでは、必要な材料と準備のポイントまとめるわ。"
+        },
+        {
+          "id": "block-4",
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "牛ステーキ肉（部位は好きなん選び）"
+            },
+            {
+              "content": "塩・こしょう"
+            },
+            {
+              "content": "油かバター"
+            },
+            {
+              "content": "にんにく（入れたかったらでええよ）"
+            }
+          ]
+        },
+        {
+          "id": "block-4a",
+          "type": "paragraph",
+          "variant": "small-gray",
+          "content": "※牛肉は分厚いと焼きムラ出やすいから、初めてやったら2cmぐらいが扱いやすいで。"
+        },
+        {
+          "id": "block-5",
+          "type": "header",
+          "level": 2,
+          "preset": "default",
+          "content": "2. 焼き方の手順や"
+        },
+        {
+          "id": "block-6",
+          "type": "list",
+          "listType": "ol",
+          "items": [
+            {
+              "content": "肉を常温に戻す（冷蔵庫から出して20～30分ぐらい置いといて）"
+            },
+            {
+              "content": "表面に塩・こしょうふる（両面しっかりな）"
+            },
+            {
+              "content": "フライパン、強火で十分熱してから油入れる"
+            },
+            {
+              "content": "肉を焼く（片面1～2分ずつ、お肉の厚さで調整やで）"
+            },
+            {
+              "content": "焼き終わったら、アルミホイルで包んでちょい待つ（2～3分ぐらい）"
+            }
+          ]
+        },
+        {
+          "id": "block-6a",
+          "type": "paragraph",
+          "variant": "small-gray",
+          "content": "※ちょい休ませたら肉汁落ち着いて、めっちゃジューシーになるで。"
+        },
+        {
+          "id": "block-7",
+          "type": "header",
+          "level": 2,
+          "preset": "default",
+          "content": "3. うまく焼くポイントな"
+        },
+        {
+          "id": "block-8",
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "焼く前に肉を室温に戻したら、火の通りが均等や"
+            },
+            {
+              "content": "塩は焼く直前にふったら、ジューシーさ守れるで"
+            },
+            {
+              "content": "焼き時間は自分の好みで調整したらええ"
+            },
+            {
+              "content": "肉触りすぎん方が、表面キレイに焼けるわ"
+            }
+          ]
+        },
+        {
+          "id": "block-9",
+          "type": "card",
+          "subtype": "2-col",
+          "cards": [
+            {
+              "title": "おすすめ部位",
+              "content": "サーロイン、リブロース、ヒレとかがやっぱり人気やな。それぞれ脂のノリや柔らかさがちゃうし、食べ比べも楽しいで。",
+              "image": "",
+              "alt": ""
+            },
+            {
+              "title": "焼き加減",
+              "content": "レア、ミディアム、ウェルダンとか、自分の好きに調整できるで。初めてならミディアムが失敗しにくいわ。",
+              "image": "",
+              "alt": ""
+            }
+          ]
+        },
+        {
+          "id": "block-9a",
+          "type": "list",
+          "listType": "dl",
+          "items": [
+            {
+              "term": "レア",
+              "definition": "表面に焼き色ついて、中が赤くてやわらかい。肉のジューシーさもダイレクトに味わえるで。"
+            },
+            {
+              "term": "ミディアム",
+              "definition": "中心がピンクで、火の通りもええ感じ。バランスが取れてて初心者にもおすすめや。"
+            },
+            {
+              "term": "ウェルダン",
+              "definition": "しっかり火通して中心まで茶色。ちょっと歯ごたえあるけど、肉の旨みもしっかり感じ取れるわ。"
+            }
+          ]
+        },
+        {
+          "id": "block-10",
+          "type": "header",
+          "level": 2,
+          "preset": "default",
+          "content": "まとめやで"
+        },
+        {
+          "id": "block-11",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "うまいステーキ焼くには、素材選びから焼き方までポイント押さえるんがめっちゃ大事や。焼き加減や休ませ方にもこだわって、ぜひ家でステーキ作り楽しんでや～。"
+        }
+      ],
+      "timestamp": 1770729673989,
+      "updatedAt": 1770730118582
+    },
+    {
+      "id": "draft-1770730543549",
+      "name": "(AI 作文) 六法全書の解説",
+      "title": "(AI 作文) 六法全書の解説",
+      "blocks": [
+        {
+          "id": "block-1",
+          "type": "header",
+          "level": 1,
+          "preset": "default",
+          "content": "六法全書とは"
+        },
+        {
+          "id": "block-1-newintro",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "六法全書というのはのう、日本の大切な法律がたくさん詰まった書物じゃよ。法律を学ぶ人だけでなく、みんなにも役立つ知識の宝物なんじゃ。時代が進んで、最近じゃ電子版も普及して、どこでも気軽に読めるようになったのう。"
+        },
+        {
+          "id": "block-1a",
+          "type": "header",
+          "level": 2,
+          "preset": "blue",
+          "content": "六法全書の歴史・成り立ち"
+        },
+        {
+          "id": "block-1b",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "六法全書というのは、明治のころに日本の近代法を整えるために生まれたんじゃ。時代に合わせて内容もどんどん広がってのう、今じゃ学びにも仕事にも欠かせぬ存在じゃ。出版されるたびに中身が見直されて、世の中の変化や法律の改正にもちゃんと合わせてきた歴史があるんじゃぞ。"
+        },
+        {
+          "id": "block-2",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "六法全書は、日本で大事な法律をしっかり集めた法典のひとつじゃ。法律を学ぶ若いもんも、現場で働く者にも、みんなの基本資料になるんじゃ。市民の皆も、自分の権利や義務を知るのに役立つ大事な本なんじゃぞ。"
+        },
+        {
+          "id": "block-3",
+          "type": "header",
+          "level": 2,
+          "preset": "blue",
+          "content": "収録されている六法"
+        },
+        {
+          "id": "block-4a",
+          "type": "list",
+          "listType": "dl",
+          "items": [
+            {
+              "term": "憲法",
+              "definition": "これはのう、日本という国の基本となる決まりで、みんなの権利や国家のしくみを定めた、いちばん大事な法律じゃよ。"
+            },
+            {
+              "term": "民法",
+              "definition": "家族や財産のこと、つまりわしらの生活にぐっと関わってくる決まりなんじゃ。相続や契約など、日々の暮らしに欠かせんのう。"
+            },
+            {
+              "term": "商法",
+              "definition": "お店をやっとる人や会社のための法律じゃ。商売や取引の決まりごとは、これがないと話にならんのじゃよ。"
+            },
+            {
+              "term": "民事訴訟法",
+              "definition": "人同士のもめごとをどうやって裁判で解決するか、その手順を決めておる法律なんじゃ。"
+            },
+            {
+              "term": "刑法",
+              "definition": "悪いことをしたらどうなるか、世の中の秩序を守る法律じゃ。犯罪や罰について決めておるんじゃよ。"
+            },
+            {
+              "term": "刑事訴訟法",
+              "definition": "罪に問われた時の捜査や裁判、刑の執行についての決まりじゃな。犯罪の裁きには欠かせん法律じゃ。"
+            }
+          ]
+        },
+        {
+          "id": "block-5",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "この六つの法律だけじゃなくて、他にもいろんな大事な決まりごとや特別な法律も収められておるのじゃ。専門の分野ごとの法律もきちんと載せて、幅広く世の中のルールを網羅しておるぞい。"
+        },
+        {
+          "id": "block-3b",
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "行政法や労働法など、今の世の中で大事になってきた法律も一緒に載せておるんじゃ。"
+            },
+            {
+              "content": "最近の六法全書は、判例や重要な改正も注釈でしっかり教えてくれるものが多いんじゃぞ。"
+            }
+          ]
+        },
+        {
+          "id": "block-3b-card",
+          "type": "card",
+          "subtype": "2-col",
+          "cards": [
+            {
+              "title": "特別法や補足法令の存在",
+              "content": "六法全書は時代の流れに合わせて、さまざまな法律も追加されとるからの。今は労働法や環境法なんかも大切なんじゃぞ。",
+              "image": "",
+              "alt": ""
+            },
+            {
+              "title": "判例・注釈の利便性",
+              "content": "判例や注釈が書いてあると、実際にどんなふうに使われとるのか、しっかり分かるのう。受験勉強にも、本職にも役立つんじゃ。",
+              "image": "",
+              "alt": ""
+            }
+          ]
+        },
+        {
+          "id": "block-6",
+          "type": "header",
+          "level": 2,
+          "preset": "default",
+          "content": "六法全書の用途と特徴"
+        },
+        {
+          "id": "block-7",
+          "type": "card",
+          "subtype": "2-col",
+          "cards": [
+            {
+              "title": "法学や資格試験の学習",
+              "content": "若いもんが法学や資格試験を受ける時には、六法全書は欠かせん道しるべじゃ。最新の内容もどんどん反映されとるから、安心して使えるぞい。",
+              "image": "",
+              "alt": ""
+            },
+            {
+              "title": "実務での活用",
+              "content": "現場で法律を使うプロも、ビジネスで法律を頼りにする者も、六法全書は必需品じゃ。注釈や施行日の情報が重宝されるのう。",
+              "image": "",
+              "alt": ""
+            }
+          ]
+        },
+        {
+          "id": "block-7b",
+          "type": "card",
+          "subtype": "3-col",
+          "cards": [
+            {
+              "title": "ポケット六法",
+              "content": "小さくて持ち運びも楽じゃ。外でも勉強できるし、内容もぎゅっとまとまっとるぞい。",
+              "image": "",
+              "alt": ""
+            },
+            {
+              "title": "判例付き六法",
+              "content": "大事な判例や改正の道筋なんかが解説されていて、もっと深く知りたいときにぴったりじゃ。",
+              "image": "",
+              "alt": ""
+            },
+            {
+              "title": "電子六法",
+              "content": "スマホやタブレットで気軽に読めるんじゃ。検索やリンクもついて便利じゃぞ。",
+              "image": "",
+              "alt": ""
+            }
+          ]
+        },
+        {
+          "id": "block-6b",
+          "type": "header",
+          "level": 3,
+          "preset": "blue",
+          "content": "活用の具体例"
+        },
+        {
+          "id": "block-6c",
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "改正がないか、時々調べて最新の内容をつかんでおくんじゃ。"
+            },
+            {
+              "content": "模擬試験や実際の問題を解くときの頼もしい参考になるんじゃぞ。"
+            },
+            {
+              "content": "契約書や法律文書を作るとき、「これで大丈夫かのう」と根拠を調べるのに大いに役立つぞい。"
+            }
+          ]
+        },
+        {
+          "id": "block-6d",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "六法全書を使えば、条文だけじゃなく、その背景や改正の経緯、判例まで学ぶことができるんじゃ。社会人もビジネスの場面でも、正しい知識が判断を助けてくれるんじゃぞ。"
+        },
+        {
+          "id": "block-8",
+          "type": "header",
+          "level": 2,
+          "preset": "default",
+          "content": "六法全書の入手と選び方"
+        },
+        {
+          "id": "block-8b",
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "有名な出版社（有斐閣・三省堂・弘文堂など）の特徴を見比べて決めるのがええぞ。"
+            },
+            {
+              "content": "自分の目的や勉強のやり方に合うものを選ぶとええんじゃ。"
+            },
+            {
+              "content": "法改正への対応や、判例や注釈のわかりやすさも、大事なポイントじゃよ。"
+            }
+          ]
+        },
+        {
+          "id": "block-8c",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "最近は電子書籍にもなっておるから、スマホやパソコンでもすぐ使えるぞい。自分の生活や勉強のペースに合わせて、使いやすいものを選んでおくれ。"
+        },
+        {
+          "id": "block-9",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "六法全書は本屋さんでもネットでも手に入る時代じゃ。内容や大きさなど、自分にぴったりのものを選ぶんじゃぞ。特に、法律の改正にすぐ対応してくれるかや、判例がしっかり載っておるかが大事なポイントじゃ。"
+        },
+        {
+          "id": "block-10",
+          "type": "paragraph",
+          "variant": "small-gray",
+          "content": "六法全書は法律が変わるたびに新しくなるんじゃ。だから、必ず最新版を使うようにな、古いのは使っちゃいかんぞ。"
+        },
+        {
+          "id": "block-summary",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "六法全書は法律を学ぶならまず持っておきたい一冊じゃ。どんな道に進んでも必ず役に立つから、目的や腕前に合うものを見つけてうまく使うんじゃぞい。"
+        }
+      ],
+      "timestamp": 1770730543549,
+      "updatedAt": 1770731271742
     }
   ]
 }
