@@ -31,6 +31,24 @@ class CardComponent extends HTMLElement {
     return 'https://www.linkey-lock.com/wp-content/uploads/2025/05/2634fefd9b745aa48f169e9a26c89cf8-1.png';
   }
 
+  formatInlineContent(content) {
+    const safe = String(content ?? '');
+    return safe
+      .replace(/\{red\}([\s\S]+?)\{\/red\}/g, '<strong class="strong strong--warning">$1</strong>')
+      .replace(/\{blue\}([\s\S]+?)\{\/blue\}/g, '<strong class="strong strong--info">$1</strong>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/__(.+?)__/g, '<strong>$1</strong>');
+  }
+
+  normalizeInlineContent(html) {
+    const raw = String(html ?? '');
+    return raw
+      .replace(/<\s*strong[^>]*class="[^"]*strong--warning[^"]*"[^>]*>([\s\S]*?)<\s*\/\s*strong>/gi, '{red}$1{/red}')
+      .replace(/<\s*strong[^>]*class="[^"]*strong--info[^"]*"[^>]*>([\s\S]*?)<\s*\/\s*strong>/gi, '{blue}$1{/blue}')
+      .replace(/<\s*b[^>]*>([\s\S]*?)<\s*\/\s*b>/gi, '**$1**')
+      .replace(/<\s*strong[^>]*>([\s\S]*?)<\s*\/\s*strong>/gi, '**$1**');
+  }
+
   render() {
     if (!this.data) return;
 
@@ -54,7 +72,7 @@ class CardComponent extends HTMLElement {
       const head = document.createElement('h3');
       head.className = 'thmb-card__title';
       head.contentEditable = 'true';
-      head.textContent = card.title || `Card ${index + 1}`;
+      head.innerHTML = this.formatInlineContent(card.title || `Card ${index + 1}`);
 
       const img = document.createElement('img');
       img.className = 'thmb-card__img img-responsive';
@@ -64,15 +82,17 @@ class CardComponent extends HTMLElement {
       const body = document.createElement('div');
       body.className = 'thmb-card__body';
       body.contentEditable = 'true';
-      body.innerHTML = card.content || '';
+      body.innerHTML = this.formatInlineContent(card.content || '');
 
       head.addEventListener('blur', () => {
-        this.data.cards[index] = { ...this.data.cards[index], title: head.textContent };
+        const normalizedTitle = this.normalizeInlineContent(head.innerHTML);
+        this.data.cards[index] = { ...this.data.cards[index], title: normalizedTitle };
         this.dispatchContentChange();
       });
 
       body.addEventListener('blur', () => {
-        this.data.cards[index] = { ...this.data.cards[index], content: body.innerHTML };
+        const normalizedContent = this.normalizeInlineContent(body.innerHTML);
+        this.data.cards[index] = { ...this.data.cards[index], content: normalizedContent };
         this.dispatchContentChange();
       });
 

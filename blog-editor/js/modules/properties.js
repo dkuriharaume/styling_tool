@@ -15,6 +15,12 @@
       if (!target) return;
 
       switch (target.id) {
+        case 'btn-properties-edit':
+          app.showEditView();
+          break;
+        case 'btn-properties-ai':
+          app.showAiChatView();
+          break;
         case 'btn-new': {
           const title = await app.showPrompt('Create New Draft', 'Enter a title for your new draft:', 'Untitled Draft');
           if (title) {
@@ -42,15 +48,63 @@
         case 'btn-import-markdown':
           app.openMarkdownImportDialog();
           break;
+        case 'btn-ai-help':
+          if (app.openAiHelpModal) {
+            app.openAiHelpModal();
+          }
+          break;
         default:
           break;
       }
     });
   };
 
+  const formatSelectionLabel = (block) => {
+    if (!block) return '';
+    switch (block.type) {
+      case 'header':
+        return `Header (H${block.level || 2})`;
+      case 'list':
+        return `List (${block.listType || 'ul'})`;
+      case 'card':
+        return `Card (${block.subtype || '2-col'})`;
+      case 'paragraph':
+        return `Paragraph (${block.variant || 'normal'})`;
+      default:
+        return block.type ? String(block.type) : 'Block';
+    }
+  };
+
+  const updateSelectionStatus = (app, selectedBlock) => {
+    const panel = app.getPropertiesPanel();
+    if (!panel) return;
+    let status = panel.querySelector('.selection-status');
+    if (!status) {
+      status = document.createElement('div');
+      status.className = 'selection-status';
+      panel.prepend(status);
+    }
+
+    if (!selectedBlock) {
+      status.dataset.state = 'empty';
+      status.textContent = 'No block selected';
+      return;
+    }
+
+    status.dataset.state = 'selected';
+    status.textContent = `Selected: ${formatSelectionLabel(selectedBlock)}`;
+  };
+
   const updatePropertiesPanel = (app) => {
     const panel = app.getPropertiesPanel();
     const selectedBlock = app.state.getSelectedBlock();
+
+    updateSelectionStatus(app, selectedBlock);
+
+    if (app.isInAiChatView) {
+      showAiChatView(app);
+      return;
+    }
 
     if (!selectedBlock) {
       // If draft browser is showing and no block selected, keep it
@@ -117,6 +171,82 @@
         break;
       default:
         propsContainer.innerHTML = '<p>No properties available</p>';
+    }
+    ensurePropertiesTabs(app, panel);
+  };
+
+  const ensurePropertiesTabs = (app, panel) => {
+    if (!panel) return;
+    let tabs = panel.querySelector('.properties-tabs');
+    if (tabs) return;
+    tabs = document.createElement('div');
+    tabs.className = 'properties-tabs';
+    tabs.innerHTML = `
+      <button class="properties-tab" id="btn-properties-edit">${app.t('ai.viewEdit')}</button>
+      <button class="properties-tab" id="btn-properties-ai">${app.t('ai.viewChat')}</button>
+    `;
+    panel.prepend(tabs);
+    updateTabState(app, panel);
+  };
+
+  const updateTabState = (app, panel) => {
+    const editBtn = panel.querySelector('#btn-properties-edit');
+    const aiBtn = panel.querySelector('#btn-properties-ai');
+    if (editBtn) editBtn.classList.toggle('active', !app.isInAiChatView);
+    if (aiBtn) aiBtn.classList.toggle('active', !!app.isInAiChatView);
+  };
+
+  const renderAiPanel = (app, panel) => {
+    if (!panel) return;
+    let aiPanel = panel.querySelector('.ai-panel');
+    if (aiPanel) return;
+
+    aiPanel = document.createElement('div');
+    aiPanel.className = 'ai-panel';
+    aiPanel.innerHTML = `
+      <div class="ai-chat">
+        <div class="ai-chat-header">
+          <span>${app.t('ai.chatTitle')}</span>
+        </div>
+        <div class="ai-chat-messages" id="ai-chat-messages"></div>
+        <div class="ai-chat-input">
+          <textarea id="ai-chat-input" rows="2" placeholder="${app.t('ai.chatPlaceholder')}"></textarea>
+          <button class="btn btn-primary" id="btn-ai-chat-send">${app.t('ai.chatSend')}</button>
+        </div>
+      </div>
+      <div class="ai-debug" id="ai-debug">
+        <div class="ai-debug-header">
+          <span>${app.t('ai.debugTitle')}</span>
+          <div class="ai-debug-actions">
+            <button class="btn btn-secondary" id="btn-ai-debug-copy">${app.t('ai.debugCopy')}</button>
+            <button class="btn btn-secondary" id="btn-ai-debug-clear">${app.t('ai.debugClear')}</button>
+          </div>
+        </div>
+        <textarea id="ai-debug-log" rows="6" readonly></textarea>
+      </div>
+    `;
+
+    panel.appendChild(aiPanel);
+  };
+
+  const showAiChatView = (app) => {
+    const panel = app.getPropertiesPanel();
+    if (!panel) return;
+    app.isInAiChatView = true;
+    panel.classList.add('ai-chat-mode');
+    panel.innerHTML = `
+      <div class="selection-status" data-state="empty"></div>
+      <div class="properties-tabs">
+        <button class="properties-tab" id="btn-properties-edit">${app.t('ai.viewEdit')}</button>
+        <button class="properties-tab" id="btn-properties-ai">${app.t('ai.viewChat')}</button>
+        <button class="properties-tab properties-tab--icon" id="btn-ai-help" title="${app.t('ai.helpButton')}" aria-label="${app.t('ai.helpButton')}">?</button>
+      </div>
+    `;
+    renderAiPanel(app, panel);
+    updateTabState(app, panel);
+    updateSelectionStatus(app, app.state.getSelectedBlock());
+    if (app.setupAiPanel) {
+      app.setupAiPanel();
     }
   };
 
@@ -516,6 +646,11 @@
 
     panel.innerHTML = `
       <!-- File Operations (shown when no block selected) -->
+      <div class="properties-tabs">
+        <button class="properties-tab" id="btn-properties-edit">${app.t('ai.viewEdit')}</button>
+        <button class="properties-tab" id="btn-properties-ai">${app.t('ai.viewChat')}</button>
+        <button class="properties-tab properties-tab--icon" id="btn-ai-help" title="${app.t('ai.helpButton')}" aria-label="${app.t('ai.helpButton')}">?</button>
+      </div>
       <div class="file-operations">
         ${recentFilesHtml}
         
@@ -579,6 +714,9 @@
         <input type="file" id="markdown-file-input" accept="text/markdown,.md" style="display:none" />
       </div>
     `;
+
+    panel.classList.remove('ai-chat-mode');
+    updateTabState(app, panel);
 
     // Attach event listeners for recent files
     recentDrafts.forEach(draft => {
@@ -670,6 +808,11 @@
     if (drafts.length === 0) {
       panel.innerHTML = `
         <div class="drafts-browser">
+          <div class="properties-tabs">
+            <button class="properties-tab" id="btn-properties-edit">${app.t('ai.viewEdit')}</button>
+            <button class="properties-tab" id="btn-properties-ai">${app.t('ai.viewChat')}</button>
+            <button class="properties-tab properties-tab--icon" id="btn-ai-help" title="${app.t('ai.helpButton')}" aria-label="${app.t('ai.helpButton')}">?</button>
+          </div>
           <div class="drafts-header">
             <h3>Open Draft</h3>
             <button class="btn-back" id="btn-back-to-files">← Back</button>
@@ -703,6 +846,11 @@
 
       panel.innerHTML = `
         <div class="drafts-browser">
+          <div class="properties-tabs">
+            <button class="properties-tab" id="btn-properties-edit">${app.t('ai.viewEdit')}</button>
+            <button class="properties-tab" id="btn-properties-ai">${app.t('ai.viewChat')}</button>
+            <button class="properties-tab properties-tab--icon" id="btn-ai-help" title="${app.t('ai.helpButton')}" aria-label="${app.t('ai.helpButton')}">?</button>
+          </div>
           <div class="drafts-header">
             <h3>Open Draft</h3>
             <button class="btn-back" id="btn-back-to-files">← Back</button>
@@ -714,6 +862,9 @@
         </div>
       `;
     }
+
+    panel.classList.remove('ai-chat-mode');
+    updateTabState(app, panel);
 
     // Add event listeners
     const backBtn = app.getDraftsBackButton();
@@ -787,7 +938,8 @@
     renderListProperties,
     renderCardProperties,
     showFileOperations,
-    showDraftsBrowser
+    showDraftsBrowser,
+    showAiChatView
   };
 
   window.BLOG_EDITOR_MODULES = modules;

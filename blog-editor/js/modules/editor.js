@@ -208,6 +208,10 @@
 
     // Update properties panel
     app.updatePropertiesPanel();
+
+    if (app.logRenderedStyleIssues) {
+      app.logRenderedStyleIssues();
+    }
   };
 
   const createDropZone = (app, position) => {

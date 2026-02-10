@@ -1,6 +1,581 @@
 {
   "drafts": [
     {
+      "id": "draft-1770723568776",
+      "name": "おいしいとんかつの揚げ方",
+      "title": "おいしいとんかつの揚げ方",
+      "blocks": [
+        {
+          "id": "block-1",
+          "type": "header",
+          "level": 1,
+          "preset": "default",
+          "content": "おいしいとんかつの揚げ方"
+        },
+        {
+          "id": "block-2",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "サクサクでジューシーなとんかつを自宅で揚げたい方のために、材料選びから揚げ方のコツまでを分かりやすくご紹介します。"
+        },
+        {
+          "id": "block-3",
+          "type": "header",
+          "level": 2,
+          "preset": "default",
+          "content": "材料と下準備"
+        },
+        {
+          "id": "block-4a",
+          "type": "list",
+          "listType": "dl",
+          "items": [
+            {
+              "term": "豚ロース肉（とんかつ用）",
+              "definition": "脂が適度についたものを選ぶとジューシーに仕上がります。ヒレでも代用可。"
+            },
+            {
+              "term": "塩、こしょう",
+              "definition": "下味に使用します。粒こしょうを挽くとより香りが立ちます。"
+            },
+            {
+              "term": "小麦粉",
+              "definition": "衣のつなぎ。薄力粉が一般的ですが、米粉などグルテン控えめでも代用可。"
+            },
+            {
+              "term": "卵",
+              "definition": "溶き卵にすることで衣がしっかりつきます。卵が苦手な場合は水溶き小麦粉でも可。"
+            },
+            {
+              "term": "パン粉",
+              "definition": "生パン粉がおすすめですが、乾燥パン粉を少し湿らせて使ってもOK。粒が大きいほどサクサク感が増します。"
+            },
+            {
+              "term": "揚げ油",
+              "definition": "サラダ油や米油、ラードなど。香りや仕上がりの好みで選びましょう。"
+            }
+          ]
+        },
+        {
+          "id": "block-4b",
+          "type": "paragraph",
+          "variant": "small-gray",
+          "content": "材料は新鮮なものを使うと仕上がりがより美味しくなります。特に肉は調理の30分前には冷蔵庫から出して常温に戻しておくと、熱の通りが均一になります。"
+        },
+        {
+          "id": "block-4c",
+          "type": "list",
+          "listType": "ol",
+          "items": [
+            {
+              "content": "豚肉は筋切りをして形を整えます。"
+            },
+            {
+              "content": "両面に軽く塩、こしょうを振り下味をつける。"
+            }
+          ]
+        },
+        {
+          "id": "block-6",
+          "type": "header",
+          "level": 2,
+          "preset": "default",
+          "content": "とんかつの揚げ方 手順"
+        },
+        {
+          "id": "block-8a",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "サクサクの衣とジューシーな食感を実現するために、下記の手順を順番に丁寧に行うことが大切です。衣の付け方や油の温度にも意識して作業しましょう。"
+        },
+        {
+          "id": "block-7",
+          "type": "list",
+          "listType": "ol",
+          "items": [
+            {
+              "content": "小麦粉を肉の両面に薄くまぶす。"
+            },
+            {
+              "content": "溶き卵にくぐらせる。"
+            },
+            {
+              "content": "パン粉を丁寧につける。"
+            },
+            {
+              "content": "170℃〜180℃の油で両面をこんがりと揚げる（3〜4分程度）。"
+            },
+            {
+              "content": "揚がったら油をきって休ませる。"
+            }
+          ]
+        },
+        {
+          "id": "block-8",
+          "type": "header",
+          "level": 2,
+          "preset": "default",
+          "content": "美味しく仕上げるポイント"
+        },
+        {
+          "id": "block-9",
+          "type": "card",
+          "subtype": "2-col",
+          "cards": [
+            {
+              "title": "衣をしっかりつける",
+              "content": "パン粉をやさしく押さえつけると、揚げたときに剥がれにくくなります。",
+              "image": "https://www.linkey-lock.com/wp-content/uploads/2025/05/2634fefd9b745aa48f169e9a26c89cf8-1.png",
+              "alt": ""
+            },
+            {
+              "title": "火加減に注意",
+              "content": "温度が低いとべたつき、高すぎると中が生焼けになるので温度管理が大切です。",
+              "image": "https://www.linkey-lock.com/wp-content/uploads/2025/05/2634fefd9b745aa48f169e9a26c89cf8-1.png",
+              "alt": ""
+            }
+          ]
+        },
+        {
+          "id": "block-ptips",
+          "type": "header",
+          "level": 3,
+          "preset": "blue",
+          "content": "プロの裏技・ワンポイント"
+        },
+        {
+          "id": "block-ptipcard",
+          "type": "card",
+          "subtype": "2-col",
+          "cards": [
+            {
+              "title": "肉の仕込みでひと工夫",
+              "content": "肉の両面に細かく包丁で浅い切り目を入れると柔らかくジューシーに。調理30分前に塩だけをなじませ、余計な水分を引き出すと、より旨みが凝縮されます。",
+              "image": "",
+              "alt": ""
+            },
+            {
+              "title": "パン粉で黄金色に",
+              "content": "パン粉に少しだけサラダ油（小さじ1程度）をまぶしてから衣に使うと、揚げ色が一段と美しく仕上がります。",
+              "image": "https://www.linkey-lock.com/wp-content/uploads/2025/05/2634fefd9b745aa48f169e9a26c89cf8-1.png",
+              "alt": ""
+            }
+          ]
+        },
+        {
+          "id": "block-10",
+          "type": "header",
+          "level": 2,
+          "preset": "default",
+          "content": "まとめ"
+        },
+        {
+          "id": "block-11",
+          "type": "paragraph",
+          "variant": "small-gray",
+          "content": "コツを押さえて揚げれば、自宅でもお店のような美味しいとんかつが楽しめます。ぜひお試しください。"
+        }
+      ],
+      "timestamp": 1770723568776,
+      "updatedAt": 1770724071397
+    },
+    {
+      "id": "draft-1770711017740",
+      "name": "AI 機能のテスト",
+      "title": "AI 機能のテスト",
+      "blocks": [
+        {
+          "id": "block-1",
+          "type": "header",
+          "variant": "default",
+          "content": "AI 機能のテスト",
+          "level": 2,
+          "preset": "default"
+        },
+        {
+          "id": "block-1000",
+          "type": "header",
+          "variant": "blue",
+          "content": "この記事で伝えたいこと",
+          "level": 3,
+          "preset": "blue"
+        },
+        {
+          "id": "block-1000-purpose-intro",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "本記事の目的は、**AI技術に興味のある方**や、**最新AIの導入を検討しているビジネス担当者、学生、開発者**、幅広い読者に対して、**AI機能の実際の動作や応用可能性**を分かりやすく伝えることです。"
+        },
+        {
+          "id": "block-1000-purpose-note",
+          "type": "paragraph",
+          "variant": "small-gray",
+          "content": "本記事を通じて、**AIを正しく理解し、その可能性を最大限に活用する**ためのヒントを得ていただければと思います。"
+        },
+        {
+          "id": "block-1010",
+          "type": "header",
+          "variant": "default",
+          "level": 3,
+          "preset": "default",
+          "content": "記事の概要"
+        },
+        {
+          "id": "block-1011",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "AIの**応用例や業界別の活用、メリット、具体事例、そして今後の展望**についてわかりやすく解説します。本記事をご覧いただくことで、AIが社会やビジネスにもたらす**具体的変革や活用イメージ**を包括的に把握できます。"
+        },
+        {
+          "id": "block-1011-list",
+          "type": "list",
+          "listType": "ol",
+          "items": [
+            {
+              "content": "**AI技術の幅広い社会・産業応用**"
+            },
+            {
+              "content": "主要分野・業界別**AI導入のポイント**"
+            },
+            {
+              "content": "**AI活用のメリット・リスク**"
+            },
+            {
+              "content": "具体的な**応用事例**と**今後の展望**"
+            }
+          ]
+        },
+        {
+          "id": "block-2-overview",
+          "type": "paragraph",
+          "variant": "small",
+          "content": "下記の構成でAIの最新機能や注目トピックを順に説明します。"
+        },
+        {
+          "id": "block-3",
+          "type": "header",
+          "variant": "default",
+          "content": "AIの応用例",
+          "level": 2,
+          "preset": "default"
+        },
+        {
+          "id": "block-16",
+          "type": "header",
+          "variant": "blue",
+          "content": "主要な応用分野",
+          "level": 3,
+          "preset": "blue"
+        },
+        {
+          "id": "block-13",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "AIは{red}さまざまな分野で応用{/red}されており、その技術力によって{red}多様な課題解決が可能{/red}です。例えば、{red}医療、製造、金融、教育、交通、安全対策{/red}など幅広い分野でAIの導入が進んでいます。各分野でAIがどのように活用されているかを理解することで、私たちの生活やビジネスにAIが与える影響の大きさを実感できます。AI技術は、データ解析や自動化によって{red}「人手不足の解消」「精度向上」「新しい知見の発見」{/red}など、さまざまな社会課題に対して有効なソリューションとなっています。これらの点を含めて、以下に代表的な応用例を分野ごとに示します。"
+        },
+        {
+          "id": "block-17",
+          "type": "header",
+          "level": 4,
+          "variant": "default",
+          "content": "テクノロジー・知識分野",
+          "preset": "default"
+        },
+        {
+          "id": "block-17-exp",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "テクノロジーや知識分野では、**AIが情報処理や解析を高度に自動化**し、従来手作業や専門知識が必要だった作業を効率的に行えるようになっています。また、AIの導入によって、**新しい知識や発見の促進**にも貢献しています。"
+        },
+        {
+          "id": "block-17-list",
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "**大量のデータ分析**による知見の抽出"
+            },
+            {
+              "content": "専門知識を活用した**自動推論システム**"
+            },
+            {
+              "content": "研究開発における**新発見のサポート**"
+            },
+            {
+              "content": "膨大な情報源をリアルタイムに統合する**ナレッジグラフの作成と活用**"
+            },
+            {
+              "content": "**自然言語処理技術**を用いた論文や資料の自動要約"
+            }
+          ]
+        },
+        {
+          "id": "block-19",
+          "type": "header",
+          "level": 4,
+          "variant": "default",
+          "content": "ビジネス&マーケティング",
+          "preset": "default"
+        },
+        {
+          "id": "block-19-exp",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "ビジネス分野では、**AIによる自動化や分析の活用**が進んでいます。マーケティングやカスタマーサポートの効率化、顧客体験の向上など、多岐に渡る業務で生産性向上やサービスの差別化に寄与しています。"
+        },
+        {
+          "id": "block-19-list",
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "顧客データ分析による**ターゲティングの最適化**"
+            },
+            {
+              "content": "チャットボット等による**自動応答システム**"
+            },
+            {
+              "content": "販売予測や**需要予測の高度化**"
+            }
+          ]
+        },
+        {
+          "id": "block-21",
+          "type": "header",
+          "level": 4,
+          "variant": "default",
+          "content": "社会インフラ・その他",
+          "preset": "default"
+        },
+        {
+          "id": "block-21-exp",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "社会インフラ分野やその他の領域でも、**AIの導入**により安全性や利便性が向上しています。教育・交通・セキュリティなど多様な観点から**社会全体への貢献**が期待されています。"
+        },
+        {
+          "id": "block-21-list",
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "交通渋滞予測と**ルート最適化**"
+            },
+            {
+              "content": "防犯カメラ映像による**自動監視**"
+            },
+            {
+              "content": "教育現場での**個別最適化教材の提供**"
+            }
+          ]
+        },
+        {
+          "id": "block-6",
+          "type": "header",
+          "variant": "default",
+          "content": "AIのメリットと業界別の活用",
+          "level": 2,
+          "preset": "default"
+        },
+        {
+          "id": "block-6-desc",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "AIの主なメリットは、効率化・自動化・最適化など多岐にわたり、さまざまな業界で新たな価値創出に貢献しています。"
+        },
+        {
+          "id": "block-23",
+          "type": "header",
+          "level": 3,
+          "variant": "blue",
+          "content": "AIの主なメリットをハイライト",
+          "preset": "blue"
+        },
+        {
+          "id": "block-23-highlight",
+          "type": "card",
+          "subtype": "3-col",
+          "cards": [
+            {
+              "title": "高速なデータ処理",
+              "content": "**膨大なデータを短時間で処理・分析**し、的確な意思決定をサポート",
+              "image": "https://www.linkey-lock.com/wp-content/uploads/2025/05/2634fefd9b745aa48f169e9a26c89cf8-1.png",
+              "alt": ""
+            },
+            {
+              "title": "業務の自動化・省力化",
+              "content": "**定型作業の自動化**により、**人為的ミス**を低減し**コスト削減**を実現",
+              "image": "https://www.linkey-lock.com/wp-content/uploads/2025/05/2634fefd9b745aa48f169e9a26c89cf8-1.png",
+              "alt": ""
+            },
+            {
+              "title": "体験の最適化",
+              "content": "利用者ひとりひとりに合わせて、**パーソナライズされた最適なサービス**を提供",
+              "image": "https://www.linkey-lock.com/wp-content/uploads/2025/05/2634fefd9b745aa48f169e9a26c89cf8-1.png",
+              "alt": ""
+            }
+          ]
+        },
+        {
+          "id": "block-25",
+          "type": "header",
+          "level": 3,
+          "variant": "blue",
+          "content": "業界別の主な活用例",
+          "preset": "blue"
+        },
+        {
+          "id": "block-14",
+          "type": "card",
+          "subtype": "2-col",
+          "cards": [
+            {
+              "title": "医療業界",
+              "content": "正確な**診断支援**と**患者データ管理の効率化**",
+              "image": "https://www.linkey-lock.com/wp-content/uploads/2025/05/2634fefd9b745aa48f169e9a26c89cf8-1.png",
+              "alt": ""
+            },
+            {
+              "title": "製造業",
+              "content": "**生産ラインの自動化**と**品質管理**",
+              "image": "https://www.linkey-lock.com/wp-content/uploads/2025/05/2634fefd9b745aa48f169e9a26c89cf8-1.png",
+              "alt": ""
+            },
+            {
+              "title": "金融業",
+              "content": "**リスク分析**や**詐欺検出の高度化**",
+              "image": "https://www.linkey-lock.com/wp-content/uploads/2025/05/2634fefd9b745aa48f169e9a26c89cf8-1.png",
+              "alt": ""
+            },
+            {
+              "title": "小売業",
+              "content": "顧客行動分析による**パーソナライズされたマーケティング**",
+              "image": "https://www.linkey-lock.com/wp-content/uploads/2025/05/2634fefd9b745aa48f169e9a26c89cf8-1.png",
+              "alt": ""
+            }
+          ]
+        },
+        {
+          "id": "block-9",
+          "type": "header",
+          "variant": "default",
+          "content": "具体的な事例紹介",
+          "level": 2,
+          "preset": "default"
+        },
+        {
+          "id": "block-9-summary",
+          "type": "paragraph",
+          "variant": "small",
+          "content": "以下に、医療・ビジネスの分野ごとにAI導入の具体例をまとめます。"
+        },
+        {
+          "id": "block-26",
+          "type": "header",
+          "level": 3,
+          "variant": "default",
+          "content": "医療分野でのAI事例",
+          "preset": "default"
+        },
+        {
+          "id": "block-10",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "例えば、ある医療機関では**AI画像認識**を用いることで、従来よりも早期にがんを発見し、患者の治療成功率を**向上**させています。このように**AIの利用は現場の課題解決**に役立っています。"
+        },
+        {
+          "id": "block-10-example-list",
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "**AIによるX線画像やMRIの判読支援システム**の導入"
+            },
+            {
+              "content": "患者ごとの**予後予測モデルの活用**"
+            }
+          ]
+        },
+        {
+          "id": "block-27-addition",
+          "type": "header",
+          "level": 3,
+          "variant": "default",
+          "content": "ビジネス分野でのAI活用例",
+          "preset": "default"
+        },
+        {
+          "id": "block-27-addition-p",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "たとえば**大手通販サイト**では、AIによる**需要予測やレコメンデーションエンジン**が商品提案や在庫管理の効率化に活用されています。チャットボットによる顧客対応も、多忙な時間帯でも**即時対応を実現**しています。"
+        },
+        {
+          "id": "block-27-addition-header-upd",
+          "type": "header",
+          "level": 3,
+          "variant": "blue",
+          "content": "今後のアップデートと可能性",
+          "preset": "blue"
+        },
+        {
+          "id": "block-5",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "今後もアップデートを重ねて、さらに{blue}**高性能な機能を提供**{/blue}していく予定です。AI技術の進化に伴い、{blue}**新しい可能性を切り開き、ユーザーのニーズに応えていきます**{/blue}。"
+        },
+        {
+          "id": "block-11",
+          "type": "header",
+          "variant": "default",
+          "content": "AIの今後の展望",
+          "level": 2,
+          "preset": "default"
+        },
+        {
+          "id": "block-27-future-intro",
+          "type": "paragraph",
+          "variant": "small",
+          "content": "未来のAIは社会へのインパクトがさらに拡大することが予想されます。"
+        },
+        {
+          "id": "block-27",
+          "type": "header",
+          "level": 3,
+          "variant": "default",
+          "content": "社会へのインパクトと課題",
+          "preset": "default"
+        },
+        {
+          "id": "block-12",
+          "type": "paragraph",
+          "variant": "normal",
+          "content": "今後のAI技術は、より**高度な判断力や創造性**を持つシステムの開発、そして**人間とAIとの協働**が進むことで社会に大きな変革をもたらすと期待されています。**倫理面の配慮**と共に、安全で信頼できるAIの構築が重要です。"
+        },
+        {
+          "id": "block-unique-future-points",
+          "type": "list",
+          "listType": "ul",
+          "items": [
+            {
+              "content": "さらなる創造性と判断力の強化"
+            },
+            {
+              "content": "多様な業界への普及と新しいビジネスの創出"
+            },
+            {
+              "content": "人間とAIの協働による新しい価値の創造"
+            },
+            {
+              "content": "倫理・安全性・プライバシーの課題への対応"
+            }
+          ]
+        }
+      ],
+      "timestamp": 1770711017740,
+      "updatedAt": 1770723415825
+    },
+    {
       "id": "draft-1770562036998",
       "name": "テストブログ 1-2",
       "title": "テストブログ 1-2",

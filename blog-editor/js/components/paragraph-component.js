@@ -7,6 +7,15 @@ class ParagraphComponent extends HTMLElement {
     super();
     this.blockData = null;
   }
+
+  formatInlineContent(content) {
+    const safe = String(content ?? '');
+    return safe
+      .replace(/\{red\}([\s\S]+?)\{\/red\}/g, '<strong class="strong strong--warning">$1</strong>')
+      .replace(/\{blue\}([\s\S]+?)\{\/blue\}/g, '<strong class="strong strong--info">$1</strong>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/__(.+?)__/g, '<strong>$1</strong>');
+  }
   
   connectedCallback() {
     this.render();
@@ -34,7 +43,7 @@ class ParagraphComponent extends HTMLElement {
     }
     
     p.contentEditable = 'true';
-    p.innerHTML = content;
+    p.innerHTML = this.formatInlineContent(content);
     
     // Handle content changes
     p.addEventListener('blur', (e) => {

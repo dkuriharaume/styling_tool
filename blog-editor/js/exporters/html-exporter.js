@@ -125,7 +125,12 @@ class HTMLExporter {
     });
     
     // Normalize whitespace
-    return temp.innerHTML.trim();
+    const cleaned = temp.innerHTML.trim();
+    return cleaned
+      .replace(/\{red\}([\s\S]+?)\{\/red\}/g, '<strong class="strong strong--warning">$1</strong>')
+      .replace(/\{blue\}([\s\S]+?)\{\/blue\}/g, '<strong class="strong strong--info">$1</strong>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/__(.+?)__/g, '<strong>$1</strong>');
   }
   
   /**

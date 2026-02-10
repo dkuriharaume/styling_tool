@@ -14,6 +14,24 @@ class ListComponent extends HTMLElement {
       ]
     };
   }
+
+  formatInlineContent(content) {
+    const safe = String(content ?? '');
+    return safe
+      .replace(/\{red\}([\s\S]+?)\{\/red\}/g, '<strong class="strong strong--warning">$1</strong>')
+      .replace(/\{blue\}([\s\S]+?)\{\/blue\}/g, '<strong class="strong strong--info">$1</strong>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/__(.+?)__/g, '<strong>$1</strong>');
+  }
+
+  normalizeInlineContent(html) {
+    const raw = String(html ?? '');
+    return raw
+      .replace(/<\s*strong[^>]*class="[^"]*strong--warning[^"]*"[^>]*>([\s\S]*?)<\s*\/\s*strong>/gi, '{red}$1{/red}')
+      .replace(/<\s*strong[^>]*class="[^"]*strong--info[^"]*"[^>]*>([\s\S]*?)<\s*\/\s*strong>/gi, '{blue}$1{/blue}')
+      .replace(/<\s*b[^>]*>([\s\S]*?)<\s*\/\s*b>/gi, '**$1**')
+      .replace(/<\s*strong[^>]*>([\s\S]*?)<\s*\/\s*strong>/gi, '**$1**');
+  }
   
   connectedCallback() {
     this.render();
@@ -82,11 +100,11 @@ class ListComponent extends HTMLElement {
       // Wrap content in a span
       const contentSpan = document.createElement('span');
       contentSpan.contentEditable = true;
-      contentSpan.textContent = item.content || '';
+      contentSpan.innerHTML = this.formatInlineContent(item.content || '');
       contentSpan.style.display = 'inline';
       
       contentSpan.addEventListener('blur', () => {
-        this.data.items[index].content = contentSpan.textContent;
+        this.data.items[index].content = this.normalizeInlineContent(contentSpan.innerHTML);
         this.dispatchContentChange();
       });
       
@@ -175,11 +193,11 @@ class ListComponent extends HTMLElement {
       // Wrap content in a span
       const contentSpan = document.createElement('span');
       contentSpan.contentEditable = true;
-      contentSpan.textContent = item.content || '';
+      contentSpan.innerHTML = this.formatInlineContent(item.content || '');
       contentSpan.style.display = 'inline';
       
       contentSpan.addEventListener('blur', () => {
-        this.data.items[index].content = contentSpan.textContent;
+        this.data.items[index].content = this.normalizeInlineContent(contentSpan.innerHTML);
         this.dispatchContentChange();
       });
       
@@ -269,20 +287,20 @@ class ListComponent extends HTMLElement {
       const h4 = document.createElement('h4');
       h4.className = 'h4 ol__title';
       h4.contentEditable = true;
-      h4.textContent = item.title || 'List item title';
+      h4.innerHTML = this.formatInlineContent(item.title || 'List item title');
       
       h4.addEventListener('blur', () => {
-        this.data.items[index].title = h4.textContent;
+        this.data.items[index].title = this.normalizeInlineContent(h4.innerHTML);
         this.dispatchContentChange();
       });
       
       // Content (P)
       const p = document.createElement('p');
       p.contentEditable = true;
-      p.textContent = item.content || 'List item content';
+      p.innerHTML = this.formatInlineContent(item.content || 'List item content');
       
       p.addEventListener('blur', () => {
-        this.data.items[index].content = p.textContent;
+        this.data.items[index].content = this.normalizeInlineContent(p.innerHTML);
         this.dispatchContentChange();
       });
       
@@ -374,11 +392,11 @@ class ListComponent extends HTMLElement {
       // Wrap term content in a span
       const termSpan = document.createElement('span');
       termSpan.contentEditable = true;
-      termSpan.textContent = item.term || '';
+      termSpan.innerHTML = this.formatInlineContent(item.term || '');
       termSpan.style.display = 'inline';
       
       termSpan.addEventListener('blur', () => {
-        this.data.items[index].term = termSpan.textContent;
+        this.data.items[index].term = this.normalizeInlineContent(termSpan.innerHTML);
         this.dispatchContentChange();
       });
       
@@ -400,12 +418,12 @@ class ListComponent extends HTMLElement {
       // Definition (DD)
       const dd = document.createElement('dd');
       dd.contentEditable = true;
-      dd.textContent = item.definition || '';
+      dd.innerHTML = this.formatInlineContent(item.definition || '');
       dd.dataset.index = index;
       dd.dataset.pairType = 'dd';
       
       dd.addEventListener('blur', () => {
-        this.data.items[index].definition = dd.textContent;
+        this.data.items[index].definition = this.normalizeInlineContent(dd.innerHTML);
         this.dispatchContentChange();
       });
       

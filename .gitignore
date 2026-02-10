@@ -1,1 +1,3 @@
 linkey_service
+server/.env
+server/data/

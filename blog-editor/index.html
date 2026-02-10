@@ -266,6 +266,45 @@
       </div>
     </div>
   </div>
+
+  <!-- AI Help Modal -->
+  <div id="ai-help-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 data-i18n="ai.helpTitle">How to use AI</h2>
+        <button class="modal-close" id="ai-help-close">×</button>
+      </div>
+      <div class="modal-body">
+        <p data-i18n="ai.helpIntro">Use the AI chat to ask questions or propose edits to the current draft.</p>
+        <div class="ai-help-chips">
+          <span class="ai-help-chip ai-help-chip--blue" data-i18n="ai.helpChipSelect">Select block</span>
+          <span class="ai-help-chip ai-help-chip--purple" data-i18n="ai.helpChipAsk">Ask for changes</span>
+          <span class="ai-help-chip ai-help-chip--green" data-i18n="ai.helpChipApply">Apply or drop</span>
+        </div>
+        <h3 class="ai-help-section-title" data-i18n="ai.helpSectionUseCases">Use cases</h3>
+        <p class="ai-help-subtitle" data-i18n="ai.helpUseCasesTitle">Common use cases</p>
+        <ul class="ai-help-list ai-help-list--usecases">
+          <li data-i18n="ai.helpUseCase1">Summarize or tighten a long section into a shorter paragraph.</li>
+          <li data-i18n="ai.helpUseCase2">Convert scattered points into a list or cards for readability.</li>
+          <li data-i18n="ai.helpUseCase3">Improve tone and clarity while keeping the meaning intact.</li>
+          <li data-i18n="ai.helpUseCase4">Target a selected block and propose precise edits only there.</li>
+        </ul>
+        <h3 class="ai-help-section-title" data-i18n="ai.helpSectionRules">Rules & limits</h3>
+        <ul class="ai-help-list">
+          <li data-i18n="ai.helpItem1">Select a block to target edits; leave nothing selected to edit the whole draft.</li>
+          <li data-i18n="ai.helpItem2">Ask for changes in plain language. Apply or drop suggestions after review.</li>
+          <li data-i18n="ai.helpItem3">Use **bold** and {blue}/{red} markers for emphasis (no HTML/CSS).</li>
+          <li data-i18n="ai.helpItem4">Use header presets for color (blue/red) instead of markers.</li>
+          <li data-i18n="ai.helpLimit1">Limitations: The AI only edits the current draft content and allowed block types.</li>
+          <li data-i18n="ai.helpLimit2">It cannot add custom CSS, HTML elements, or unsupported fields.</li>
+          <li data-i18n="ai.helpLimit3">Always review suggestions before applying; results may need manual tweaks.</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="ai-help-ok" data-i18n="ai.helpClose">OK</button>
+      </div>
+    </div>
+  </div>
   
   <!-- Scripts -->
   <script src="js/constants.js"></script>

@@ -64,7 +64,9 @@ class BlogEditorApp {
     this.isDragging = false;
     this.statusTimer = null;
     this.isInDraftsBrowser = false; // Track if user is browsing drafts
+    this.isInAiChatView = false;
     this.currentLang = localStorage.getItem(STORAGE_KEYS.language) || 'en';
+    this.aiChatHistory = [];
 
     // Pre-calculate margin collapse lookup table for all combinations
     this.marginLookup = this.buildMarginLookupTable();
@@ -76,6 +78,295 @@ class BlogEditorApp {
     }
 
     this.init();
+  }
+
+  normalizeAiInlineText(text) {
+    const raw = String(text ?? '');
+    return raw
+      .replace(/<\s*\/\s*(strong|b)\b[^>]*>/gi, '**')
+      .replace(/<\s*(strong|b)\b[^>]*>/gi, '**')
+      .replace(/<[^>]+>/g, '');
+  }
+
+  normalizeAiDraft(draft) {
+    if (!draft || !Array.isArray(draft.blocks)) return null;
+    const allowedTypes = new Set(['header', 'paragraph', 'list', 'card']);
+    const placeholderImage = 'https://www.linkey-lock.com/wp-content/uploads/2025/05/2634fefd9b745aa48f169e9a26c89cf8-1.png';
+
+    const normalizeText = (value) => this.normalizeAiInlineText(value);
+
+    const blocks = draft.blocks.map((block) => {
+      if (!block || typeof block !== 'object') {
+        return { type: 'paragraph', variant: 'normal', content: normalizeText(block ?? '') };
+      }
+
+      const type = allowedTypes.has(block.type) ? block.type : 'paragraph';
+
+      if (type === 'header') {
+        const level = [1, 2, 3, 4].includes(block.level) ? block.level : 2;
+        let preset = ['default', 'red', 'blue'].includes(block.preset) ? block.preset : 'default';
+        let content = normalizeText(block.content ?? '');
+        if (/\{red\}/i.test(content)) {
+          preset = 'red';
+        } else if (/\{blue\}/i.test(content)) {
+          preset = 'blue';
+        }
+        content = content
+          .replace(/\{red\}([\s\S]+?)\{\/red\}/gi, '$1')
+          .replace(/\{blue\}([\s\S]+?)\{\/blue\}/gi, '$1');
+        return {
+          ...block,
+          type,
+          level,
+          preset,
+          content
+        };
+      }
+
+      if (type === 'list') {
+        const listTypeRaw = String(block.listType || '').toLowerCase();
+        const listTypeMap = {
+          unordered: 'ul',
+          ordered: 'ol',
+          numbered: 'ol',
+          bullets: 'ul',
+          bullet: 'ul',
+          'ol-title': 'ol-title',
+          dl: 'dl',
+          ul: 'ul',
+          ol: 'ol'
+        };
+        const listType = listTypeMap[listTypeRaw] || 'ul';
+        let items = Array.isArray(block.items) ? block.items : [];
+
+        if (!items.length && typeof block.content === 'string') {
+          const lines = block.content.split('\n').map(line => line.trim()).filter(Boolean);
+          if (lines.some(line => /^[-*]\s+/.test(line))) {
+            items = lines.filter(line => /^[-*]\s+/.test(line)).map(line => line.replace(/^[-*]\s+/, ''));
+          } else if (lines.some(line => /^\d+\.\s+/.test(line))) {
+            items = lines.filter(line => /^\d+\.\s+/.test(line)).map(line => line.replace(/^\d+\.\s+/, ''));
+          }
+        }
+
+        if (listType === 'dl') {
+          return {
+            ...block,
+            type,
+            listType,
+            items: items.map(item => ({
+              term: normalizeText(item?.term ?? item?.key ?? item?.title ?? item?.label ?? ''),
+              definition: normalizeText(item?.definition ?? item?.value ?? item?.content ?? item?.text ?? '')
+            }))
+          };
+        }
+
+        if (listType === 'ol-title') {
+          return {
+            ...block,
+            type,
+            listType,
+            items: items.map(item => ({
+              title: normalizeText(item?.title ?? item?.heading ?? item?.label ?? ''),
+              content: normalizeText(item?.content ?? item?.description ?? item?.text ?? item?.body ?? '')
+            }))
+          };
+        }
+
+        return {
+          ...block,
+          type,
+          listType,
+          items: items.map(item => ({
+            content: normalizeText(
+              item?.content ??
+              item?.text ??
+              item?.value ??
+              item?.title ??
+              item?.label ??
+              item?.name ??
+              item?.item ??
+              item ??
+              ''
+            )
+          }))
+        };
+      }
+
+      if (type === 'card') {
+        const subtype = ['2-col', '3-col'].includes(block.subtype) ? block.subtype : '2-col';
+        const cards = Array.isArray(block.cards) ? block.cards : [];
+        return {
+          ...block,
+          type,
+          subtype,
+          cards: cards.map(card => ({
+            title: normalizeText(card?.title ?? ''),
+            content: normalizeText(card?.content ?? ''),
+            image: String(card?.image ?? placeholderImage),
+            alt: String(card?.alt ?? '')
+          }))
+        };
+      }
+
+      const rawContent = normalizeText(block.content ?? block.text ?? '');
+      const lines = rawContent.split('\n').map(line => line.trim()).filter(Boolean);
+      const bulletLines = lines.filter(line => /^[-*•]\s+/.test(line));
+      const orderedLines = lines.filter(line => /^\d+[\.)]\s+/.test(line));
+
+      if (lines.length >= 2) {
+        const bulletRatio = bulletLines.length / lines.length;
+        const orderedRatio = orderedLines.length / lines.length;
+        if (orderedLines.length >= 2 && orderedRatio >= 0.6) {
+          return {
+            ...block,
+            type: 'list',
+            listType: 'ol',
+            items: orderedLines.map(line => ({ content: normalizeText(line.replace(/^\d+[\.)]\s+/, '')) }))
+          };
+        }
+        if (bulletLines.length >= 2 && bulletRatio >= 0.6) {
+          return {
+            ...block,
+            type: 'list',
+            listType: 'ul',
+            items: bulletLines.map(line => ({ content: normalizeText(line.replace(/^[-*•]\s+/, '')) }))
+          };
+        }
+      }
+
+      const rawVariant = String(block.variant ?? block.style ?? block.preset ?? '').toLowerCase().replace(/\s+/g, '-');
+      const variantMap = {
+        highlight: 'small',
+        highlighted: 'small',
+        emphasis: 'small',
+        note: 'small',
+        callout: 'small',
+        caption: 'small-gray',
+        disclaimer: 'small-gray',
+        gray: 'small-gray',
+        grey: 'small-gray',
+        smallgray: 'small-gray',
+        'small-gray': 'small-gray',
+        'small_grey': 'small-gray',
+        'small_gray': 'small-gray',
+        'small-grey': 'small-gray',
+        small: 'small',
+        normal: 'normal'
+      };
+      const variant = variantMap[rawVariant] || (['normal', 'small', 'small-gray'].includes(block.variant) ? block.variant : 'normal');
+      return {
+        ...block,
+        type,
+        variant,
+        content: rawContent
+      };
+    });
+
+    return {
+      ...draft,
+      blocks
+    };
+  }
+
+  areDraftsEquivalent(a, b) {
+    if (!a || !b) return false;
+    try {
+      const pick = (d) => ({
+        title: d.title || d.name || '',
+        blocks: Array.isArray(d.blocks) ? d.blocks : []
+      });
+      return JSON.stringify(pick(a)) === JSON.stringify(pick(b));
+    } catch (e) {
+      return false;
+    }
+  }
+
+  sanitizeDraftForAi(draft) {
+    if (!draft || !Array.isArray(draft.blocks)) return draft;
+
+    const isNonEmptyListItem = (item) => {
+      if (!item || typeof item !== 'object') return Boolean(String(item || '').trim());
+      const content = String(
+        item.content ?? item.text ?? item.value ?? item.title ?? item.label ?? item.name ?? ''
+      ).trim();
+      const term = String(item.term ?? '').trim();
+      const definition = String(item.definition ?? '').trim();
+      return Boolean(content || term || definition);
+    };
+
+    const blocks = draft.blocks
+      .map(block => {
+        if (block?.type !== 'list') return block;
+        const items = Array.isArray(block.items) ? block.items : [];
+        const filteredItems = items.filter(isNonEmptyListItem);
+        return { ...block, items: filteredItems };
+      })
+      .filter(block => {
+        if (block?.type !== 'list') return true;
+        return Array.isArray(block.items) && block.items.length > 0;
+      });
+
+    return { ...draft, blocks };
+  }
+
+  getAiSelectionContext() {
+    const selected = this.state.getSelectedBlock ? this.state.getSelectedBlock() : null;
+    if (!selected) return null;
+    const selectionText = (() => {
+      try {
+        const sel = window.getSelection();
+        return sel ? sel.toString().trim() : '';
+      } catch (e) {
+        return '';
+      }
+    })();
+
+    const blocks = Array.isArray(this.state.blocks) ? this.state.blocks : [];
+    const selectedIndex = blocks.findIndex(block => block && block.id === selected.id);
+    let scope = 'block';
+    let subtree = null;
+    if (selected.type === 'header' && selectedIndex !== -1) {
+      scope = 'subtree';
+      const level = selected.level || 2;
+      const range = this.getHeaderSubtreeRange(blocks, selectedIndex, level);
+      if (range) {
+        subtree = {
+          startIndex: range.start,
+          endIndex: range.end,
+          blocks: blocks.slice(range.start, range.end + 1)
+        };
+      }
+    }
+
+    return {
+      id: selected.id || null,
+      type: selected.type || null,
+      listType: selected.listType || null,
+      level: selected.level || null,
+      preset: selected.preset || null,
+      variant: selected.variant || null,
+      content: typeof selected.content === 'string' ? selected.content : null,
+      items: Array.isArray(selected.items) ? selected.items : null,
+      cards: Array.isArray(selected.cards) ? selected.cards : null,
+      selectionText,
+      scope,
+      subtree
+    };
+  }
+
+  getHeaderSubtreeRange(blocks, headerIndex, headerLevel) {
+    if (!Array.isArray(blocks) || headerIndex < 0) return null;
+    let end = blocks.length - 1;
+    for (let i = headerIndex + 1; i < blocks.length; i += 1) {
+      const block = blocks[i];
+      if (block && block.type === 'header' && typeof block.level === 'number') {
+        if (block.level <= headerLevel) {
+          end = i - 1;
+          break;
+        }
+      }
+    }
+    return { start: headerIndex, end };
   }
   
   init() {
@@ -91,6 +382,7 @@ class BlogEditorApp {
     this.setupBlurHandler();
     this.setupScrollPersistence();
     this.bindDraftBackupButtons();
+    this.setupAiPanel();
     
     // Listen to state changes
     this.state.on('change', () => {
@@ -116,6 +408,233 @@ class BlogEditorApp {
     
     // Restore scroll position after render
     this.restoreScrollPosition();
+  }
+
+  /**
+   * Setup AI panel actions
+   */
+  setupAiPanel() {
+    const chatSendBtn = this.getElement('btn-ai-chat-send');
+    const chatInput = this.getElement('ai-chat-input');
+    const debugCopyBtn = this.getElement('btn-ai-debug-copy');
+    const debugClearBtn = this.getElement('btn-ai-debug-clear');
+    const debugLog = this.getElement('ai-debug-log');
+
+    if (chatSendBtn && chatSendBtn.dataset.bound !== 'true') {
+      chatSendBtn.dataset.bound = 'true';
+      chatSendBtn.addEventListener('click', () => {
+        if (this._aiChatInFlight) {
+          this.abortAiChat();
+        } else {
+          this.sendAiChatMessage();
+        }
+      });
+    }
+
+    if (chatInput && chatInput.dataset.bound !== 'true') {
+      chatInput.dataset.bound = 'true';
+      chatInput.addEventListener('keydown', (e) => {
+        if (e.isComposing) return;
+        if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+          e.preventDefault();
+          if (!this._aiChatInFlight) {
+            this.sendAiChatMessage();
+          }
+        }
+      });
+      chatInput.addEventListener('input', () => {
+        chatInput.style.height = 'auto';
+        chatInput.style.height = `${Math.min(chatInput.scrollHeight, 140)}px`;
+      });
+    }
+
+    if (debugCopyBtn && debugCopyBtn.dataset.bound !== 'true') {
+      debugCopyBtn.dataset.bound = 'true';
+      debugCopyBtn.addEventListener('click', async () => {
+        const logs = this.getAiDebugLog();
+        try {
+          await navigator.clipboard.writeText(logs);
+          this.showStatus(this.t('ai.debugCopied'), 'success');
+        } catch (e) {
+          console.error('Failed to copy debug log:', e);
+          this.showStatus(this.t('ai.debugCopyFailed'), 'error');
+        }
+      });
+    }
+
+    if (debugClearBtn && debugClearBtn.dataset.bound !== 'true') {
+      debugClearBtn.dataset.bound = 'true';
+      debugClearBtn.addEventListener('click', () => {
+        this.clearAiDebugLog();
+      });
+    }
+
+    if (debugLog) {
+      debugLog.value = this.getAiDebugLog();
+    }
+
+
+    this.renderAiChatHistory();
+  }
+
+  getAiDebugLog() {
+    return localStorage.getItem('linkey-ai-debug-log') || '';
+  }
+
+  serializeDraftForLog(draft) {
+    try {
+      return JSON.stringify(draft || {}, null, 2);
+    } catch (e) {
+      return '{"error":"failed to serialize draft"}';
+    }
+  }
+
+  appendAiDebugLog(entry) {
+    const timestamp = new Date().toISOString();
+    const line = `[${timestamp}] ${entry}`;
+    const existing = this.getAiDebugLog();
+    const updated = existing ? `${existing}\n${line}` : line;
+    localStorage.setItem('linkey-ai-debug-log', updated);
+    const debugLog = this.getElement('ai-debug-log');
+    if (debugLog) debugLog.value = updated;
+  }
+
+  clearAiDebugLog() {
+    localStorage.removeItem('linkey-ai-debug-log');
+    const debugLog = this.getElement('ai-debug-log');
+    if (debugLog) debugLog.value = '';
+  }
+
+  getDraftDebugSummary(draft) {
+    const blocks = Array.isArray(draft?.blocks) ? draft.blocks : [];
+    const typeCounts = {};
+    let listBlocksWithItems = 0;
+    const blockPreview = [];
+    blocks.forEach(block => {
+      const type = block?.type || 'unknown';
+      typeCounts[type] = (typeCounts[type] || 0) + 1;
+      if (type === 'list') {
+        const items = Array.isArray(block.items) ? block.items : [];
+        const hasItems = items.some(item => {
+          if (!item || typeof item !== 'object') return Boolean(String(item || '').trim());
+          const content = String(item.content ?? item.text ?? item.value ?? item.title ?? item.label ?? item.name ?? '').trim();
+          const term = String(item.term ?? '').trim();
+          const definition = String(item.definition ?? '').trim();
+          return Boolean(content || term || definition);
+        });
+        if (hasItems) listBlocksWithItems += 1;
+      }
+
+      if (blockPreview.length < 6) {
+        const preview = {
+          id: block?.id || null,
+          type,
+          listType: block?.listType || null,
+          level: block?.level || null,
+          preset: block?.preset || null,
+          variant: block?.variant || null,
+          content: typeof block?.content === 'string' ? block.content.slice(0, 80) : null,
+          items: Array.isArray(block?.items)
+            ? block.items.slice(0, 3).map(item => {
+                if (!item || typeof item !== 'object') return String(item || '').slice(0, 60);
+                return {
+                  content: String(item.content ?? item.text ?? item.value ?? item.title ?? item.label ?? item.name ?? '').slice(0, 60),
+                  term: String(item.term ?? '').slice(0, 40),
+                  definition: String(item.definition ?? '').slice(0, 60)
+                };
+              })
+            : null
+        };
+        blockPreview.push(preview);
+      }
+    });
+    return {
+      blocks: blocks.length,
+      listBlocksWithItems,
+      typeCounts,
+      blockPreview
+    };
+  }
+
+  getDraftStyleIssues(draft) {
+    const blocks = Array.isArray(draft?.blocks) ? draft.blocks : [];
+    const issues = [];
+    const unsupportedMarkers = /\{(?!red|blue)([a-z-]+)\}/i;
+    const unsupportedClosing = /\{\/(?!red|blue)([a-z-]+)\}/i;
+    blocks.forEach(block => {
+      if (!block) return;
+      const id = block.id || 'unknown';
+      const contents = [];
+      if (typeof block.content === 'string') contents.push(block.content);
+      if (Array.isArray(block.items)) {
+        block.items.forEach(item => {
+          if (!item) return;
+          if (typeof item === 'string') contents.push(item);
+          if (typeof item.content === 'string') contents.push(item.content);
+          if (typeof item.title === 'string') contents.push(item.title);
+          if (typeof item.term === 'string') contents.push(item.term);
+          if (typeof item.definition === 'string') contents.push(item.definition);
+        });
+      }
+      if (Array.isArray(block.cards)) {
+        block.cards.forEach(card => {
+          if (!card) return;
+          if (typeof card.title === 'string') contents.push(card.title);
+          if (typeof card.content === 'string') contents.push(card.content);
+        });
+      }
+      contents.forEach(text => {
+        if (unsupportedMarkers.test(text) || unsupportedClosing.test(text)) {
+          issues.push({ id, type: block.type, issue: 'unsupported-color-marker', sample: text.slice(0, 120) });
+        }
+        if (/\<strong[^>]*\>/i.test(text) && !/\*\*/.test(text)) {
+          issues.push({ id, type: block.type, issue: 'raw-strong-tag', sample: text.slice(0, 120) });
+        }
+        if (/\{blue\}/i.test(text) && !/\{\/blue\}/i.test(text)) {
+          issues.push({ id, type: block.type, issue: 'unclosed-blue-marker', sample: text.slice(0, 120) });
+        }
+      });
+    });
+    return issues;
+  }
+
+  getRenderedStyleIssues() {
+    const issues = [];
+    const canvas = this.getCanvasBlocks ? this.getCanvasBlocks() : null;
+    if (!canvas) return issues;
+
+    const candidates = canvas.querySelectorAll(
+      'list-component ol li span, list-component ol li h4, list-component ol li p, list-component ol-title li h4, list-component ol-title li p, list-component dl dt span, list-component dl dd, .thmb-card__title, .thmb-card__body'
+    );
+
+    candidates.forEach((el) => {
+      const text = (el.textContent || '').trim();
+      if (!text) return;
+      if (/\*\*.+?\*\*/.test(text) || /\{red\}|\{blue\}/i.test(text)) {
+        const blockEl = el.closest('.editor-block');
+        issues.push({
+          id: blockEl?.dataset?.blockId || 'unknown',
+          issue: 'unparsed-inline-markers',
+          sample: text.slice(0, 120)
+        });
+      }
+    });
+
+    return issues;
+  }
+
+  logRenderedStyleIssues() {
+    const issues = this.getRenderedStyleIssues();
+    if (!issues.length) {
+      this._lastRenderedStyleIssuesKey = '';
+      return;
+    }
+    const key = JSON.stringify(issues);
+    if (key === this._lastRenderedStyleIssuesKey) return;
+    this._lastRenderedStyleIssuesKey = key;
+    if (this.appendAiDebugLog) {
+      this.appendAiDebugLog(`renderStyleIssues=${key}`);
+    }
   }
 
   /**
@@ -170,7 +689,11 @@ class BlogEditorApp {
    */
   getServerBaseUrl() {
     const stored = localStorage.getItem(STORAGE_KEYS.serverUrl);
-    return stored || SERVER_CONFIG.baseUrl;
+    if (stored) return stored;
+    if (window.location && (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost')) {
+      return 'http://127.0.0.1:3001';
+    }
+    return SERVER_CONFIG.baseUrl;
   }
 
   /**
@@ -467,7 +990,6 @@ class BlogEditorApp {
 
       const rawName = file.name || 'Imported Markdown';
       const title = rawName.replace(/\.[^/.]+$/, '').trim() || 'Imported Markdown';
-
       this.state.newDraft();
       this.state.title = title;
       this.state.blocks = blocks;
@@ -488,6 +1010,503 @@ class BlogEditorApp {
     } catch (e) {
       console.error('Markdown import failed:', e);
       this.showStatus('Markdown import failed', 'error');
+    }
+  }
+
+  /**
+   * Request AI suggestions and optional edits
+   */
+  async requestAiSuggestions() {
+    const prompt = (arguments.length > 0 ? arguments[0] : '')?.trim();
+    const options = arguments.length > 1 ? arguments[1] : {};
+    if (!prompt) {
+      this.showStatus('Enter a prompt for the AI', 'error');
+      return;
+    }
+
+    if (!this.isServerEnabled()) {
+      this.showStatus('AI server is not configured', 'error');
+      return;
+    }
+
+    try {
+      this.appendAiDebugLog(`requestAiSuggestions: promptLength=${prompt.length}`);
+      this.appendAiDebugLog(`requestAiSuggestions: promptPreview=${prompt.slice(0, 280)}`);
+      const baseUrl = this.getServerBaseUrl();
+      const selection = this.getAiSelectionContext();
+      this.appendAiDebugLog(`requestAiSuggestions: baseUrl=${baseUrl}`);
+      this.appendAiDebugLog(`requestAiSuggestions: draftSummary=${JSON.stringify(this.getDraftDebugSummary(this.state.exportCurrentDraft()))}`);
+      this.appendAiDebugLog(`requestAiSuggestions: draftFull=${this.serializeDraftForLog(this.state.exportCurrentDraft())}`);
+      const preIssues = this.getDraftStyleIssues(this.state.exportCurrentDraft());
+      if (preIssues.length) {
+        this.appendAiDebugLog(`requestAiSuggestions: styleIssues=${JSON.stringify(preIssues)}`);
+      }
+      if (selection) {
+        this.appendAiDebugLog(`requestAiSuggestions: selection=${JSON.stringify(selection)}`);
+      }
+      this.appendAiDebugLog('requestAiSuggestions: requireEdits=true');
+      const res = await fetch(`${baseUrl}/ai/suggest`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: options?.signal,
+        body: JSON.stringify({
+          prompt,
+          draft: this.sanitizeDraftForAi(this.state.exportCurrentDraft()),
+          language: this.currentLang,
+          requireEdits: true,
+          selection
+        })
+      });
+
+      if (!res.ok) {
+        let details = '';
+        try {
+          const errJson = await res.json();
+          details = errJson && (errJson.details || errJson.error) ? `: ${errJson.details || errJson.error}` : '';
+        } catch (e) {
+          // ignore
+        }
+        throw new Error(`AI request failed (${res.status})${details}`);
+      }
+
+      const data = await res.json();
+      this.appendAiDebugLog(`requestAiSuggestions: responseOk suggestions=${Array.isArray(data?.suggestions) ? data.suggestions.length : 0} hasDraft=${!!data?.draft}`);
+      if (Array.isArray(data?.suggestions)) {
+        this.appendAiDebugLog(`requestAiSuggestions: suggestionsPreview=${data.suggestions.join(' | ').slice(0, 400)}`);
+      }
+      if (data?.draft) {
+        this.appendAiDebugLog(`requestAiSuggestions: draftSummary=${JSON.stringify(this.getDraftDebugSummary(data.draft))}`);
+      }
+      const suggestions = Array.isArray(data.suggestions) ? data.suggestions : [];
+      const normalized = this.normalizeAiDraft(data && data.draft ? data.draft : null);
+
+      if (normalized) {
+        normalized.blocks = this.state.ensureBlockIds(normalized.blocks);
+        normalized.id = normalized.id || this.state.currentDraftId || this.state.generateDraftId();
+        normalized.title = normalized.title || normalized.name || this.state.title || '';
+        normalized.name = normalized.name || normalized.title || this.state.title || 'Untitled Draft';
+        this._aiDraftCandidate = normalized;
+      } else {
+        this._aiDraftCandidate = null;
+      }
+
+      return { suggestions, draft: this._aiDraftCandidate };
+    } catch (e) {
+      this.appendAiDebugLog(`requestAiSuggestions: error=${String(e?.message || e)}`);
+      console.error('AI request failed:', e);
+      this.showStatus('AI request failed', 'error');
+    } finally {
+      // no-op
+    }
+
+    return null;
+  }
+
+  /**
+   * Request AI chat response (Q&A)
+   */
+  async requestAiChatResponse() {
+    const message = (arguments.length > 0 ? arguments[0] : '')?.trim();
+    const options = arguments.length > 1 ? arguments[1] : {};
+    if (!message) {
+      this.showStatus('Enter a message for the AI', 'error');
+      return;
+    }
+
+    if (!this.isServerEnabled()) {
+      this.showStatus('AI server is not configured', 'error');
+      return;
+    }
+
+    try {
+      this.appendAiDebugLog(`requestAiChatResponse: messageLength=${message.length}`);
+      const baseUrl = this.getServerBaseUrl();
+      this.appendAiDebugLog(`requestAiChatResponse: baseUrl=${baseUrl}`);
+      const history = Array.isArray(this.aiChatHistory)
+        ? this.aiChatHistory
+            .filter(entry => entry && entry.role && entry.content)
+            .map(entry => ({ role: entry.role, content: entry.content }))
+        : [];
+
+      const res = await fetch(`${baseUrl}/ai/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: options?.signal,
+        body: JSON.stringify({
+          message,
+          history,
+          draft: this.sanitizeDraftForAi(this.state.exportCurrentDraft()),
+          language: this.currentLang
+        })
+      });
+
+      if (!res.ok) {
+        let details = '';
+        try {
+          const errJson = await res.json();
+          details = errJson && (errJson.details || errJson.error) ? `: ${errJson.details || errJson.error}` : '';
+        } catch (e) {
+          // ignore
+        }
+        throw new Error(`AI chat failed (${res.status})${details}`);
+      }
+
+      const data = await res.json();
+      this.appendAiDebugLog(`requestAiChatResponse: responseOk length=${String(data?.message || '').length}`);
+      return data && data.message ? String(data.message) : '';
+    } catch (e) {
+      this.appendAiDebugLog(`requestAiChatResponse: error=${String(e?.message || e)}`);
+      console.error('AI chat failed:', e);
+      this.showStatus('AI chat failed', 'error');
+    }
+
+    return '';
+  }
+
+  /**
+   * Apply AI edits to current draft
+   */
+  async applyAiEdits() {
+    try {
+      const draft = arguments.length > 0 ? arguments[0] : this._aiDraftCandidate;
+      if (!draft) return false;
+      this.appendAiDebugLog(`applyAiEdits: draftBlocks=${Array.isArray(draft.blocks) ? draft.blocks.length : 0}`);
+      this.appendAiDebugLog(`applyAiEdits: draftPreview=${JSON.stringify(this.getDraftDebugSummary(draft).blockPreview)}`);
+      this.appendAiDebugLog(`applyAiEdits: draftFull=${this.serializeDraftForLog(draft)}`);
+      const normalized = this.normalizeAiDraft(draft) || draft;
+      if (normalized && normalized.blocks) {
+        normalized.blocks = this.state.ensureBlockIds(normalized.blocks);
+      }
+      const current = this.state.exportCurrentDraft();
+      const selection = this.getAiSelectionContext();
+      this.appendAiDebugLog(`applyAiEdits: currentSummary=${JSON.stringify(this.getDraftDebugSummary(current))}`);
+      this.appendAiDebugLog(`applyAiEdits: normalizedSummary=${JSON.stringify(this.getDraftDebugSummary(normalized))}`);
+      this.appendAiDebugLog(`applyAiEdits: currentFull=${this.serializeDraftForLog(current)}`);
+      this.appendAiDebugLog(`applyAiEdits: normalizedFull=${this.serializeDraftForLog(normalized)}`);
+      const currentIssues = this.getDraftStyleIssues(current);
+      const normalizedIssues = this.getDraftStyleIssues(normalized);
+      if (currentIssues.length) {
+        this.appendAiDebugLog(`applyAiEdits: currentStyleIssues=${JSON.stringify(currentIssues)}`);
+      }
+      if (normalizedIssues.length) {
+        this.appendAiDebugLog(`applyAiEdits: normalizedStyleIssues=${JSON.stringify(normalizedIssues)}`);
+      }
+
+      let finalDraft = normalized;
+      if (selection && selection.id) {
+        const targetId = selection.id;
+        const currentBlocks = Array.isArray(current.blocks) ? current.blocks : [];
+        const normalizedBlocks = Array.isArray(normalized.blocks) ? normalized.blocks : [];
+        const updatedBlock = normalizedBlocks.find(block => block && block.id === targetId);
+        if (!updatedBlock) {
+          this.appendAiDebugLog(`applyAiEdits: selected block not found in AI draft (${targetId})`);
+          this.showStatus(this.t('ai.noEdits'), 'info');
+          return false;
+        }
+        const currentIds = new Set(currentBlocks.map(block => block && block.id).filter(Boolean));
+        const extraBlocks = normalizedBlocks.filter(block => block && block.id && !currentIds.has(block.id));
+        const insertPosition = normalized.selectionInsert || normalized._selectionInsert || normalized.insertPosition || null;
+        let mergedBlocks = currentBlocks.map(block => (block && block.id === targetId ? updatedBlock : block));
+
+        if (selection.scope === 'subtree') {
+          const selectedBlock = currentBlocks.find(block => block && block.id === targetId);
+          const headerLevel = selectedBlock?.level || selection.level || 2;
+          const currentRange = this.getHeaderSubtreeRange(currentBlocks, currentBlocks.findIndex(block => block && block.id === targetId), headerLevel);
+          const normalizedRange = this.getHeaderSubtreeRange(normalizedBlocks, normalizedBlocks.findIndex(block => block && block.id === targetId), headerLevel);
+          if (currentRange && normalizedRange) {
+            mergedBlocks = [
+              ...currentBlocks.slice(0, currentRange.start),
+              ...normalizedBlocks.slice(normalizedRange.start, normalizedRange.end + 1),
+              ...currentBlocks.slice(currentRange.end + 1)
+            ];
+            this.appendAiDebugLog(`applyAiEdits: replaced subtree ${targetId} (${currentRange.start}-${currentRange.end})`);
+          }
+        } else if (extraBlocks.length && (insertPosition === 'before' || insertPosition === 'after')) {
+          const targetIndex = mergedBlocks.findIndex(block => block && block.id === targetId);
+          if (targetIndex !== -1) {
+            const insertAt = insertPosition === 'before' ? targetIndex : targetIndex + 1;
+            mergedBlocks = [
+              ...mergedBlocks.slice(0, insertAt),
+              ...extraBlocks,
+              ...mergedBlocks.slice(insertAt)
+            ];
+            this.appendAiDebugLog(`applyAiEdits: inserted ${extraBlocks.length} block(s) ${insertPosition} ${targetId}`);
+          }
+        }
+
+        finalDraft = {
+          ...current,
+          blocks: mergedBlocks,
+          title: current.title,
+          name: current.name || current.title || ''
+        };
+        this.appendAiDebugLog(`applyAiEdits: applied to selection ${targetId}`);
+      }
+
+      if (this.areDraftsEquivalent(current, finalDraft)) {
+        this.appendAiDebugLog('applyAiEdits: no changes detected');
+        this.showStatus(this.t('ai.noEdits'), 'info');
+        return false;
+      }
+
+      this.state.applyDraftData(finalDraft);
+      this.state.save(finalDraft.name || finalDraft.title || this.state.title || 'Untitled Draft');
+
+      if (this.isServerEnabled()) {
+        await this.syncCurrentDraftToServer();
+      }
+
+      this.render();
+      this.showStatus('AI edits applied', 'success');
+      this.appendAiDebugLog('applyAiEdits: applied');
+      return true;
+    } catch (e) {
+      this.appendAiDebugLog(`applyAiEdits: error=${String(e?.message || e)}`);
+      console.error('Failed to apply AI edits:', e);
+      this.showStatus('Failed to apply AI edits', 'error');
+      return false;
+    }
+  }
+
+  showAiChatView() {
+    return propertiesModule.showAiChatView ? propertiesModule.showAiChatView(this) : undefined;
+  }
+
+  showEditView() {
+    this.isInAiChatView = false;
+    return this.updatePropertiesPanel();
+  }
+
+  appendAiChatMessage(role, text, record = true) {
+    const container = this.getElement('ai-chat-messages');
+    if (!container) return;
+    const msg = document.createElement('div');
+    msg.className = `ai-chat-message ${role}`;
+    const content = document.createElement('div');
+    content.className = 'ai-chat-message-text';
+    content.textContent = text;
+    msg.appendChild(content);
+    container.appendChild(msg);
+    container.scrollTop = container.scrollHeight;
+    if (record) {
+      this.aiChatHistory.push({ role, content: text });
+    }
+  }
+
+  appendAiSuggestionMessage(text, draft, record = true, entryRef = null) {
+    const container = this.getElement('ai-chat-messages');
+    if (!container) return;
+    const msg = document.createElement('div');
+    msg.className = 'ai-chat-message assistant';
+
+    const entry = entryRef || {
+      role: 'assistant',
+      content: text,
+      text,
+      draft,
+      applied: false,
+      undoDraft: null
+    };
+
+    const content = document.createElement('div');
+    content.className = 'ai-chat-message-text';
+    content.textContent = text;
+    msg.appendChild(content);
+
+    if (draft) {
+      this._pendingAiDraft = draft;
+      this._pendingAiSummary = text;
+
+      const actions = document.createElement('div');
+      actions.className = 'ai-apply-actions';
+
+      const applyBtn = document.createElement('button');
+      applyBtn.className = 'btn btn-primary ai-apply-inline';
+      applyBtn.textContent = entry.applied ? this.t('ai.revert') : this.t('ai.apply');
+      applyBtn.addEventListener('click', async () => {
+        if (applyBtn.disabled) return;
+        applyBtn.disabled = true;
+        dropBtn.disabled = true;
+        const workingMsg = this.appendAiWorkingMessage(this.t('ai.applying'));
+        try {
+          if (!entry.applied) {
+            entry.undoDraft = this.state.exportCurrentDraft();
+            const applied = await this.applyAiEdits(draft);
+            if (applied) {
+              entry.applied = true;
+              applyBtn.textContent = this.t('ai.revert');
+              this.appendAiChatMessage('assistant', this.t('ai.applyConfirmed'));
+            } else {
+              this.appendAiChatMessage('assistant', this.t('ai.noEdits'));
+            }
+          } else if (entry.undoDraft) {
+            this.state.applyDraftData(entry.undoDraft);
+            this.state.save(entry.undoDraft.name || entry.undoDraft.title || this.state.title || 'Untitled Draft');
+            if (this.isServerEnabled()) {
+              await this.syncCurrentDraftToServer();
+            }
+            this.render();
+            entry.applied = false;
+            applyBtn.textContent = this.t('ai.apply');
+            this.appendAiChatMessage('assistant', this.t('ai.revertConfirmed'));
+          }
+        } catch (e) {
+          console.error('Failed to apply AI edits:', e);
+          this.appendAiChatMessage('assistant', this.t('ai.applyFailed'));
+        } finally {
+          if (workingMsg) workingMsg.remove();
+          applyBtn.disabled = false;
+          dropBtn.disabled = false;
+          this._pendingAiDraft = null;
+          this._pendingAiSummary = null;
+        }
+      });
+
+      const dropBtn = document.createElement('button');
+      dropBtn.className = 'btn btn-secondary ai-drop-inline';
+      dropBtn.textContent = this.t('ai.drop');
+      dropBtn.addEventListener('click', () => {
+        this._pendingAiDraft = null;
+        this._pendingAiSummary = null;
+        this.appendAiChatMessage('assistant', this.t('ai.dropConfirmed'));
+      });
+
+      actions.appendChild(applyBtn);
+      actions.appendChild(dropBtn);
+      msg.appendChild(actions);
+    }
+
+    container.appendChild(msg);
+    container.scrollTop = container.scrollHeight;
+    if (record) {
+      this.aiChatHistory.push(entry);
+    }
+  }
+
+  renderAiChatHistory() {
+    const container = this.getElement('ai-chat-messages');
+    if (!container) return;
+    container.innerHTML = '';
+
+    if (!this.aiChatHistory.length) {
+      const welcome = document.createElement('div');
+      welcome.className = 'ai-chat-message assistant';
+      welcome.textContent = this.t('ai.chatWelcome');
+      container.appendChild(welcome);
+      return;
+    }
+
+    this.aiChatHistory.forEach(entry => {
+      const text = entry.text || entry.content || '';
+      if (entry.role === 'assistant' && entry.draft) {
+        this.appendAiSuggestionMessage(text, entry.draft, false, entry);
+      } else {
+        this.appendAiChatMessage(entry.role, text, false);
+      }
+    });
+  }
+
+  appendAiThinkingMessage() {
+    const container = this.getElement('ai-chat-messages');
+    if (!container) return null;
+    const msg = document.createElement('div');
+    msg.className = 'ai-chat-message assistant thinking';
+    msg.textContent = this.t('ai.thinking');
+    container.appendChild(msg);
+    container.scrollTop = container.scrollHeight;
+    return msg;
+  }
+
+  appendAiWorkingMessage(text) {
+    const container = this.getElement('ai-chat-messages');
+    if (!container) return null;
+    const msg = document.createElement('div');
+    msg.className = 'ai-chat-message assistant thinking';
+    msg.textContent = text;
+    container.appendChild(msg);
+    container.scrollTop = container.scrollHeight;
+    return msg;
+  }
+
+  updateAiChatBusyState(isBusy) {
+    this._aiChatInFlight = isBusy;
+    const sendBtn = this.getElement('btn-ai-chat-send');
+    if (sendBtn) {
+      sendBtn.textContent = isBusy ? this.t('ai.chatStop') : this.t('ai.chatSend');
+    }
+  }
+
+  abortAiChat() {
+    if (this._aiChatAbortController) {
+      this._aiChatAbortController.abort();
+    }
+  }
+
+  async sendAiChatMessage() {
+    const input = this.getElement('ai-chat-input');
+    const sendBtn = this.getElement('btn-ai-chat-send');
+    if (!input) return;
+    const message = input.value.trim();
+    if (!message) return;
+    if (this._aiChatInFlight) return;
+
+    if (!this.isServerEnabled()) {
+      this.showStatus('AI server is not configured', 'error');
+      return;
+    }
+
+    this.appendAiChatMessage('user', message);
+    this.appendAiDebugLog(`chat: userMessage=${message.slice(0, 400)}`);
+    input.value = '';
+    const thinkingMsg = this.appendAiThinkingMessage();
+    this._aiChatAbortController = new AbortController();
+    this.updateAiChatBusyState(true);
+
+    try {
+      const lower = message.toLowerCase();
+      const isApply = /(^(apply|yes|y|ok|okay|sure|はい|うん|お願いします|適用|やって)$)/i.test(lower);
+      const isDrop = /(^(drop|no|n|nope|nah|いいえ|やめて|不要)$)/i.test(lower);
+      if (this._pendingAiDraft && (isApply || isDrop)) {
+        if (isApply) {
+          await this.applyAiEdits(this._pendingAiDraft);
+          this.appendAiChatMessage('assistant', this.t('ai.applyConfirmed'));
+        } else {
+          this.appendAiChatMessage('assistant', this.t('ai.dropConfirmed'));
+        }
+        this._pendingAiDraft = null;
+        this._pendingAiSummary = null;
+        if (thinkingMsg) thinkingMsg.remove();
+        return;
+      }
+
+      const editIntent = /(edit|rewrite|improve|suggest|apply|fix|polish|shorten|expand|convert|summarize|draft|rewrite this|make it|change to|revise|refine|rephrase|cleanup|copyedit|proofread|tone|style|rewrite the|update|enhance|optimize|simplify|clarify|make this|make it more|make it less|improve this|edit this|fix this|直して|修正|編集|添削|書き換え|リライト|改善|要約|短く|長く|整えて|言い換え|表現|文章)/i.test(message);
+      const wantsEdits = editIntent;
+      const result = await this.requestAiSuggestions(message, { signal: this._aiChatAbortController.signal });
+      const suggestions = Array.isArray(result?.suggestions) ? result.suggestions : [];
+      const proposed = result?.draft || null;
+      const current = this.state.exportCurrentDraft();
+      const hasDraft = !!proposed;
+      const hasChanges = proposed ? !this.areDraftsEquivalent(current, proposed) : false;
+      if (thinkingMsg) thinkingMsg.remove();
+      if (suggestions.length) {
+        this.appendAiSuggestionMessage(suggestions.map((item, index) => `${index + 1}. ${item}`).join('\n'), hasDraft ? proposed : null);
+      } else if (hasDraft) {
+        this.appendAiSuggestionMessage('Edits are ready.', proposed);
+      } else {
+        this.appendAiChatMessage('assistant', this.t('ai.noEdits'));
+      }
+    } catch (e) {
+      if (thinkingMsg) thinkingMsg.remove();
+      if (e?.name === 'AbortError') {
+        // interrupted by user
+        return;
+      }
+      console.error('AI chat failed:', e);
+      this.showStatus('AI chat failed', 'error');
+      this.appendAiChatMessage('assistant', this.t('ai.chatFailed'));
+    } finally {
+      this._aiChatAbortController = null;
+      this.updateAiChatBusyState(false);
     }
   }
   
@@ -614,6 +1633,13 @@ class BlogEditorApp {
   }
 
   /**
+   * Get AI help modal element
+   */
+  getAiHelpModal() {
+    return this.getElement('ai-help-modal');
+  }
+
+  /**
    * Get drafts list elements
    */
   getDraftsListElements() {
@@ -621,6 +1647,36 @@ class BlogEditorApp {
       draftsList: this.getElement('drafts-list'),
       emptyState: this.getElement('empty-state')
     };
+  }
+
+  openAiHelpModal() {
+    const modal = this.getAiHelpModal();
+    if (!modal) return;
+    modal.classList.add('show');
+
+    if (modal.dataset.bound !== 'true') {
+      modal.dataset.bound = 'true';
+      const closeBtn = modal.querySelector('#ai-help-close');
+      const okBtn = modal.querySelector('#ai-help-ok');
+      const handleClose = () => this.closeAiHelpModal();
+      if (closeBtn) {
+        closeBtn.addEventListener('click', handleClose);
+      }
+      if (okBtn) {
+        okBtn.addEventListener('click', handleClose);
+      }
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          handleClose();
+        }
+      });
+    }
+  }
+
+  closeAiHelpModal() {
+    const modal = this.getAiHelpModal();
+    if (!modal) return;
+    modal.classList.remove('show');
   }
 
   /**
