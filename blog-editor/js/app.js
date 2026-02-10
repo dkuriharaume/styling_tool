@@ -101,11 +101,12 @@ class BlogEditorApp {
       }
 
       const type = allowedTypes.has(block.type) ? block.type : 'paragraph';
+      const data = block.data && typeof block.data === 'object' ? block.data : {};
 
       if (type === 'header') {
-        const level = [1, 2, 3, 4].includes(block.level) ? block.level : 2;
-        let preset = ['default', 'red', 'blue'].includes(block.preset) ? block.preset : 'default';
-        let content = normalizeText(block.content ?? '');
+        const level = [1, 2, 3, 4].includes(block.level) ? block.level : (data.level || 2);
+        let preset = ['default', 'red', 'blue'].includes(block.preset) ? block.preset : (data.preset || 'default');
+        let content = normalizeText(block.content ?? data.text ?? data.content ?? '');
         if (/\{red\}/i.test(content)) {
           preset = 'red';
         } else if (/\{blue\}/i.test(content)) {
@@ -124,7 +125,7 @@ class BlogEditorApp {
       }
 
       if (type === 'list') {
-        const listTypeRaw = String(block.listType || '').toLowerCase();
+        const listTypeRaw = String(block.listType || data.listType || '').toLowerCase();
         const listTypeMap = {
           unordered: 'ul',
           ordered: 'ol',
@@ -137,10 +138,13 @@ class BlogEditorApp {
           ol: 'ol'
         };
         const listType = listTypeMap[listTypeRaw] || 'ul';
-        let items = Array.isArray(block.items) ? block.items : [];
+        let items = Array.isArray(block.items) ? block.items : (Array.isArray(data.items) ? data.items : []);
 
-        if (!items.length && typeof block.content === 'string') {
-          const lines = block.content.split('\n').map(line => line.trim()).filter(Boolean);
+        if (!items.length && typeof (block.content ?? data.text ?? data.content) === 'string') {
+          const lines = String(block.content ?? data.text ?? data.content)
+            .split('\n')
+            .map(line => line.trim())
+            .filter(Boolean);
           if (lines.some(line => /^[-*]\s+/.test(line))) {
             items = lines.filter(line => /^[-*]\s+/.test(line)).map(line => line.replace(/^[-*]\s+/, ''));
           } else if (lines.some(line => /^\d+\.\s+/.test(line))) {
@@ -193,8 +197,8 @@ class BlogEditorApp {
       }
 
       if (type === 'card') {
-        const subtype = ['2-col', '3-col'].includes(block.subtype) ? block.subtype : '2-col';
-        const cards = Array.isArray(block.cards) ? block.cards : [];
+        const subtype = ['2-col', '3-col'].includes(block.subtype) ? block.subtype : (data.subtype || '2-col');
+        const cards = Array.isArray(block.cards) ? block.cards : (Array.isArray(data.cards) ? data.cards : []);
         return {
           ...block,
           type,
@@ -208,7 +212,7 @@ class BlogEditorApp {
         };
       }
 
-      const rawContent = normalizeText(block.content ?? block.text ?? '');
+      const rawContent = normalizeText(block.content ?? data.text ?? data.content ?? block.text ?? '');
       const lines = rawContent.split('\n').map(line => line.trim()).filter(Boolean);
       const bulletLines = lines.filter(line => /^[-*•]\s+/.test(line));
       const orderedLines = lines.filter(line => /^\d+[\.)]\s+/.test(line));
@@ -234,7 +238,7 @@ class BlogEditorApp {
         }
       }
 
-      const rawVariant = String(block.variant ?? block.style ?? block.preset ?? '').toLowerCase().replace(/\s+/g, '-');
+      const rawVariant = String(block.variant ?? data.variant ?? block.style ?? block.preset ?? '').toLowerCase().replace(/\s+/g, '-');
       const variantMap = {
         highlight: 'small',
         highlighted: 'small',
@@ -952,8 +956,28 @@ class BlogEditorApp {
     try {
       const text = await file.text();
       const payload = JSON.parse(text);
-      const result = this.state.importDrafts(payload);
+      const existingCount = this.state.getDraftsList().length;
+      let replaceExisting = false;
+      if (existingCount > 0) {
+        replaceExisting = await this.showConfirm(
+          'Replace existing drafts?',
+          'Importing can duplicate drafts. Replace will delete existing local and server drafts before importing.'
+        );
+      }
+      const result = this.state.importDrafts(payload, { overwrite: replaceExisting, replace: replaceExisting });
       if (this.isServerEnabled()) {
+        if (replaceExisting) {
+          try {
+            const serverDrafts = await this.fetchServerDrafts();
+            for (const draft of serverDrafts) {
+              if (draft && draft.id) {
+                await this.deleteServerDraft(draft.id);
+              }
+            }
+          } catch (e) {
+            console.warn('Failed to clear server drafts before import', e);
+          }
+        }
         await this.syncAllDraftsToServer();
       }
       if (result.imported || result.updated) {
@@ -1191,6 +1215,31 @@ class BlogEditorApp {
       if (normalizedIssues.length) {
         this.appendAiDebugLog(`applyAiEdits: normalizedStyleIssues=${JSON.stringify(normalizedIssues)}`);
       }
+
+      const preserveCardImages = (sourceDraft, targetDraft) => {
+        if (!sourceDraft || !targetDraft) return;
+        const sourceBlocks = Array.isArray(sourceDraft.blocks) ? sourceDraft.blocks : [];
+        const targetBlocks = Array.isArray(targetDraft.blocks) ? targetDraft.blocks : [];
+        const sourceById = new Map(sourceBlocks.map(block => [block?.id, block]));
+
+        targetBlocks.forEach(block => {
+          if (!block || block.type !== 'card' || !Array.isArray(block.cards)) return;
+          const source = sourceById.get(block.id);
+          if (source && Array.isArray(source.cards)) {
+            block.cards = block.cards.map((card, index) => {
+              const currentCard = source.cards[index];
+              if (currentCard && typeof currentCard.image === 'string') {
+                return { ...card, image: currentCard.image };
+              }
+              return { ...card };
+            });
+          } else {
+            block.cards = block.cards.map(card => ({ ...card, image: '' }));
+          }
+        });
+      };
+
+      preserveCardImages(current, normalized);
 
       let finalDraft = normalized;
       if (selection && selection.id) {

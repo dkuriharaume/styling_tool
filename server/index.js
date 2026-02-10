@@ -192,6 +192,7 @@ app.post('/ai/suggest', async (req, res) => {
       `When the user asks to make text blue or red inside paragraphs/lists/cards, wrap only the words to color as {blue}...{/blue} or {red}...{/red} (do not add CSS).\n` +
       `For headers, never use {blue}/{red} markers in content. Use the header preset field: preset: "blue" or preset: "red".\n` +
       `Avoid raw HTML tags (including <strong>) and do not introduce any new HTML elements, inline styles, or CSS.\n` +
+      `For card blocks, NEVER change existing image URLs or alt text. When adding new cards, set image to an empty string.\n` +
       `Do not add any custom fields or attributes beyond the allowed block schema.\n` +
       `IMPORTANT: Suggestions must describe planned changes, not completed edits. Use future/conditional phrasing like "I will change... after you apply" and never claim edits are already done before apply.\n` +
       `${selection ? 'Selection is provided. If selection.scope is "subtree", you must reconstruct and return the full subtree under the selected header (that header and all child blocks until the next header of same or higher level). Keep all other blocks and the title unchanged. Preserve existing block ids when possible and include any new blocks needed. If you add new blocks outside subtree replacement, include top-level field selectionInsert with value "before" or "after" to place new blocks relative to the selected block. When you add a new block, suggestions must include the exact text you will insert.\n' : ''}` +

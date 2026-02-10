@@ -487,6 +487,7 @@ class EditorState {
    */
   importDrafts(payload, options = {}) {
     const overwrite = options.overwrite === true;
+    const replace = options.replace === true;
     let drafts = [];
 
     if (payload && Array.isArray(payload.drafts)) {
@@ -504,7 +505,19 @@ class EditorState {
       return { imported: 0, skipped: 0, updated: 0 };
     }
 
-    const draftsList = this.getDraftsList();
+    let draftsList = this.getDraftsList();
+    if (replace) {
+      draftsList.forEach(entry => {
+        if (entry && entry.id) {
+          localStorage.removeItem(`linkey-draft-${entry.id}`);
+        }
+      });
+      localStorage.removeItem('linkey-drafts-list');
+      localStorage.removeItem('linkey-current-draft-id');
+      this.currentDraftId = null;
+      this.currentDraftTimestamp = null;
+      draftsList = [];
+    }
     let imported = 0;
     let skipped = 0;
     let updated = 0;
